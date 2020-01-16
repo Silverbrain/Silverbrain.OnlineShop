@@ -1,12 +1,11 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Text;
-
 
 namespace SilverBrain.OnlineShop.DataLayer
 {
-    class ApplicationUser : IdentityUser
+    public class ApplicationUser : IdentityUser
     {
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
     }
 }
