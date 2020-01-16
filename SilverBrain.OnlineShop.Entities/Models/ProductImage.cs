@@ -8,7 +8,7 @@ namespace Silverbrain.OnlineShop.Entities.Models
     {
         public Uri ThumbnailUrl { get; set; }
 
-        public int Product_Id { get; set; }
+        public string Product_Id { get; set; }
         public Product Product { get; set; }
     }
 }

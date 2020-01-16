@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -28,6 +29,10 @@ namespace Silverbrain.OnlineShop.Web
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<OnlineShopDbContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddDbContext<OnlineShopDbContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("OnlineShopContext"),
+                x => x.MigrationsAssembly("Silverbrain.OnlineShop.DataLayer")));
 
             services.AddControllersWithViews();
         }
