@@ -1,22 +1,27 @@
-﻿using Microsoft.AspNet.Identity.EntityFramework;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using SilverBrain.OnlineShop.Entities.Models;
+using Silverbrain.OnlineShop.Entities.Models;
 
 namespace SilverBrain.OnlineShop.DataLayer
 {
-    class OnlineShopDbContext : IdentityDbContext<ApplicationUser>
+    public class OnlineShopDbContext : IdentityDbContext<ApplicationUser>
     {
         public OnlineShopDbContext(DbContextOptions<OnlineShopDbContext> options)
             : base(options)
         {
         }
 
-        public Microsoft.EntityFrameworkCore.DbSet<Product> Products { get; set; }
-        public Microsoft.EntityFrameworkCore.DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<Image> Images { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(builder);
+            builder.Entity<Product>()
+                .HasMany(p => p.Images)
+                .WithOne(i => i.Product)
+                .HasForeignKey(i => i.Product_Id);
         }
     }
 }
