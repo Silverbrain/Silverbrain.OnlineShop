@@ -9,6 +9,7 @@ using Silverbrain.OnlineShop.Web.Models.ViewModels;
 
 namespace Silverbrain.OnlineShop.Web.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         IAcountManagementService _accountService;
@@ -20,8 +21,9 @@ namespace Silverbrain.OnlineShop.Web.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login()
+        public async Task<IActionResult> Login()
         {
+            var result = await _accountService.LoginAsync("Admin", "Admin");
             return View();
         }
 
