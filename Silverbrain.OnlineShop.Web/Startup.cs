@@ -10,6 +10,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Silverbrain.OnlineShop.Services;
 using SilverBrain.OnlineShop.DataLayer;
 
 namespace Silverbrain.OnlineShop.Web
@@ -34,11 +35,13 @@ namespace Silverbrain.OnlineShop.Web
                 options.UseSqlServer(Configuration.GetConnectionString("OnlineShopContext"),
                 x => x.MigrationsAssembly("Silverbrain.OnlineShop.DataLayer")));
 
+            services.AddTransient<IAcountManagementService, AccountManagementServiceProvider>();
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +67,37 @@ namespace Silverbrain.OnlineShop.Web
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            await CreateRoles(services);
+        }
+
+        public async Task CreateRoles(IServiceProvider services)
+        {
+            var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+            var _userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+            List<string> roles = new List<string> { "Admin" };
+
+            foreach(string role in roles)
+            {
+                var roleExist = await _roleManager.RoleExistsAsync(role);
+                if (!roleExist)
+                    _roleManager.CreateAsync(new IdentityRole(role)).Wait();
+            }
+
+            var _adminUser = _userManager.FindByNameAsync("Admin");
+            if(_adminUser == null)
+            {
+                //in oreder to change the manager username and password, change the value of ManagerUser
+                //section in appsettings.json
+                var adminUser = new ApplicationUser
+                {
+                    UserName = Configuration.GetSection("ManagerUser").GetValue<string>("UserName")
+                };
+                var creatResult = await _userManager.CreateAsync(adminUser, Configuration.GetSection("ManagerUser").GetValue<string>("Password"));
+
+                if (creatResult.Succeeded)
+                    await _userManager.AddToRoleAsync(adminUser, "Admin");
+            }
         }
     }
 }
