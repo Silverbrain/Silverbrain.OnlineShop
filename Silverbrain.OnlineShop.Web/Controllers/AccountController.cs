@@ -29,7 +29,7 @@ namespace Silverbrain.OnlineShop.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(UserViewModel model)
         {
-            var result = await _accountService.LoginAsync(userName: model.Username, password: model.Password);
+            _accountService.LoginAsync(userName: model.Username, password: model.Password).Wait();
             return View();
         }
 
