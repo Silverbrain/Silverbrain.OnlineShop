@@ -1,6 +1,15 @@
-﻿@{
+﻿
+@{
     Layout = null;
+    IgnoreBody();
 }
+
+@inject UserManager<ApplicationUser> userManager;
+@{
+    ApplicationUser loginUser;
+    loginUser = await userManager.FindByNameAsync(User.Identity.Name);
+}
+
 <!doctype html>
 <html class="no-js" lang="en">
 
@@ -256,15 +265,33 @@
                                                     <img src="~/assets/images/avatar/avatar-1.jpg" alt="">
                                                     <span class="status"></span>
                                                 </span>
-                                                <span class="name">طاهر نصیری</span>
+                                                @if (string.IsNullOrEmpty(loginUser.FirstName))
+                                                {
+                                                    <span class="name">@loginUser.UserName</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="name">@loginUser.FirstName @loginUser.LastName</span>
+                                                }
                                             </span>
                                         </a>
 
                                         <!-- Dropdown -->
                                         <div class="adomx-dropdown-menu dropdown-menu-user">
                                             <div class="head">
-                                                <h5 class="name"><a href="#">طاهر نصیری</a></h5>
-                                                <a class="mail" href="#">mailnam@mail.com</a>
+                                                <h5 class="name">
+                                                    <a href="#">
+                                                        @if (string.IsNullOrEmpty(loginUser.FirstName))
+                                                        {
+                                                            @loginUser.UserName
+                                                        }
+                                                        else
+                                                        {
+                                                            @loginUser.FirstName @loginUser.LastName
+                                                        }
+                                                    </a>
+                                                </h5>
+                                                <a class="mail" href="#">@loginUser.Email</a>
                                             </div>
                                             <div class="body">
                                                 <ul>
@@ -274,7 +301,7 @@
                                                 </ul>
                                                 <ul>
                                                     <li><a href="#"><i class="zmdi zmdi-settings"></i>تنظیمات</a></li>
-                                                    <li><a href="#"><i class="zmdi zmdi-lock-open"></i>خروج</a></li>
+                                                    <li><a href="@Url.Action("Logout","Account")"><i class="zmdi zmdi-lock-open"></i>خروج</a></li>
                                                 </ul>
                                                 <ul>
                                                     <li><a href="#"><i class="zmdi zmdi-paypal"></i>پرداخت ها</a></li>

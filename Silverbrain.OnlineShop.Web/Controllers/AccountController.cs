@@ -12,18 +12,17 @@ namespace Silverbrain.OnlineShop.Web.Controllers
     [Authorize]
     public class AccountController : Controller
     {
-        IAcountManagementService _accountService;
+        private readonly IAccountManagementService _accountService;
 
-        public AccountController(IAcountManagementService accountService)
+        public AccountController(IAccountManagementService accountService)
         {
             _accountService = accountService;
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> Login()
+        public IActionResult Login()
         {
-            var result = await _accountService.LoginAsync("Admin", "Admin");
             return View();
         }
 
@@ -31,15 +30,19 @@ namespace Silverbrain.OnlineShop.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(UserViewModel model)
         {
-            _accountService.LoginAsync(userName: model.Username, password: model.Password).Wait();
-            return View();
+            var result = await _accountService.LoginAsync("Admin", "Admin", true);
+
+            if (result.Succeeded)
+                return RedirectToAction("Index", "ManagementDashboard");
+            else
+                return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogOutAsync();
-            return View();
+            return RedirectToAction("Index","Home");
         }
     }
 }

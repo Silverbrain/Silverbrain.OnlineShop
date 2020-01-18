@@ -46,7 +46,7 @@ namespace Silverbrain.OnlineShop.Web
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
                 options.Lockout.MaxFailedAccessAttempts = 3;
 
-                options.User.RequireUniqueEmail = true;
+                options.User.RequireUniqueEmail = false;
             });
 
             services.ConfigureApplicationCookie(options =>
@@ -58,13 +58,13 @@ namespace Silverbrain.OnlineShop.Web
             services.AddAuthentication();
             services.AddAuthorization();
 
-            services.AddTransient<IAcountManagementService, AccountManagementServiceProvider>();
+            services.AddTransient<IAccountManagementService, AccountManagementServiceProvider>();
 
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async Task Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services)
         {
             if (env.IsDevelopment())
             {
@@ -76,6 +76,12 @@ namespace Silverbrain.OnlineShop.Web
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
+            {
+                scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
+            }
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -91,7 +97,9 @@ namespace Silverbrain.OnlineShop.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            await CreateRoles(services);
+            app.UseCookiePolicy();
+
+            CreateRoles(services).Wait();
         }
 
         public async Task CreateRoles(IServiceProvider services)
@@ -107,14 +115,15 @@ namespace Silverbrain.OnlineShop.Web
                     _roleManager.CreateAsync(new IdentityRole(role)).Wait();
             }
 
-            var _adminUser = _userManager.FindByNameAsync("Admin");
+            var _adminUser = await _userManager.FindByNameAsync("Admin");
             if(_adminUser == null)
             {
                 //in oreder to change the manager username and password, change the value of ManagerUser
                 //section in appsettings.json
                 var adminUser = new ApplicationUser
                 {
-                    UserName = Configuration.GetSection("ManagerUser").GetValue<string>("UserName")
+                    UserName = Configuration.GetSection("ManagerUser").GetValue<string>("UserName"),
+                    Email = Configuration.GetSection("ManagerUser").GetValue<string>("Email")
                 };
                 var creatResult = await _userManager.CreateAsync(adminUser, Configuration.GetSection("ManagerUser").GetValue<string>("Password"));
 

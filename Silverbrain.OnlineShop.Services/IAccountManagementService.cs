@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
-    public interface IAcountManagementService
+    public interface IAccountManagementService
     {
-        Task<SignInResult> LoginAsync(string userName, string password);
+        Task<SignInResult> LoginAsync(string userName, string password, bool isPersistent);
         Task LogOutAsync();
     }
 }
