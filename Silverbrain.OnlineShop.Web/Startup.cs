@@ -58,6 +58,8 @@ namespace Silverbrain.OnlineShop.Web
             services.AddAuthentication();
             services.AddAuthorization();
 
+            services.AddKendo();
+
             services.AddTransient<IAccountManagementService, AccountManagementServiceProvider>();
 
             services.AddControllersWithViews();

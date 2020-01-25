@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Web", "Silverbrain.OnlineShop.Web\Silverbrain.OnlineShop.Web.csproj", "{D2BD52FE-624A-4AB6-9A8E-86AFC47510A7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silverbrain.OnlineShop.DataLayer", "Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj", "{19A31BE7-6EF4-4648-95F9-119D2567C909}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.DataLayer", "Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj", "{19A31BE7-6EF4-4648-95F9-119D2567C909}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silverbrain.OnlineShop.Services", "Silverbrain.OnlineShop.Services\Silverbrain.OnlineShop.Services.csproj", "{88EC49AB-B813-438A-B626-8B47D12E22AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Services", "Silverbrain.OnlineShop.Services\Silverbrain.OnlineShop.Services.csproj", "{88EC49AB-B813-438A-B626-8B47D12E22AF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Silverbrain.OnlineShop.Entities", "Silverbrain.OnlineShop.Entities\Silverbrain.OnlineShop.Entities.csproj", "{00B9EF02-06FE-420F-B173-67A70AA3BD9E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Entities", "Silverbrain.OnlineShop.Entities\Silverbrain.OnlineShop.Entities.csproj", "{00B9EF02-06FE-420F-B173-67A70AA3BD9E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

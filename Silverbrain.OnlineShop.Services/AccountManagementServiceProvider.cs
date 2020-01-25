@@ -24,19 +24,11 @@ namespace Silverbrain.OnlineShop.Services
 
         public async Task<SignInResult> LoginAsync(string userName, string password, bool isPersistent)
         {
-            var user = await _userManager.FindByNameAsync(userName);
-            
-            if(user != null)
-            {
-                var inRole = await _userManager.IsInRoleAsync(user, "Admin");
-                
-                if(inRole)
-                {
-                    var result = await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
-                    if (result.Succeeded)
-                        return result;
-                }
-            }
+            var user = await _userManager.FindByEmailAsync(userName);
+
+            if (user == null)
+                user = await _userManager.FindByNameAsync(userName);
+
             return await _signInManager.PasswordSignInAsync(user, password, isPersistent, false);
         }
 

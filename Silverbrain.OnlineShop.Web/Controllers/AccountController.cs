@@ -30,7 +30,8 @@ namespace Silverbrain.OnlineShop.Web.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(UserViewModel model)
         {
-            var result = await _accountService.LoginAsync("Admin", "Admin", true);
+            model.Username = model.Email;
+            var result = await _accountService.LoginAsync(model.Username, model.Password, model.isPersistence);
 
             if (result.Succeeded)
                 return RedirectToAction("Index", "ManagementDashboard");
