@@ -3,4 +3,28 @@
     ViewData["Title"] = "مدیریت";
     Layout = "~/Views/Shared/_ManagementLayout.cshtml";
 }
+@model List<UserViewModel>;
 
+<!-- Kendo UI -->
+<div class="row">
+    <div class="col">
+        @(Html.Kendo().Grid(Model)
+            .Name("Grid")
+            .DataSource(s => s
+                .Ajax()
+                .PageSize(5)
+                .ServerOperation(false)
+            )
+            .Pageable()
+            .Sortable()
+            .Groupable()
+            .Columns(columns =>
+            {
+                columns.Bound(u => u.FirstName).Title("First Name");
+                columns.Bound(u => u.LastName).Title("Last Name");
+                columns.Bound(u => u.Username).Title("Username");
+            })
+        )
+    </div>
+</div>
+<!-- Kendo UI End -->

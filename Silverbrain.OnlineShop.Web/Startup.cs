@@ -11,7 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Silverbrain.OnlineShop.Services;
-using SilverBrain.OnlineShop.DataLayer;
+using Silverbrain.OnlineShop.DataLayer;
 
 namespace Silverbrain.OnlineShop.Web
 {

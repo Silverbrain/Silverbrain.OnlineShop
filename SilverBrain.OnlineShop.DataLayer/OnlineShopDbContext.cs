@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Silverbrain.OnlineShop.Entities.Models;
 
-namespace SilverBrain.OnlineShop.DataLayer
+namespace Silverbrain.OnlineShop.DataLayer
 {
     public class OnlineShopDbContext : IdentityDbContext<ApplicationUser>
     {

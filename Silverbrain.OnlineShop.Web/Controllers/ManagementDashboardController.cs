@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Kendo.Mvc.Extensions;
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Silverbrain.OnlineShop.Web.Models.ViewModels;
+using Silverbrain.OnlineShop.ViewModels;
 
 namespace Silverbrain.OnlineShop.Web.Controllers
 {
@@ -13,6 +16,8 @@ namespace Silverbrain.OnlineShop.Web.Controllers
     {
         public IActionResult Index()
         {
+
+            //this is a list only for testing Kendo UI
             List<UserViewModel> users = new List<UserViewModel>
             {
                 new UserViewModel{FirstName = "sina", LastName = "ataei", Username = "silverbrain" },

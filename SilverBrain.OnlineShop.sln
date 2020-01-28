@@ -11,6 +11,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Entities", "Silverbrain.OnlineShop.Entities\Silverbrain.OnlineShop.Entities.csproj", "{00B9EF02-06FE-420F-B173-67A70AA3BD9E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Resources", "SilverBrain.OnlineShop.Resources\Silverbrain.OnlineShop.Resources.csproj", "{6FFC79D9-53D8-4826-AB66-E6DD62BFDE8A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.Repositories", "SilverBrain.OnlineShop.Repositories\Silverbrain.OnlineShop.Repositories.csproj", "{24058D9C-CD9A-47C6-A3C7-05DDF5A0C03E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Silverbrain.OnlineShop.ViewModels", "SilverBrain.OnlineShop.ViewModels\Silverbrain.OnlineShop.ViewModels.csproj", "{E0B4135F-9E10-4D25-A7B3-68890CDB3FD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +39,18 @@ Global
 		{00B9EF02-06FE-420F-B173-67A70AA3BD9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00B9EF02-06FE-420F-B173-67A70AA3BD9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00B9EF02-06FE-420F-B173-67A70AA3BD9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FFC79D9-53D8-4826-AB66-E6DD62BFDE8A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FFC79D9-53D8-4826-AB66-E6DD62BFDE8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FFC79D9-53D8-4826-AB66-E6DD62BFDE8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FFC79D9-53D8-4826-AB66-E6DD62BFDE8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{24058D9C-CD9A-47C6-A3C7-05DDF5A0C03E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{24058D9C-CD9A-47C6-A3C7-05DDF5A0C03E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{24058D9C-CD9A-47C6-A3C7-05DDF5A0C03E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{24058D9C-CD9A-47C6-A3C7-05DDF5A0C03E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0B4135F-9E10-4D25-A7B3-68890CDB3FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0B4135F-9E10-4D25-A7B3-68890CDB3FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0B4135F-9E10-4D25-A7B3-68890CDB3FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0B4135F-9E10-4D25-A7B3-68890CDB3FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

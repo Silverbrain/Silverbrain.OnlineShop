@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 
-namespace SilverBrain.OnlineShop.DataLayer
+namespace Silverbrain.OnlineShop.DataLayer
 {
     public class ApplicationUser : IdentityUser
     {
