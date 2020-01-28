@@ -60,7 +60,7 @@ namespace Silverbrain.OnlineShop.Web
 
             services.AddKendo();
 
-            services.AddTransient<IAccountManagementService, AccountManagementServiceProvider>();
+            services.AddCustomServices();
 
             services.AddControllersWithViews();
         }
