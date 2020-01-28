@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj" />
+  </ItemGroup>
+
 </Project>

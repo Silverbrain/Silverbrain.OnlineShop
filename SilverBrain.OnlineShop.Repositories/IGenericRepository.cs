@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Repositories
 {
-    interface IGenericRepository<TEntity>
+    public interface IGenericRepository<TEntity>
         where TEntity : class
     {
-        Task<IQueryable<TEntity>> ReadAllAsync();
+        Task<IEnumerable<TEntity>> ReadAllAsync();
         Task<TEntity> ReadByIdAsync<TIdType>(TIdType Id);
         Task CreatAsync(TEntity entity);
-        Task UpdateAsync<TIdType>(TIdType id, TEntity entity);
-
+        Task UpdateAsync(TEntity entity);
+        Task DeleteAsync<TIdType>(TIdType id);
     }
 }
