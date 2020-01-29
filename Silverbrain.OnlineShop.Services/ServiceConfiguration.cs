@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Models;
+using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.Repositories;
 using System;
 using System.Collections.Generic;

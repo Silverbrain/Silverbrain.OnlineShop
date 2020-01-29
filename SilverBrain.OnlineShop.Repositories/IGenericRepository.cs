@@ -10,9 +10,9 @@ namespace Silverbrain.OnlineShop.Repositories
         where TEntity : class
     {
         Task<IEnumerable<TEntity>> ReadAllAsync();
-        Task<TEntity> ReadByIdAsync<TIdType>(TIdType Id);
+        Task<TEntity> ReadByIdAsync(string Id);
         Task CreatAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);
-        Task DeleteAsync<TIdType>(TIdType id);
+        Task DeleteAsync(string Id);
     }
 }

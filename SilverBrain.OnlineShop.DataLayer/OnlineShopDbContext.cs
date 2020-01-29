@@ -17,11 +17,6 @@ namespace Silverbrain.OnlineShop.DataLayer
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<Product>()
-                .HasMany(p => p.Images)
-                .WithOne(i => i.Product)
-                .HasForeignKey(i => i.Product_Id);
-
             base.OnModelCreating(builder);
         }
     }

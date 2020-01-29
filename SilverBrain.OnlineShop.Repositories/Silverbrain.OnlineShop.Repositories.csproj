@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj" />
+    <ProjectReference Include="..\Silverbrain.OnlineShop.Entities\Silverbrain.OnlineShop.Entities.csproj" />
   </ItemGroup>
 
 </Project>

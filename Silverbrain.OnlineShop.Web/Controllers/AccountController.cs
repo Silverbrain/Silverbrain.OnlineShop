@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Silverbrain.OnlineShop.Services;
+using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.ViewModels;
 
 namespace Silverbrain.OnlineShop.Web.Controllers

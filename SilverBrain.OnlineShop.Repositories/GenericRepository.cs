@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Silverbrain.OnlineShop.Entities;
 
 namespace Silverbrain.OnlineShop.Repositories
 {
@@ -29,7 +30,7 @@ namespace Silverbrain.OnlineShop.Repositories
         public async Task<IEnumerable<TEntity>> ReadAllAsync() =>
             await entities.ToListAsync();
 
-        public async Task<TEntity> ReadByIdAsync<TIdType>(TIdType Id) =>
+        public async Task<TEntity> ReadByIdAsync(string Id) =>
             await entities.FindAsync(Id);
 
         public async Task UpdateAsync(TEntity entity)
@@ -38,9 +39,9 @@ namespace Silverbrain.OnlineShop.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync<TIdType>(TIdType id)
+        public async Task DeleteAsync(string Id)
         {
-            entities.Remove(entities.Find(id));
+            entities.Remove(entities.Find(Id));
             await _dbContext.SaveChangesAsync();
         }
     }
