@@ -27,7 +27,7 @@ namespace Silverbrain.OnlineShop.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<TEntity>> ReadAllAsync() =>
+        public async Task<IList<TEntity>> ReadAllAsync() =>
             await entities.ToListAsync();
 
         public async Task<TEntity> ReadByIdAsync(string Id) =>

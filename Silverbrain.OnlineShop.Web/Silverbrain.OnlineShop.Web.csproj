@@ -19,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj" />
     <ProjectReference Include="..\Silverbrain.OnlineShop.IServices\Silverbrain.OnlineShop.IServices.csproj" />
+    <ProjectReference Include="..\SilverBrain.OnlineShop.Resources\Silverbrain.OnlineShop.Resources.csproj" />
     <ProjectReference Include="..\Silverbrain.OnlineShop.Services\Silverbrain.OnlineShop.Services.csproj" />
     <ProjectReference Include="..\SilverBrain.OnlineShop.ViewModels\Silverbrain.OnlineShop.ViewModels.csproj" />
   </ItemGroup>

@@ -9,7 +9,7 @@ namespace Silverbrain.OnlineShop.Repositories
     public interface IGenericRepository<TEntity>
         where TEntity : class
     {
-        Task<IEnumerable<TEntity>> ReadAllAsync();
+        Task<IList<TEntity>> ReadAllAsync();
         Task<TEntity> ReadByIdAsync(string Id);
         Task CreatAsync(TEntity entity);
         Task UpdateAsync(TEntity entity);

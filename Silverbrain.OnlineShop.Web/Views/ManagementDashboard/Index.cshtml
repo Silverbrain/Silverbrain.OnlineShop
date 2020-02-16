@@ -9,7 +9,7 @@
 <div class="row">
     <div class="col">
         @(Html.Kendo().Grid(Model)
-            .Name("Grid")
+            .Name(Captions.UsersForm)
             .DataSource(s => s
                 .Ajax()
                 .PageSize(5)
@@ -20,9 +20,9 @@
             .Groupable()
             .Columns(columns =>
             {
-                columns.Bound(u => u.FirstName).Title("First Name");
-                columns.Bound(u => u.LastName).Title("Last Name");
-                columns.Bound(u => u.Username).Title("Username");
+                columns.Bound(u => u.FirstName).Title(Fields.FirstName);
+                columns.Bound(u => u.LastName).Title(Fields.LastName);
+                columns.Bound(u => u.Username).Title(Fields.Username);
             })
         )
     </div>

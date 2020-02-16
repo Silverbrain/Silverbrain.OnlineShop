@@ -24,11 +24,11 @@
 
   <ItemGroup>
     <EmbeddedResource Update="Captions.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Captions.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Fields.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Fields.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Update="Messages.resx">
