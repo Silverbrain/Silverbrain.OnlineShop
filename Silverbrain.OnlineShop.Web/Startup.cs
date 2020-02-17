@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Silverbrain.OnlineShop.Services;
 using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Web.Infrastructure;
+using Silverbrain.OnlineShop.Mapping;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -60,6 +61,8 @@ namespace Silverbrain.OnlineShop.Web
             services.AddAuthorization();
 
             services.AddKendo();
+
+            services.AddAutoMapper();
 
             services.AddCustomServices();
 

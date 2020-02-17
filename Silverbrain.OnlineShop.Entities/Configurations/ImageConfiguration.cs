@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Silverbrain.OnlineShop.Entities.Configurations
 {
-    public class ProductConfiguration : IEntityTypeConfiguration<Product>
+    public class ImageConfiguration : IEntityTypeConfiguration<Image>
     {
-        public void Configure(EntityTypeBuilder<Product> builder)
+        public void Configure(EntityTypeBuilder<Image> builder)
         {
-            builder.HasKey(t=>t.Id);
-    }
+            builder.HasKey(b => b.Id);
+        }
     }
 }

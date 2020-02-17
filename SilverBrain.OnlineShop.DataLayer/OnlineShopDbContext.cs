@@ -13,12 +13,13 @@ namespace Silverbrain.OnlineShop.DataLayer
         }
 
         public DbSet<Image> Images { get; set; }
-        public DbSet<Product> Products { get; set; }
-        public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<BrandImage> BrandImages { get; set; }
+        public DbSet<Brand> Brands { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new ProductConfiguration());
+            builder.ApplyConfiguration(new BrandConfiguration());
+            builder.ApplyConfiguration(new ImageConfiguration());
             base.OnModelCreating(builder);
         }
     }
