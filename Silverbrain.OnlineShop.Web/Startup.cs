@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Silverbrain.OnlineShop.Services;
 using Silverbrain.OnlineShop.DataLayer;
+using Silverbrain.OnlineShop.Web.Infrastructure;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -91,7 +92,7 @@ namespace Silverbrain.OnlineShop.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseMiddleware<ContentGenerator>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

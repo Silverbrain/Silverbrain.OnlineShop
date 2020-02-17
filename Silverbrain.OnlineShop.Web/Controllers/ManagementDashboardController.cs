@@ -14,11 +14,12 @@ namespace Silverbrain.OnlineShop.Web.Controllers
     [Authorize(Roles = "Admin")]
     public class ManagementDashboardController : Controller
     {
-        public IActionResult Index()
+        public ActionResult Index() => View();
+        public IActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
 
             //this is a list only for testing Kendo UI
-            List<UserViewModel> users = new List<UserViewModel>
+            var users = new List<UserViewModel>()
             {
                 new UserViewModel{FirstName = "sina", LastName = "ataei", Username = "silverbrain" },
                 new UserViewModel{FirstName = "ali", LastName = "emami", Username = "alikhan" },
@@ -31,9 +32,9 @@ namespace Silverbrain.OnlineShop.Web.Controllers
                 new UserViewModel{FirstName = "asal", LastName = "ataei", Username = "asat" },
                 new UserViewModel{FirstName = "neda", LastName = "shariari", Username = "nedsss" },
                 new UserViewModel{FirstName = "soorena", LastName = "ataei", Username = "soorenaAt" },
-            };
+            }.ToDataSourceResult(request);
 
-            return View(users);
+            return Json(users);
         }
     }
 }
