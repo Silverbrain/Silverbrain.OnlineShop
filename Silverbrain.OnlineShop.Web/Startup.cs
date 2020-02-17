@@ -62,7 +62,7 @@ namespace Silverbrain.OnlineShop.Web
 
             services.AddKendo();
 
-            services.AddAutoMapper();
+            //services.AddAutoMapper();
 
             services.AddCustomServices();
 
