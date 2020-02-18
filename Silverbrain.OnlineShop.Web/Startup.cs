@@ -13,8 +13,6 @@ using Microsoft.Extensions.Hosting;
 using Silverbrain.OnlineShop.Services;
 using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Web.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json.Serialization;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -62,6 +60,8 @@ namespace Silverbrain.OnlineShop.Web
             services.AddAuthorization();
 
             services.AddKendo();
+
+            //services.AddAutoMapper();
 
             services.AddCustomServices();
 
