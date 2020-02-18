@@ -6,8 +6,7 @@
 @inject UserManager<ApplicationUser> userManager;
 @{
     ApplicationUser loginUser;
-    //loginUser = await userManager.FindByNameAsync(User.Identity.Name);
-    loginUser = await userManager.FindByNameAsync("Admin");
+    loginUser = await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <!doctype html>
