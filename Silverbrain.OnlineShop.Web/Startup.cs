@@ -101,12 +101,20 @@ namespace Silverbrain.OnlineShop.Web
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ContentGenerator>();
+         
             app.UseEndpoints(endpoints =>
             {
+               // endpoints.MapControllers();
+
+                endpoints.MapControllerRoute(
+                    name: "areaRoute",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
             app.UseCookiePolicy();
 

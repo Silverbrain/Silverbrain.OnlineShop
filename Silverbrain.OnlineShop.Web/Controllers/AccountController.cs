@@ -34,7 +34,7 @@ namespace Silverbrain.OnlineShop.Web.Controllers
             var result = await _accountService.LoginAsync(model.UserName, model.Password, model.IsPersistence);
 
             if (result.Succeeded)
-                return RedirectToAction("Index", "ManagementDashboard");
+                return RedirectToAction("Index", "Home",new { area="Dashboard"});
             else
                 return RedirectToAction("Index", "Home");
         }
