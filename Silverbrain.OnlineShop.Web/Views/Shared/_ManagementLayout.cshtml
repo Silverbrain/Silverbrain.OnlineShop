@@ -6,7 +6,8 @@
 @inject UserManager<ApplicationUser> userManager;
 @{
     ApplicationUser loginUser;
-    loginUser = await userManager.FindByNameAsync(User.Identity.Name);
+    //loginUser = await userManager.FindByNameAsync(User.Identity.Name);
+    loginUser = await userManager.FindByNameAsync("Admin");
 }
 
 <!doctype html>
@@ -26,7 +27,7 @@
     <!-- CSS
     ============================================ -->
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/assets/css/vendor/bootstrap.min.css">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Icon Font CSS -->
     <link rel="stylesheet" href="~/assets/css/vendor/material-design-iconic-font.min.css">
@@ -37,25 +38,29 @@
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="~/assets/css/plugins/plugins.css">
 
+    <!-- Kendo UI -->
+    <link href="~/Kendo/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" />
+
     <!-- Helper CSS -->
     <link rel="stylesheet" href="~/assets/css/helper.css">
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="~/assets/css/style.css">
 
-    <!-- Custom Style CSS Only For Demo Purpose -->
-    <link id="cus-style" rel="stylesheet" href="~/assets/css/style-primary.css">
-
-    <!-- Kendo UI -->
-    <link href="~/Kendo/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" />
-
     <!-- JS
     ============================================ -->
     <!-- Global Vendor, plugins & Activation JS -->
     <script src="~/assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="~/assets/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/assets/js/vendor/popper.min.js"></script>
-    <script src="~/assets/js/vendor/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Kendo UI-->
+    <script src="~/Kendo/js/kendo.all.min.js"></script>
+    <script src="~/Kendo/js/kendo.aspnetmvc.min.js"></script>
+
     <!--Plugins JS-->
     <script src="~/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="~/assets/js/plugins/tippy4.min.js.js"></script>
@@ -77,10 +82,6 @@
     <script src="~/assets/js/plugins/vmap/maps/jquery.vmap.world.js"></script>
     <script src="~/assets/js/plugins/vmap/maps/samples/jquery.vmap.sampledata.js"></script>
     <script src="~/assets/js/plugins/vmap/vmap.active.js"></script>
-
-    <!-- Kendo UI-->
-    <script src="~/Kendo/js/kendo.all.min.js"></script>
-    <script src="~/Kendo/js/kendo.aspnetmvc.min.js"></script>
 
 </head>
 

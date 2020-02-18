@@ -19,17 +19,17 @@ namespace Silverbrain.OnlineShop.Web.Controllers
         {
             List<UserViewModel> aa = new List<UserViewModel>()
             {
-                new UserViewModel{FirstName = "sina", LastName = "ataei", Username = "silverbrain" },
-                new UserViewModel{FirstName = "ali", LastName = "emami", Username = "alikhan" },
-                new UserViewModel{FirstName = "hassan", LastName = "hassani", Username = "hassani" },
-                new UserViewModel{FirstName = "amin", LastName = "farahmand", Username = "aminfar" },
-                new UserViewModel{FirstName = "mohammad", LastName = "rahimi", Username = "more13" },
-                new UserViewModel{FirstName = "reza", LastName = "mohammadpour", Username = "rezmo" },
-                new UserViewModel{FirstName = "mina", LastName = "esmaeili", Username = "minesmal" },
-                new UserViewModel{FirstName = "elnaz", LastName = "mahzoon", Username = "eli" },
-                new UserViewModel{FirstName = "asal", LastName = "ataei", Username = "asat" },
-                new UserViewModel{FirstName = "neda", LastName = "shariari", Username = "nedsss" },
-                new UserViewModel{FirstName = "soorena", LastName = "ataei", Username = "soorenaAt" }
+                new UserViewModel{FirstName = "sina", LastName = "ataei", UserName = "silverbrain" },
+                new UserViewModel{FirstName = "ali", LastName = "emami", UserName = "alikhan" },
+                new UserViewModel{FirstName = "hassan", LastName = "hassani", UserName = "hassani" },
+                new UserViewModel{FirstName = "amin", LastName = "farahmand", UserName = "aminfar" },
+                new UserViewModel{FirstName = "mohammad", LastName = "rahimi", UserName = "more13" },
+                new UserViewModel{FirstName = "reza", LastName = "mohammadpour", UserName = "rezmo" },
+                new UserViewModel{FirstName = "mina", LastName = "esmaeili", UserName = "minesmal" },
+                new UserViewModel{FirstName = "elnaz", LastName = "mahzoon", UserName = "eli" },
+                new UserViewModel{FirstName = "asal", LastName = "ataei", UserName = "asat" },
+                new UserViewModel{FirstName = "neda", LastName = "shariari", UserName = "nedsss" },
+                new UserViewModel{FirstName = "soorena", LastName = "ataei", UserName = "soorenaAt" }
             };
             return Json(aa.ToList().ToDataSourceResult(request));
         }

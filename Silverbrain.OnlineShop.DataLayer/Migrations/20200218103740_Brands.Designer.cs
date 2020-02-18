@@ -10,7 +10,7 @@ using Silverbrain.OnlineShop.DataLayer;
 namespace Silverbrain.OnlineShop.DataLayer.Migrations
 {
     [DbContext(typeof(OnlineShopDbContext))]
-    [Migration("20200217215126_Brands")]
+    [Migration("20200218103740_Brands")]
     partial class Brands
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
