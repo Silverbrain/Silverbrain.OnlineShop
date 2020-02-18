@@ -11,7 +11,7 @@ using Silverbrain.OnlineShop.ViewModels;
 
 namespace Silverbrain.OnlineShop.Web.Controllers
 {
-    //[Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class ManagementDashboardController : Controller
     {
         public ActionResult Index() => View();
