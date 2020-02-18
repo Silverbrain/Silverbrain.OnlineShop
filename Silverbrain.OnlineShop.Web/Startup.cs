@@ -13,7 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Silverbrain.OnlineShop.Services;
 using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Web.Infrastructure;
-using Silverbrain.OnlineShop.Mapping;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -62,11 +63,13 @@ namespace Silverbrain.OnlineShop.Web
 
             services.AddKendo();
 
-            //services.AddAutoMapper();
-
             services.AddCustomServices();
 
-            services.AddControllersWithViews();
+            services
+               .AddControllersWithViews()
+               .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
