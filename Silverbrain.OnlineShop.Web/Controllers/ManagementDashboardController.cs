@@ -11,15 +11,13 @@ using Silverbrain.OnlineShop.ViewModels;
 
 namespace Silverbrain.OnlineShop.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
+    //[Authorize(Roles = "Admin")]
     public class ManagementDashboardController : Controller
     {
         public ActionResult Index() => View();
         public IActionResult Read([DataSourceRequest]DataSourceRequest request)
         {
-
-            //this is a list only for testing Kendo UI
-            var users = new List<UserViewModel>()
+            List<UserViewModel> aa = new List<UserViewModel>()
             {
                 new UserViewModel{FirstName = "sina", LastName = "ataei", Username = "silverbrain" },
                 new UserViewModel{FirstName = "ali", LastName = "emami", Username = "alikhan" },
@@ -31,10 +29,9 @@ namespace Silverbrain.OnlineShop.Web.Controllers
                 new UserViewModel{FirstName = "elnaz", LastName = "mahzoon", Username = "eli" },
                 new UserViewModel{FirstName = "asal", LastName = "ataei", Username = "asat" },
                 new UserViewModel{FirstName = "neda", LastName = "shariari", Username = "nedsss" },
-                new UserViewModel{FirstName = "soorena", LastName = "ataei", Username = "soorenaAt" },
-            }.ToDataSourceResult(request);
-
-            return Json(users);
+                new UserViewModel{FirstName = "soorena", LastName = "ataei", Username = "soorenaAt" }
+            };
+            return Json(aa.ToList().ToDataSourceResult(request));
         }
     }
 }
