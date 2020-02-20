@@ -13,10 +13,10 @@
                     @*<column field="OrderID" title="Order ID">
                             <filterable enabled="false"></filterable>
                         </column>*@
-                    <column field="Id" title="Id" />
-                    <column field="FirstName" title="FirstName" />
-                    <column field="LastName" title="LastName" />
-                    <column field="UserName" title="UserName" />
+                    <column field="@nameof(UserViewModel.Id)" title="Id" />
+                    <column field="@nameof(UserViewModel.FirstName)" title="@Fields.FirstName" />
+                    <column field="@nameof(UserViewModel.LastName)" title="@Fields.LastName" />
+                    <column field="@nameof(UserViewModel.UserName)" title="@Fields.Username" />
                 </columns>
                 <scrollable enabled="true" />
                 <sortable enabled="true" />
@@ -28,6 +28,13 @@
                     <transport>
                         <read url="@Url.Action("Read", "Home")" />
                     </transport>
+                    <schema>
+                        <model id="@nameof(UserViewModel)">
+                            <fields>
+                                <field name="@nameof(UserViewModel.Id)" type="number" />
+                            </fields>
+                        </model>
+                    </schema>
                 </datasource>
             </kendo-grid>
         </div>
