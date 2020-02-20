@@ -90,7 +90,8 @@ namespace Silverbrain.OnlineShop.Web
 
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
+               
+                //scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
             }
 
             app.UseHttpsRedirection();
