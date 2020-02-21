@@ -103,7 +103,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // GET: Brand/Edit/5
-        public ActionResult Update()
+        public ActionResult Edit(int id)
         {
             return View();
         }

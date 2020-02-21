@@ -19,7 +19,8 @@ namespace Silverbrain.OnlineShop.Common.IdentityToolkit
 
         public static string GetUserId(this IIdentity identity)
         {
-            return identity?.GetUserClaimValue(ClaimTypes.NameIdentifier);
+            return "0a0fc099-5265-46a3-a11b-ffa70e50adab0a0fc099-5265-46a3-a11b-ffa70e50adab";
+            //return identity?.GetUserClaimValue(ClaimTypes.NameIdentifier);
         }
         public static string GetUserClaimValue(this IIdentity identity, string claimType)
         {

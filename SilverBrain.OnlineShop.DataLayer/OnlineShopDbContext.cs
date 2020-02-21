@@ -35,53 +35,53 @@ namespace Silverbrain.OnlineShop.DataLayer
             builder.AddAuditableShadowProperties();
         }
 
-        public override int SaveChanges(bool acceptAllChangesOnSuccess)
-        {
-            ChangeTracker.DetectChanges();
+        //public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        //{
+        //    ChangeTracker.DetectChanges();
 
-            beforeSaveTriggers();
+        //    beforeSaveTriggers();
 
-            ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
-            var result = base.SaveChanges(acceptAllChangesOnSuccess);
-            ChangeTracker.AutoDetectChangesEnabled = true;
-            return result;
-        }
+        //    ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
+        //    var result = base.SaveChanges(acceptAllChangesOnSuccess);
+        //    ChangeTracker.AutoDetectChangesEnabled = true;
+        //    return result;
+        //}
 
-        public override int SaveChanges()
-        {
-            ChangeTracker.DetectChanges(); //NOTE: changeTracker.Entries<T>() will call it automatically.
+        //public override int SaveChanges()
+        //{
+        //    ChangeTracker.DetectChanges(); //NOTE: changeTracker.Entries<T>() will call it automatically.
 
-            beforeSaveTriggers();
+        //    beforeSaveTriggers();
 
-            ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
-            var result = base.SaveChanges();
-            ChangeTracker.AutoDetectChangesEnabled = true;
-            return result;
-        }
+        //    ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
+        //    var result = base.SaveChanges();
+        //    ChangeTracker.AutoDetectChangesEnabled = true;
+        //    return result;
+        //}
 
-        public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
-        {
-            ChangeTracker.DetectChanges();
+        //public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = new CancellationToken())
+        //{
+        //    ChangeTracker.DetectChanges();
 
-            beforeSaveTriggers();
+        //    beforeSaveTriggers();
 
-            ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
-            var result = base.SaveChangesAsync(cancellationToken);
-            ChangeTracker.AutoDetectChangesEnabled = true;
-            return result;
-        }
+        //    ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
+        //    var result = base.SaveChangesAsync(cancellationToken);
+        //    ChangeTracker.AutoDetectChangesEnabled = true;
+        //    return result;
+        //}
 
-        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
-        {
-            ChangeTracker.DetectChanges();
+        //public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = new CancellationToken())
+        //{
+        //    ChangeTracker.DetectChanges();
 
-            beforeSaveTriggers();
+        //    beforeSaveTriggers();
 
-            ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
-            var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
-            ChangeTracker.AutoDetectChangesEnabled = true;
-            return result;
-        }
+        //    ChangeTracker.AutoDetectChangesEnabled = false; // for performance reasons, to avoid calling DetectChanges() again.
+        //    var result = base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        //    ChangeTracker.AutoDetectChangesEnabled = true;
+        //    return result;
+        //}
 
 
         private void SetShadowProperties()
