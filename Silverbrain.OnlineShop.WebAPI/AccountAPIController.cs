@@ -20,7 +20,7 @@ namespace Silverbrain.OnlineShop.WebAPI
 
         [HttpGet("{Id}")]
         public async Task<IActionResult> GetAccountByIdAsync([FromRoute] string Id) =>
-            Ok(await _accountManagement.GetByIdAsync(Id));
+            Ok(await _accountManagement.GetAsync(Id));
 
         [HttpGet]
         public async Task<IActionResult> GetAccountAsync() =>

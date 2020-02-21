@@ -12,6 +12,7 @@ namespace Silverbrain.OnlineShop.Entities.Configurations
         public void Configure(EntityTypeBuilder<Brand> builder)
         {
             builder.HasKey(b => b.Id);
+            builder.Property(b => b.Title).HasMaxLength(50);
         }
     }
 }

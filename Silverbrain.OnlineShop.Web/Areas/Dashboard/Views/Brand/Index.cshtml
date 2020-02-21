@@ -1,0 +1,126 @@
+﻿
+@{
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+@model BrandViewModel;
+
+<div class="box">
+    <div class="box-head">
+        <h4 class="title">@Captions.CreateBrand</h4>
+    </div>
+    <div class="box-body">
+        <form method="post" enctype="multipart/form-data">
+            <div class="row mbn-20">
+
+                <div class="col-12 mb-20">
+                    <label asp-for="Title">@Fields.TitleInput</label>
+                    <input asp-for="Title" type="text" id="titleform" class="form-control" placeholder="@Fields.TitleInput">
+                </div>
+
+                <!--File Upload-->
+                <div class="col-12 mb-20">
+                    <label for="formLayoutFile2">@Fields.UploadFile</label>
+                    <div class="dropify-wrapper">
+                        <div class="dropify-message">
+                            <span class="file-icon"></span>
+                            <p>Drag and drop a file here or click</p>
+                            <p class="dropify-error">@Messages.UploadFailureMessage</p>
+                        </div>
+                        <div class="dropify-loader"></div>
+                        <div class="dropify-errors-container">
+                            <ul></ul>
+                        </div>
+                        <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
+                        <button type="button" class="dropify-clear">@Fields.DeleteButton</button>
+                        <div class="dropify-preview">
+                            <span class="dropify-render"></span>
+                            <div class="dropify-infos">
+                                <div class="dropify-infos-inner">
+                                    <p class="dropify-filename">
+                                        <span class="file-icon"></span>
+                                        <span class="dropify-filename-inner"></span>
+                                    </p>
+                                    <p class="dropify-infos-message">@Messages.UploadPlaceHolderMessage</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--File Upload-End-->
+
+                <div class="col-12 mb-20">
+                    <button id="createBrand" class="button button-primary">@Fields.SendButton</button>
+                    @*<input type="submit" value="@Fields.CancelButton" class="button button-danger">*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<div class="box">
+    <div class="box-head">
+        <h4 class="title">@Captions.BrandForm</h4>
+    </div>
+    <div class="box-body">
+        <div class="k-rtl">
+            <kendo-grid name="grid" height="550">
+                <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
+                    <transport>
+                        <read href="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <update href="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <destroy href="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                    </transport>
+                    <schema>
+                        <model id="@nameof(BrandViewModel.Id)">
+                            <fields>
+                                <field name="@nameof(BrandViewModel.Title)"></field>
+                            </fields>
+                        </model>
+                    </schema>
+                </datasource>
+
+                <editable mode="incell" />
+
+                <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
+                </pageable>
+
+                <sortable enabled="true" />
+
+                <columns>
+                    <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" width="240" />
+                    <column>
+                        <commands>
+                            <column-command name="edit" text="@Fields.EditButtin"></column-command>
+                            <column-command name="destroy" text="@Fields.DeleteButton"></column-command>
+                        </commands>
+                    </column>
+                </columns>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $(createBrand).on("click", function (e) {
+            e.preventDefault();
+            $.ajax({
+                url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
+                data: {
+                    ImageFormFile: new FormData(document.forms[0]),
+                    Title: $(titleform).val()
+                },
+                contentType: false,
+                processData: false,
+                type: 'post',
+                success: function () {
+                    var grid = $('#grid').data('kendoGrid');
+                    grid.refresh();
+                }
+            });
+        })
+    });
+</script>

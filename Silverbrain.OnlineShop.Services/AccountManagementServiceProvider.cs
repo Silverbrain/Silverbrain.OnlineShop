@@ -42,8 +42,8 @@ namespace Silverbrain.OnlineShop.Services
             await _signInManager.SignOutAsync();
         }
 
-        public async Task<ApplicationUser> GetByIdAsync(string Id) =>
-            await _repository.ReadByIdAsync(Id);
+        public async Task<ApplicationUser> GetAsync(string Id) =>
+            await _repository.ReadAsync(Id);
 
         public async Task<IEnumerable<ApplicationUser>> GetAllAsync() =>
             await _repository.ReadAllAsync();

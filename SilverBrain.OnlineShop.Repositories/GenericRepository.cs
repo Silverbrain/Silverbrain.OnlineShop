@@ -30,16 +30,25 @@ namespace Silverbrain.OnlineShop.Repositories
         public async Task<IList<TEntity>> ReadAllAsync() =>
             await entities.ToListAsync();
 
-        public async Task<TEntity> ReadByIdAsync(string Id) =>
+        public async Task<TEntity> ReadAsync(string Id) =>
+            await entities.FindAsync(Id);
+
+        public async Task<TEntity> ReadAsync(int Id) =>
             await entities.FindAsync(Id);
 
         public async Task UpdateAsync(TEntity entity)
         {
-            entities.Update(entity);
-            await _dbContext.SaveChangesAsync();
+                entities.Update(entity);
+                await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(string Id)
+        {
+            entities.Remove(entities.Find(Id));
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int Id)
         {
             entities.Remove(entities.Find(Id));
             await _dbContext.SaveChangesAsync();

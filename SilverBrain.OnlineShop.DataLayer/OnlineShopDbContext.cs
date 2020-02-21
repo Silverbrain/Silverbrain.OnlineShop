@@ -18,8 +18,10 @@ namespace Silverbrain.OnlineShop.DataLayer
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new BrandConfiguration());
             builder.ApplyConfiguration(new ImageConfiguration());
+            builder.ApplyConfiguration(new BrandConfiguration());
+            builder.ApplyConfiguration(new ApplicationUserConfiguration());
+
             base.OnModelCreating(builder);
         }
     }

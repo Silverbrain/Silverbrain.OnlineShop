@@ -11,7 +11,7 @@ namespace Silverbrain.OnlineShop.IServices
     {
         Task<SignInResult> LoginAsync(string userName, string password, bool isPersistent);
         Task LogOutAsync();
-        Task<ApplicationUser> GetByIdAsync(string Id);
+        Task<ApplicationUser> GetAsync(string Id);
         Task<IEnumerable<ApplicationUser>> GetAllAsync();
     }
 }
