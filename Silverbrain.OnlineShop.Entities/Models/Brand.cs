@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Silverbrain.OnlineShop.Entities.AuditableEntity;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Silverbrain.OnlineShop.Entities.Models
 {
-    public class Brand
+    public class Brand: IAuditableEntity
     {
         public int Id { get; set; }
         public string Name { get; set; }
