@@ -1,3 +1,4 @@
+using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,10 +12,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Silverbrain.OnlineShop.Services;
+using Silverbrain.OnlineShop.Repositories;
 using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Web.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
+using Silverbrain.OnlineShop.Resources;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -54,7 +57,7 @@ namespace Silverbrain.OnlineShop.Web
 
             services.ConfigureApplicationCookie(options =>
             {
-                options.LoginPath = "/Account/Login";
+                options.LoginPath = "/Account/Account/Login";
                 options.Cookie.MaxAge = TimeSpan.FromDays(1);
             });
 
@@ -63,9 +66,10 @@ namespace Silverbrain.OnlineShop.Web
 
             services.AddKendo();
 
-            //services.AddAutoMapper();
-
+            services.AddRepositories();
             services.AddCustomServices();
+
+            services.AddAutoMapper(typeof(Startup));
 
             services
                .AddControllersWithViews()
@@ -90,8 +94,7 @@ namespace Silverbrain.OnlineShop.Web
 
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-               
-                //scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
+                scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
             }
 
             app.UseHttpsRedirection();
@@ -101,55 +104,57 @@ namespace Silverbrain.OnlineShop.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<ContentGenerator>();
-         
+
+            //app.UseMiddleware<ContentGenerator>();
+
             app.UseEndpoints(endpoints =>
             {
-               // endpoints.MapControllers();
+                // endpoints.MapControllers();
 
                 endpoints.MapControllerRoute(
                     name: "areaRoute",
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
-
-                endpoints.MapControllerRoute(
+                endpoints.MapAreaControllerRoute(
                     name: "default",
+                    areaName: "Shop",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
 
             app.UseCookiePolicy();
 
-            CreateRoles(services).Wait();
+            app.AddUserWithRoles(services, Configuration).Wait();
+            //CreateRoles(services).Wait();
         }
 
-        public async Task CreateRoles(IServiceProvider services)
-        {
-            var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-            var _userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-            List<string> roles = new List<string> { "Admin" };
+        //public async Task CreateRoles(IServiceProvider services)
+        //{
+        //    var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+        //    var _userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+        //    List<string> roles = new List<string> { "Admin" };
 
-            foreach(string role in roles)
-            {
-                var roleExist = await _roleManager.RoleExistsAsync(role);
-                if (!roleExist)
-                    _roleManager.CreateAsync(new IdentityRole(role)).Wait();
-            }
+        //    foreach (string role in roles)
+        //    {
+        //        var roleExist = await _roleManager.RoleExistsAsync(role);
+        //        if (!roleExist)
+        //            _roleManager.CreateAsync(new IdentityRole(role)).Wait();
+        //    }
 
-            var _adminUser = await _userManager.FindByNameAsync("Admin");
-            if(_adminUser == null)
-            {
-                //in oreder to change the manager username and password, change the value of ManagerUser
-                //section in appsettings.json
-                var adminUser = new ApplicationUser
-                {
-                    UserName = Configuration.GetSection("ManagerUser").GetValue<string>("UserName"),
-                    Email = Configuration.GetSection("ManagerUser").GetValue<string>("Email")
-                };
-                var creatResult = await _userManager.CreateAsync(adminUser, Configuration.GetSection("ManagerUser").GetValue<string>("Password"));
+        //    var _adminUser = await _userManager.FindByNameAsync("Admin");
+        //    if (_adminUser == null)
+        //    {
+        //        //in oreder to change the manager username and password, change the value of ManagerUser
+        //        //section in appsettings.json
+        //        var adminUser = new ApplicationUser
+        //        {
+        //            UserName = Configuration.GetSection("ManagerUser").GetValue<string>("UserName"),
+        //            Email = Configuration.GetSection("ManagerUser").GetValue<string>("Email")
+        //        };
+        //        var creatResult = await _userManager.CreateAsync(adminUser, Configuration.GetSection("ManagerUser").GetValue<string>("Password"));
 
-                if (creatResult.Succeeded)
-                    await _userManager.AddToRoleAsync(adminUser, "Admin");
-            }
-        }
+        //        if (creatResult.Succeeded)
+        //            await _userManager.AddToRoleAsync(adminUser, "Admin");
+        //    }
+        //}
     }
 }

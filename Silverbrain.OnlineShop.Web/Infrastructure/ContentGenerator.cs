@@ -19,10 +19,9 @@ namespace Silverbrain.OnlineShop.Web.Infrastructure
 
         public Task Invoke(HttpContext httpContext)
         {
-            if(httpContext.Request.Path.ToString().ToLower().Contains("middleware"))
-            {
-                return httpContext.Response.WriteAsync("hello middleware...");
-            }
+            if (httpContext.Response.StatusCode == StatusCodes.Status400BadRequest)
+                httpContext.Response.Headers.Append("error-message", httpContext.Response.ContentType.ToString());
+
             return _next(httpContext);
         }
     }

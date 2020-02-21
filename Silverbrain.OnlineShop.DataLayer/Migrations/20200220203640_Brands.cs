@@ -40,8 +40,8 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -54,7 +54,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 50, nullable: true),
                     Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -80,8 +80,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade
-                        );
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -175,7 +174,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Title = table.Column<string>(maxLength: 50, nullable: true),
                     ImageId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>

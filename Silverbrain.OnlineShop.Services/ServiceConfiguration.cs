@@ -14,7 +14,7 @@ namespace Silverbrain.OnlineShop.Services
         public static void AddCustomServices(this IServiceCollection services)
         {
             services.AddTransient(typeof(IAccountManagementService), typeof(AccountManagementServiceProvider));
-            services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient(typeof(IBrandService), typeof(BrandService));
         }
     }
 }

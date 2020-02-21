@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Silverbrain.OnlineShop.ViewModels;
@@ -11,6 +12,7 @@ using Silverbrain.OnlineShop.ViewModels;
 namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 {
     [Area("Dashboard")]
+    [Authorize(Roles = "Admin")]
     public class HomeController : Controller
     {
         

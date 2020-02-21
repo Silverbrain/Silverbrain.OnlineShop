@@ -1,0 +1,118 @@
+﻿
+@{
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+}
+
+@model BrandViewModel
+<!--<script src="~/assets/js/plugins/dropify/dropify.min.js"></script>-->
+<div class="box">
+    <div class="box-head">
+        <h4 class="title">@Captions.CreateBrand</h4>
+    </div>
+    <div class="box-body">
+        <form method="post" id="brandform">
+            <div class="row mbn-20">
+
+                <input type="hidden" asp-for="Id" /> 
+                <input type="hidden" asp-for="Image" /> 
+
+                <div class="col-12 mb-20">
+                    <label asp-for="Title">@Fields.TitleInput</label>
+                    <input asp-for="Title" type="text" id="titleform" class="form-control" placeholder="@Fields.TitleInput">
+                </div>
+
+                <!--File Upload-->
+                <div class="col-12 mb-20">
+                    <label for="formLayoutFile2">@Fields.UploadFile</label>
+                    <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
+                </div>
+                <!--File Upload-End-->
+
+                <div class="col-12 mb-20">
+                    <button id="createBrand" class="button button-primary">@Fields.SendButton</button>
+                    @*<input type="submit" value="@Fields.CancelButton" class="button button-danger">*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<br />
+
+<div class="box">
+    <div class="box-head">
+        <h4 class="title">@Captions.BrandForm</h4>
+    </div>
+    <div class="box-body">
+        <div class="k-rtl">
+            <kendo-grid name="grid" height="550">
+                <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
+                    <transport>
+                        <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <destroy url="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                    </transport>
+                    <schema>
+                        <model id="@nameof(BrandViewModel.Id)">
+                            <fields>
+                                <field name="@nameof(BrandViewModel.Id)" type="number"></field>
+                                <field name="@nameof(BrandViewModel.Title)"></field>
+                            </fields>
+                        </model>
+                    </schema>
+                </datasource>
+
+                <editable mode="incell" />
+
+                <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
+                </pageable>
+
+                <sortable enabled="true" />
+
+                <columns>
+                    <column field="@nameof(BrandViewModel.Id)" title="@Fields.Id" />
+                    <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" width="240" />
+                    <column>
+                        <commands>
+                            <column-command name="edit" text="@Fields.EditButtin"></column-command>
+                            <column-command name="destroy" text="@Fields.DeleteButton"></column-command>
+                        </commands>
+                    </column>
+                </columns>
+            </kendo-grid>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(function () {
+        $('.dropify').dropify({
+            messages: {
+                'default': '@Messages.UploadPlaceHolderMessage',
+                'replace': '@Messages.UploadPlaceHolderMessage',
+                'remove': '@Fields.DeleteButton',
+                'error': '@Messages.UploadFailureMessage'
+            },
+        });
+
+        $(createBrand).on("click", function (e) {
+            e.preventDefault();
+            var form = $(brandform)[0];
+            var data = new FormData(form);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
+                data: data,
+                enctype: 'multipart/form-data', // Important!!!!
+                processData: false,  //prevent jQuery transforming the data into a query string
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    var grid = $('#grid').data('kendoGrid');
+                    grid.refresh();
+                }
+            });
+        })
+    });
+</script>
