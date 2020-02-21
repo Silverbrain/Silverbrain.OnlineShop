@@ -48,6 +48,7 @@
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
+    <Folder Include="wwwroot\assets\images\brands\" />
   </ItemGroup>
 
 

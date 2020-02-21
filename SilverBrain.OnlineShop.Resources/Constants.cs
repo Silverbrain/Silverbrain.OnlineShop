@@ -24,5 +24,8 @@ namespace Silverbrain.OnlineShop.Resources
         public static string ActionDelete { get; set; } = "Delete";
         public static string ActionRead { get; set; } = "Read";
         public static string ActionReadAll { get; set; } = "ReadAll";
+
+        //Paths
+        public static string PathBrandImage { get; set; } = "\\assets\\images\\brands";
     }
 }

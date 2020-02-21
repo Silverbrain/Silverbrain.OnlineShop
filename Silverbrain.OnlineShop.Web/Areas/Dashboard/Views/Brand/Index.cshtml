@@ -3,15 +3,18 @@
     Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
 }
 
-@model BrandViewModel;
-
+@model BrandViewModel
+<!--<script src="~/assets/js/plugins/dropify/dropify.min.js"></script>-->
 <div class="box">
     <div class="box-head">
         <h4 class="title">@Captions.CreateBrand</h4>
     </div>
     <div class="box-body">
-        <form method="post" enctype="multipart/form-data">
+        <form method="post" id="brandform">
             <div class="row mbn-20">
+
+                <input type="hidden" asp-for="Id" /> 
+                <input type="hidden" asp-for="Image" /> 
 
                 <div class="col-12 mb-20">
                     <label asp-for="Title">@Fields.TitleInput</label>
@@ -21,31 +24,7 @@
                 <!--File Upload-->
                 <div class="col-12 mb-20">
                     <label for="formLayoutFile2">@Fields.UploadFile</label>
-                    <div class="dropify-wrapper">
-                        <div class="dropify-message">
-                            <span class="file-icon"></span>
-                            <p>Drag and drop a file here or click</p>
-                            <p class="dropify-error">@Messages.UploadFailureMessage</p>
-                        </div>
-                        <div class="dropify-loader"></div>
-                        <div class="dropify-errors-container">
-                            <ul></ul>
-                        </div>
-                        <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
-                        <button type="button" class="dropify-clear">@Fields.DeleteButton</button>
-                        <div class="dropify-preview">
-                            <span class="dropify-render"></span>
-                            <div class="dropify-infos">
-                                <div class="dropify-infos-inner">
-                                    <p class="dropify-filename">
-                                        <span class="file-icon"></span>
-                                        <span class="dropify-filename-inner"></span>
-                                    </p>
-                                    <p class="dropify-infos-message">@Messages.UploadPlaceHolderMessage</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
                 </div>
                 <!--File Upload-End-->
 
@@ -69,13 +48,14 @@
             <kendo-grid name="grid" height="550">
                 <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
                     <transport>
-                        <read href="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                        <update href="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                        <destroy href="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <destroy url="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
                     </transport>
                     <schema>
                         <model id="@nameof(BrandViewModel.Id)">
                             <fields>
+                                <field name="@nameof(BrandViewModel.Id)" type="number"></field>
                                 <field name="@nameof(BrandViewModel.Title)"></field>
                             </fields>
                         </model>
@@ -90,6 +70,7 @@
                 <sortable enabled="true" />
 
                 <columns>
+                    <column field="@nameof(BrandViewModel.Id)" title="@Fields.Id" />
                     <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" width="240" />
                     <column>
                         <commands>
@@ -105,18 +86,29 @@
 
 <script type="text/javascript">
     $(function () {
+        $('.dropify').dropify({
+            messages: {
+                'default': '@Messages.UploadPlaceHolderMessage',
+                'replace': '@Messages.UploadPlaceHolderMessage',
+                'remove': '@Fields.DeleteButton',
+                'error': '@Messages.UploadFailureMessage'
+            },
+        });
+
         $(createBrand).on("click", function (e) {
             e.preventDefault();
+            var form = $(brandform)[0];
+            var data = new FormData(form);
+
             $.ajax({
+                type: "POST",
                 url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
-                data: {
-                    ImageFormFile: new FormData(document.forms[0]),
-                    Title: $(titleform).val()
-                },
+                data: data,
+                enctype: 'multipart/form-data', // Important!!!!
+                processData: false,  //prevent jQuery transforming the data into a query string
                 contentType: false,
-                processData: false,
-                type: 'post',
-                success: function () {
+                cache: false,
+                success: function (data) {
                     var grid = $('#grid').data('kendoGrid');
                     grid.refresh();
                 }

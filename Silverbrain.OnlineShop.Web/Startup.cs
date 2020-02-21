@@ -17,6 +17,7 @@ using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Web.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
+using Silverbrain.OnlineShop.Resources;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -103,11 +104,12 @@ namespace Silverbrain.OnlineShop.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseMiddleware<ContentGenerator>();
-         
+
+            //app.UseMiddleware<ContentGenerator>();
+
             app.UseEndpoints(endpoints =>
             {
-               // endpoints.MapControllers();
+                // endpoints.MapControllers();
 
                 endpoints.MapControllerRoute(
                     name: "areaRoute",
