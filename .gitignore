@@ -164,6 +164,9 @@ DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
 
+# Image folder exclusion
+Silverbrain.OnlineShop.Web\wwwroot\assets\images\brands\*
+
 # Click-Once directory
 publish/
 
