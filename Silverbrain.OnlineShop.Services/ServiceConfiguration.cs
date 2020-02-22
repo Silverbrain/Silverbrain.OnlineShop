@@ -15,6 +15,7 @@ namespace Silverbrain.OnlineShop.Services
         public static void AddCustomServices(this IServiceCollection services)
         {
             services.AddTransient(typeof(IAccountManagementService), typeof(AccountManagementServiceProvider));
+            services.AddTransient(typeof(IBrandService), typeof(BrandService));
             //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.Configure<IdentityOptions>(options =>
             {
@@ -27,7 +28,7 @@ namespace Silverbrain.OnlineShop.Services
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.User.RequireUniqueEmail = false;
             });
-            services.AddTransient(typeof(IBrandService), typeof(BrandService));
+           
         }
     }
 }
