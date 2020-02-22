@@ -27,6 +27,7 @@ namespace Silverbrain.OnlineShop.Services
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.User.RequireUniqueEmail = false;
             });
+            services.AddTransient(typeof(IBrandService), typeof(BrandService));
         }
     }
 }

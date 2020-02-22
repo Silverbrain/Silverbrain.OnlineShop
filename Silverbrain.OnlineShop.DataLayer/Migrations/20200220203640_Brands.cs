@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Silverbrain.OnlineShop.DataLayer.Migrations
 {
-    public partial class InitialContext : Migration
+    public partial class Brands : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -40,8 +40,8 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    FirstName = table.Column<string>(nullable: true),
-                    LastName = table.Column<string>(nullable: true)
+                    FirstName = table.Column<string>(maxLength: 50, nullable: true),
+                    LastName = table.Column<string>(maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -49,16 +49,17 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Images",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    NameEnglish = table.Column<string>(nullable: true),
-                    NamePersian = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(maxLength: 50, nullable: true),
+                    Discriminator = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Images", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -168,22 +169,21 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Images",
+                name: "Brands",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    URL = table.Column<string>(nullable: true),
-                    Discriminator = table.Column<string>(nullable: false),
-                    ThumbnailUrl = table.Column<string>(nullable: true),
-                    Product_Id = table.Column<string>(nullable: true)
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(maxLength: 50, nullable: true),
+                    ImageId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Images", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Images_Products_Product_Id",
-                        column: x => x.Product_Id,
-                        principalTable: "Products",
+                        name: "FK_Brands_Images_ImageId",
+                        column: x => x.ImageId,
+                        principalTable: "Images",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -228,9 +228,9 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Images_Product_Id",
-                table: "Images",
-                column: "Product_Id");
+                name: "IX_Brands_ImageId",
+                table: "Brands",
+                column: "ImageId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -251,7 +251,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Images");
+                name: "Brands");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -260,7 +260,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Images");
         }
     }
 }

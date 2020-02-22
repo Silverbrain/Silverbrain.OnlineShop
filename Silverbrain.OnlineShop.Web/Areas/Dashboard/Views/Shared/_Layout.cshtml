@@ -26,7 +26,7 @@
     <!-- CSS
     ============================================ -->
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="~/assets/css/vendor/bootstrap.min.css">
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
 
     <!-- Icon Font CSS -->
     <link rel="stylesheet" href="~/assets/css/vendor/material-design-iconic-font.min.css">
@@ -37,28 +37,28 @@
     <!-- Plugins CSS -->
     <link rel="stylesheet" href="~/assets/css/plugins/plugins.css">
 
+    <!-- Kendo UI -->
+    <link href="~/Kendo/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" />
+
     <!-- Helper CSS -->
     <link rel="stylesheet" href="~/assets/css/helper.css">
 
     <!-- Main Style CSS -->
     <link rel="stylesheet" href="~/assets/css/style.css">
 
-    <!-- Custom Style CSS Only For Demo Purpose -->
-    @*<link id="cus-style" rel="stylesheet" href="~/assets/css/style-primary.css">*@
-
-    <!-- Kendo UI -->
-    <link href="~/Kendo/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" />
-
     <!-- JS
     ============================================ -->
     <!-- Global Vendor, plugins & Activation JS -->
     <script src="~/assets/js/vendor/modernizr-3.6.0.min.js"></script>
-    <script src="~/assets/js/vendor/jquery-3.3.1.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/assets/js/vendor/popper.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/assets/js/vendor/bootstrap.min.js"></script>
     <!--Plugins JS-->
     <script src="~/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="~/assets/js/plugins/tippy4.min.js.js"></script>
+    <script src="~/assets/js/plugins/dropify/dropify.min.js"></script>
 
     <!-- Plugins & Activation JS For Only This Page -->
     <!--Moment-->
@@ -70,17 +70,12 @@
 
     <!--Echarts-->
     <script src="~/assets/js/plugins/chartjs/Chart.min.js"></script>
-    <script src="~/assets/js/plugins/chartjs/chartjs.active.js"></script>
 
     <!--VMap-->
     <script src="~/assets/js/plugins/vmap/jquery.vmap.min.js"></script>
     <script src="~/assets/js/plugins/vmap/maps/jquery.vmap.world.js"></script>
     <script src="~/assets/js/plugins/vmap/maps/samples/jquery.vmap.sampledata.js"></script>
     <script src="~/assets/js/plugins/vmap/vmap.active.js"></script>
-
-    <!-- Kendo UI-->
-    <script src="~/Kendo/js/kendo.all.min.js"></script>
-    <script src="~/Kendo/js/kendo.aspnetmvc.min.js"></script>
 
 </head>
 
@@ -336,7 +331,7 @@
                                                 </ul>
                                                 <ul>
                                                     <li><a href="#"><i class="zmdi zmdi-settings"></i>تنظیمات</a></li>
-                                                    <li><a href="@Url.Action("Logout","Account")"><i class="zmdi zmdi-lock-open"></i>خروج</a></li>
+                                                    <li><a asp-area="@Constants.AreaAccount" asp-controller="@Constants.ControllerAccount" asp-action="@Constants.ActionLogout"><i class="zmdi zmdi-lock-open"></i>خروج</a></li>
                                                 </ul>
                                                 <ul>
                                                     <li><a href="#"><i class="zmdi zmdi-paypal"></i>پرداخت ها</a></li>
@@ -376,22 +371,11 @@
                         <li class="has-sub-menu">
                             <a href="#"><i class="ti-package"></i> <span>عناصر پایه</span></a>
                             <ul class="side-header-sub-menu">
-                                <li><a href="elements-alerts.html"><span>هشدار ها</span></a></li>
-                                <li><a href="elements-accordions.html"><span>آکاردئون ها</span></a></li>
-                                <li><a href="elements-avatar.html"><span>آواتار</span></a></li>
-                                <li><a href="elements-badge.html"><span>نشانک ها</span></a></li>
-                                <li><a href="elements-buttons.html"><span>دکمه ها</span></a></li>
-                                <li><a href="elements-carousel.html"><span>کرسول</span></a></li>
-                                <li><a href="elements-dropdown.html"><span>افت کشیدن</span></a></li>
-                                <li><a href="elements-list-group.html"><span>فهرست گروه</span></a></li>
-                                <li><a href="elements-media.html"><span>رسانه ها</span></a></li>
-                                <li><a href="elements-modal.html"><span>مودال</span></a></li>
-                                <li><a href="elements-pagination.html"><span>صفحه بندی</span></a></li>
-                                <li><a href="elements-progress.html"><span>نوار پیشرفت</span></a></li>
-                                <li><a href="elements-spinners.html"><span>اسپینرها</span></a></li>
-                                <li><a href="elements-tabs.html"><span>زبانه ها</span></a></li>
-                                <li><a href="elements-tooltip.html"><span>راهنمایی</span></a></li>
-                                <li><a href="elements-typography.html"><span>تایپوگرافی</span></a></li>
+                                <li>
+                                    <a asp-area="@Constants.AreaManagement" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionIndex">
+                                        <span>@Captions.BrandForm</span>
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                         <li class="has-sub-menu">

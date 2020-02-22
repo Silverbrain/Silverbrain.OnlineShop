@@ -6,7 +6,7 @@ namespace Silverbrain.OnlineShop.Entities.Models
 {
     public class Image
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString();
-        public Uri URL { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
     }
 }

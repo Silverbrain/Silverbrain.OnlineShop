@@ -1,0 +1,120 @@
+﻿ 
+
+@{
+    var urlCreate = Url.Action("Create", "City");
+    string gridName = "grid_City";
+}
+
+    <div class="k-rtl ">
+        @*@(Html.Kendo().Grid<Kendo.Mvc.Examples.Models.OrderViewModel>()
+        .Name("grid")
+        .Columns(columns =>
+        {
+            columns.Bound(p => p.OrderID).Filterable(ftb => ftb.Cell(cell => cell.ShowOperators(false))).Width(220);
+            columns.Bound(p => p.ShipName).Width(500).Filterable(ftb => ftb.Cell(cell => cell.Operator("contains").SuggestionOperator(FilterType.Contains)));
+            columns.Bound(p => p.Freight).Width(250).Filterable(ftb => ftb.Cell(cell => cell.Operator("gte")));
+            columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
+        })
+        .Pageable()
+        .Sortable()
+        .Scrollable()
+        .Filterable(ftb => ftb.Mode(GridFilterMode.Row))
+        .HtmlAttributes(new { style = "height:430px;" })
+        .DataSource(dataSource => dataSource
+            .Ajax()
+            .PageSize(20)
+            .ServerOperation(true)
+            .Read(read => read.Action("Orders_Read", "Grid"))
+         )
+        )*@
+
+        <div class="row">
+            <div class="col-12">
+                <kendo-grid name="grid" height="550">
+                    <columns>
+
+                        <column field="@nameof(UserViewModel.Id)" title="Id" />
+                        <column field="@nameof(UserViewModel.FirstName)" title="@Fields.FirstName" />
+                        <column field="@nameof(UserViewModel.LastName)" title="@Fields.LastName" />
+                        <column field="@nameof(UserViewModel.UserName)" title="@Fields.Username" />
+                    </columns>
+                    <scrollable enabled="true" />
+                    <sortable enabled="true" />
+                    <pageable enabled="true" button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20 }">
+                    </pageable>
+
+                    <filterable enabled="true" />
+                    <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
+                        <transport>
+                            <read url="@Url.Action("Read", "Home")" />
+                        </transport>
+                        <schema>
+                            <model id="@nameof(UserViewModel)">
+                                <fields>
+                                    <field name="@nameof(UserViewModel.Id)" type="number" />
+                                </fields>
+                            </model>
+                        </schema>
+                    </datasource>
+                </kendo-grid>
+            </div>
+        </div>
+
+
+        @*@(Html.Kendo().Grid<UserViewModel>()
+            .Name(gridName)
+                .AutoBind(true)
+            .Columns(columns =>
+            {
+                // columns.Bound(c => c.Id)
+                //.HeaderTemplate("<input id='col-checkbox-all' type='checkbox' />")
+                //.ClientTemplate("<div ><input class='checkbox chbdelete-list' type='checkbox' data-id='#=Id#'/>#= renderRecordNumber(data) #</div>")
+                //.Title("")
+                //.Width(70)
+                //.Filterable(false)
+                //.Sortable(false)
+                //.Groupable(false);
+
+            columns.Bound(c => c.FirstName).Width(400);
+            columns.Bound(c => c.LastName).Width(400);
+            columns.Bound(c => c.UserName).Width(400);
+
+
+                //columns.Bound(p => p.Id).ClientTemplate("<div style='text-align:center'><a class='btn btn-icon-only blue-sharp circle editclass_#=Id#' onClick='OpenWindowEdit(\"" + Url.Action("Edit", "City") + "?id=#= Id#" + "\")'><i class='fa fa-edit'></i></a></div>")
+                //.Title(Captions.Edit)
+                //.Width(60)
+                //.Filterable(false)
+                //.Sortable(false)
+                //.Groupable(false);
+
+
+                //columns.Bound(c => c.Id)
+                //.ClientTemplate("<div style='text-align:center'><a class='btn btn-icon-only red circle deleteclass_#=Id#' onclick='Delete(\"#=Id#\", \"/Admin/City/Delete\", \"grid_City\", \"/Admin/City/Create\")'><i class='fa fa-trash'></i></a></div>")
+                //.Title(Captions.Delete)
+                //.Width(60)
+                //.Filterable(false)
+                //.Sortable(false)
+                //.Groupable(false);
+
+
+            })
+        .Sortable().Selectable()
+        .Scrollable(x => x.Height("auto"))
+        .Filterable()
+        .Pageable(pageable => pageable
+        .Refresh(true)
+        .PageSizes(new[] { 10, 20, 50, 100, 500 })
+        .ButtonCount(10))
+
+        .DataSource(dataSource => dataSource
+        .Ajax()
+        .Sort(x => x.Add(y => y.FirstName))
+        .Read(read => read.Action("Read", "ManagementDashboard"))
+        ))*@
+
+    </div>
+
+
+
+
+

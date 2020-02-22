@@ -373,6 +373,5 @@ customizer();
 $('.custom-scroll').each( function() {
     var ps = new PerfectScrollbar($(this)[0]);
 });
-    
 })(jQuery);
 

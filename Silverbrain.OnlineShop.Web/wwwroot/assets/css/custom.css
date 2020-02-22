@@ -1,5 +1,5 @@
-@import url("font/primary-iran-yekan.css");
-@import url("font/secondary-iran-yekan.css");
+@import url("fonts/primary-iran-yekan.css");
+@import url("fonts/secondary-iran-yekan.css");
 
 .ltr_text {
 	display: inline-block;

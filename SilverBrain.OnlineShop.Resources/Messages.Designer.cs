@@ -22,7 +22,7 @@ namespace Silverbrain.OnlineShop.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Messages {
+    public class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Silverbrain.OnlineShop.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Silverbrain.OnlineShop.Resources.Messages", typeof(Messages).Assembly);
@@ -51,12 +51,57 @@ namespace Silverbrain.OnlineShop.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to انصراف از تغییرات.
+        /// </summary>
+        public static string CancelButtonMessage {
+            get {
+                return ResourceManager.GetString("CancelButtonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to پاک کردن.
+        /// </summary>
+        public static string DeleteButtonMessage {
+            get {
+                return ResourceManager.GetString("DeleteButtonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to اعمال تغییرات.
+        /// </summary>
+        public static string SaveButtonMessage {
+            get {
+                return ResourceManager.GetString("SaveButtonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ارسال فایل با مشکل مواجه شد.
+        /// </summary>
+        public static string UploadFailureMessage {
+            get {
+                return ResourceManager.GetString("UploadFailureMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عکس مورد نظر را بکشید و رها کنید یا اینجا را کلیک کنید.
+        /// </summary>
+        public static string UploadPlaceHolderMessage {
+            get {
+                return ResourceManager.GetString("UploadPlaceHolderMessage", resourceCulture);
             }
         }
     }

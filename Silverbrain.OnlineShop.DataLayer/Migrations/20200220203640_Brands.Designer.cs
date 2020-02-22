@@ -10,8 +10,8 @@ using Silverbrain.OnlineShop.DataLayer;
 namespace Silverbrain.OnlineShop.DataLayer.Migrations
 {
     [DbContext(typeof(OnlineShopDbContext))]
-    [Migration("20200116182933_InitialContext")]
-    partial class InitialContext
+    [Migration("20200220203640_Brands")]
+    partial class Brands
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -152,7 +152,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("SilverBrain.OnlineShop.DataLayer.ApplicationUser", b =>
+            modelBuilder.Entity("Silverbrain.OnlineShop.DataLayer.ApplicationUser", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -172,10 +172,12 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("LastName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
@@ -223,17 +225,41 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.Brand", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("ImageId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ImageId");
+
+                    b.ToTable("Brands");
+                });
+
             modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.Image", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("URL")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.HasKey("Id");
 
@@ -242,35 +268,11 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     b.HasDiscriminator<string>("Discriminator").HasValue("Image");
                 });
 
-            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.Product", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("NameEnglish")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NamePersian")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.ProductImage", b =>
+            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.BrandImage", b =>
                 {
                     b.HasBaseType("Silverbrain.OnlineShop.Entities.Models.Image");
 
-                    b.Property<string>("Product_Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ThumbnailUrl")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasIndex("Product_Id");
-
-                    b.HasDiscriminator().HasValue("ProductImage");
+                    b.HasDiscriminator().HasValue("BrandImage");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -284,7 +286,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("SilverBrain.OnlineShop.DataLayer.ApplicationUser", null)
+                    b.HasOne("Silverbrain.OnlineShop.DataLayer.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -293,7 +295,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("SilverBrain.OnlineShop.DataLayer.ApplicationUser", null)
+                    b.HasOne("Silverbrain.OnlineShop.DataLayer.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -308,7 +310,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SilverBrain.OnlineShop.DataLayer.ApplicationUser", null)
+                    b.HasOne("Silverbrain.OnlineShop.DataLayer.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -317,18 +319,18 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("SilverBrain.OnlineShop.DataLayer.ApplicationUser", null)
+                    b.HasOne("Silverbrain.OnlineShop.DataLayer.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.ProductImage", b =>
+            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.Brand", b =>
                 {
-                    b.HasOne("Silverbrain.OnlineShop.Entities.Models.Product", "Product")
-                        .WithMany("Images")
-                        .HasForeignKey("Product_Id");
+                    b.HasOne("Silverbrain.OnlineShop.Entities.Models.BrandImage", "Image")
+                        .WithMany()
+                        .HasForeignKey("ImageId");
                 });
 #pragma warning restore 612, 618
         }
