@@ -6,7 +6,7 @@
 @inject UserManager<ApplicationUser> userManager;
 @{
     ApplicationUser loginUser;
-    loginUser = await userManager.FindByNameAsync(User.Identity.Name);
+    //loginUser ="" await userManager.FindByNameAsync(User.Identity.Name);
 }
 
 <!doctype html>
@@ -44,7 +44,7 @@
     <link rel="stylesheet" href="~/assets/css/style.css">
 
     <!-- Custom Style CSS Only For Demo Purpose -->
-    <link id="cus-style" rel="stylesheet" href="~/assets/css/style-primary.css">
+    @*<link id="cus-style" rel="stylesheet" href="~/assets/css/style-primary.css">*@
 
     <!-- Kendo UI -->
     <link href="~/Kendo/styles/kendo.bootstrap-v4.min.css" rel="stylesheet" />
@@ -55,7 +55,7 @@
     <script src="~/assets/js/vendor/modernizr-3.6.0.min.js"></script>
     <script src="~/assets/js/vendor/jquery-3.3.1.min.js"></script>
     <script src="~/assets/js/vendor/popper.min.js"></script>
-    <script src="~/assets/js/vendor/bootstrap.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
     <!--Plugins JS-->
     <script src="~/assets/js/plugins/perfect-scrollbar.min.js"></script>
     <script src="~/assets/js/plugins/tippy4.min.js.js"></script>
@@ -300,14 +300,14 @@
                                                     <img src="~/assets/images/avatar/avatar-1.jpg" alt="">
                                                     <span class="status"></span>
                                                 </span>
-                                                @if (string.IsNullOrEmpty(loginUser.FirstName))
+                                                @*@if (string.IsNullOrEmpty(loginUser.FirstName))
                                                 {
                                                     <span class="name">@loginUser.UserName</span>
                                                 }
                                                 else
                                                 {
                                                     <span class="name">@loginUser.FirstName @loginUser.LastName</span>
-                                                }
+                                                }*@
                                             </span>
                                         </a>
 
@@ -316,17 +316,17 @@
                                             <div class="head">
                                                 <h5 class="name">
                                                     <a href="#">
-                                                        @if (string.IsNullOrEmpty(loginUser.FirstName))
+                                                        @*@if (string.IsNullOrEmpty(loginUser.FirstName))
                                                         {
                                                             @loginUser.UserName
                                                         }
                                                         else
                                                         {
                                                             @loginUser.FirstName @loginUser.LastName
-                                                        }
+                                                        }*@
                                                     </a>
                                                 </h5>
-                                                <a class="mail" href="#">@loginUser.Email</a>
+                                                <a class="mail" href="#">@*@loginUser.Email*@</a>
                                             </div>
                                             <div class="body">
                                                 <ul>
