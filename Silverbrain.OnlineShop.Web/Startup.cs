@@ -40,30 +40,13 @@ namespace Silverbrain.OnlineShop.Web
             services.AddDbContext<OnlineShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OnlineShopContext"),
                 x => x.MigrationsAssembly("Silverbrain.OnlineShop.DataLayer")));
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 1;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-                options.Lockout.MaxFailedAccessAttempts = 3;
-
-                options.User.RequireUniqueEmail = false;
-            });
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Account/Login";
                 options.Cookie.MaxAge = TimeSpan.FromDays(1);
             });
-
             services.AddAuthentication();
             services.AddAuthorization();
-
             services.AddKendo();
 
             services.AddRepositories();
