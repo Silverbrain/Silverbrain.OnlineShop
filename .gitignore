@@ -10,6 +10,9 @@
 *.userosscache
 *.sln.docstates
 
+# Image folder exclusion
+**/wwwroot/assets/images/brands/*
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -163,9 +166,6 @@ DocProject/Help/*.hhk
 DocProject/Help/*.hhp
 DocProject/Help/Html2
 DocProject/Help/html
-
-# Image folder exclusion
-**/wwwroot/assets/images/brands/*
 
 # Click-Once directory
 publish/
