@@ -73,7 +73,7 @@
                     <column>
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
-                            <column-command  text="@Fields.DeleteButton" click="Delete"></column-command>
+                            <column-command  text="@Fields.DeleteButton" click="openDeleteWindow"></column-command>
                         </commands>
                     </column>
                 </columns>
@@ -97,6 +97,7 @@
     }
 
     function openDeleteWindow(e) {
+        alert("mina")
         e.preventDefault();
         let grid = this;
         let button = e.target;
