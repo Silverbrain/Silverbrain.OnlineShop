@@ -10,6 +10,9 @@
 *.userosscache
 *.sln.docstates
 
+# Image folder exclusion
+**/wwwroot/assets/images/brands/*
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

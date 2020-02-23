@@ -13,12 +13,12 @@
         <form method="post" id="brandform">
             <div class="row mbn-20">
 
-                <input type="hidden" asp-for="Id" /> 
-                <input type="hidden" asp-for="Image" /> 
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Image" />
 
                 <div class="col-12 mb-20">
                     <label asp-for="Title">@Fields.TitleInput</label>
-                    <input asp-for="Title" type="text"  class="form-control" placeholder="@Fields.TitleInput">
+                    <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput">
                 </div>
 
                 <!--File Upload-->
@@ -50,7 +50,7 @@
                     <transport>
                         <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
                         <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                        <destroy  url="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                        <destroy url="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
                     </transport>
                     <schema>
                         <model id="@nameof(BrandViewModel.Id)">
@@ -68,8 +68,8 @@
                 <columns>
                     <column field="@nameof(BrandViewModel.Id)" title="@Fields.Id" />
                     <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" width="240" />
-                    
-                     
+
+
                     <column>
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
@@ -83,15 +83,15 @@
 </div>
 
 <script type="text/javascript">
-     
-        function openEditWindow(e) {
-        var grid = this;
-        var button = e.target;
-        var row = $(button).closest("tr");
-            var dataItem = grid.dataItem(row);
-            alert(dataItem.Id)
-           $(Title).val(dataItem.Title);
+    function openEditWindow(e) {
+    var grid = this;
+    var button = e.target;
+    var row = $(button).closest("tr");
+        var dataItem = grid.dataItem(row);
+        alert(dataItem.Id)
+        $(Title).val(dataItem.Title);
     }
+
     $(function () {
         $('.dropify').dropify({
             messages: {
@@ -116,8 +116,9 @@
                 contentType: false,
                 cache: false,
                 success: function (data) {
-                    var grid = $('#grid').data('kendoGrid');
-                    grid.refresh();
+                    form.reset();
+                    $(".dropify-clear").click(); 
+                    $("#grid").data("kendoGrid").dataSource.read();
                 }
             });
         })
