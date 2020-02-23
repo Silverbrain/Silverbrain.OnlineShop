@@ -48,7 +48,8 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         public async Task<ActionResult> ReadAll([DataSourceRequest] DataSourceRequest request)
         {
             var brands = await _brandService.ReadAllAsync();
-            var result = brands.Select(b => new BrandViewModel { Id = b.Id, Title = b.Title, Image = b.Image }).ToList();
+            var result = brands.Select(b => new BrandViewModel { Id = b.Id, Title = b.Title, Image = b.Image.Title }).ToList();
+
             return Json(result.ToDataSourceResult(request));
         }
 
@@ -73,7 +74,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                     fileName = fileName.Trim('-');
                     //var filepath = Path.Combine(_webHost.WebRootPath , "\\assets\\images\\brands");
                     var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
-                    var imagePath = Path.Combine(filepath , fileName);
+                    var imagePath = Path.Combine(filepath, fileName);
 
                     if (model.ImageFormFile.Length > 0)
                     {
@@ -95,7 +96,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                 HttpContext.Response.Headers.Append("error-message", ModelState.Values.ToString());
                 return BadRequest();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 HttpContext.Response.Headers.Append("error-message", e.Message.ToString());
                 return BadRequest();
@@ -116,7 +117,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         {
             try
             {
-                var brand = new Brand{ Id = model.Id, Image = model.Image, Title = model.Title };
+                var brand = new Brand { Id = model.Id, Image = new BrandImage { Title = model.Image }, Title = model.Title };
                 _brandService.UpdateAsync(brand);
                 return Json(new[] { brand }.ToDataSourceResult(request, ModelState));
             }
@@ -135,17 +136,12 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         // POST: Brand/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete([DataSourceRequest] DataSourceRequest request,
-            BrandViewModel model)
+        public ActionResult Delete([DataSourceRequest] DataSourceRequest request, int Id)
         {
             try
             {
-                if(model != null)
-                {
-                    _brandService.DeleteAsync(model.Id);
-                }
-
-                return Json(new[] { model }.ToDataSourceResult(request,ModelState));
+                _brandService.DeleteAsync(Id);
+                return Json(true);
             }
             catch
             {

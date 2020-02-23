@@ -79,6 +79,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to آیا از حذف این مورد اطمینان دارید؟.
+        /// </summary>
+        public static string DeleteCautionMessage {
+            get {
+                return ResourceManager.GetString("DeleteCautionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اعمال تغییرات.
         /// </summary>
         public static string SaveButtonMessage {

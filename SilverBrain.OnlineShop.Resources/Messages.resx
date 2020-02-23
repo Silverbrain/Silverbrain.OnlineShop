@@ -123,6 +123,9 @@
   <data name="DeleteButtonMessage" xml:space="preserve">
     <value>پاک کردن</value>
   </data>
+  <data name="DeleteCautionMessage" xml:space="preserve">
+    <value>آیا از حذف این مورد اطمینان دارید؟</value>
+  </data>
   <data name="SaveButtonMessage" xml:space="preserve">
     <value>اعمال تغییرات</value>
   </data>

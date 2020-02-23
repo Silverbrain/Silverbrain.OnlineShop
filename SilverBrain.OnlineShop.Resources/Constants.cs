@@ -27,5 +27,6 @@ namespace Silverbrain.OnlineShop.Resources
 
         //Paths
         public static string PathBrandImage { get; set; } = "\\assets\\images\\brands";
+        public static string PathBrandImageRead { get; set; } = "assets/images/brands";
     }
 }
