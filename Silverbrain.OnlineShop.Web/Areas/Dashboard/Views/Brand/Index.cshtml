@@ -50,7 +50,6 @@
                     <transport>
                         <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
                         <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                        <destroy  url="@Url.Action(Constants.ActionDelete, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
                     </transport>
                     <schema>
                         <model id="@nameof(BrandViewModel.Id)">
@@ -73,7 +72,7 @@
                     <column>
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
-                            <column-command name="destroy" text="@Fields.DeleteButton"></column-command>
+                            <column-command  text="@Fields.DeleteButton" click="Delete"></column-command>
                         </commands>
                     </column>
                 </columns>
@@ -89,8 +88,18 @@
         var button = e.target;
         var row = $(button).closest("tr");
             var dataItem = grid.dataItem(row);
-            alert(dataItem.Id)
+            
            $(Title).val(dataItem.Title);
+    }
+    
+    function Delete(e) {
+        //dont forget to show  confirm popup!!!
+        var grid = this;
+        var button = e.target;
+        var row = $(button).closest("tr");
+            var dataItem = grid.dataItem(row);
+             alert(dataItem.Id)
+         
     }
     $(function () {
         $('.dropify').dropify({
