@@ -120,6 +120,12 @@
   <data name="CancelButton" xml:space="preserve">
     <value>انصراف</value>
   </data>
+  <data name="CautionTitle" xml:space="preserve">
+    <value>اخطار</value>
+  </data>
+  <data name="ConfirmButton" xml:space="preserve">
+    <value>تایید</value>
+  </data>
   <data name="DeleteButton" xml:space="preserve">
     <value>حذف</value>
   </data>
@@ -131,6 +137,9 @@
   </data>
   <data name="Id" xml:space="preserve">
     <value>کد</value>
+  </data>
+  <data name="ImageInput" xml:space="preserve">
+    <value>عکس</value>
   </data>
   <data name="LastName" xml:space="preserve">
     <value>نام خانوادگی</value>

@@ -13,12 +13,12 @@
         <form method="post" id="brandform">
             <div class="row mbn-20">
 
-                <input type="hidden" asp-for="Id" /> 
-                <input type="hidden" asp-for="Image" /> 
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Image" />
 
                 <div class="col-12 mb-20">
                     <label asp-for="Title">@Fields.TitleInput</label>
-                    <input asp-for="Title" type="text"  class="form-control" placeholder="@Fields.TitleInput">
+                    <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput">
                 </div>
 
                 <!--File Upload-->
@@ -28,8 +28,10 @@
                 </div>
                 <!--File Upload-End-->
 
-                <div class="col-12 mb-20">
+                <div id="submitButton" class="col-12 mb-20">
                     <button id="createBrand" class="button button-primary">@Fields.SendButton</button>
+                    <button id="saveBrand" class="button button-success" hidden>@Fields.SaveButton</button>
+                    <button id="cancel" class="button button-danger" hidden>@Fields.CancelButton</button>
                     @*<input type="submit" value="@Fields.CancelButton" class="button button-danger">*@
                 </div>
             </div>
@@ -60,15 +62,14 @@
                         </model>
                     </schema>
                 </datasource>
-                <editable mode="incell" />
+
                 <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
                 </pageable>
                 <sortable enabled="true" />
                 <columns>
-                    <column field="@nameof(BrandViewModel.Id)" title="@Fields.Id" />
-                    <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" width="240" />
-                    
-                     
+                    <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
+                    <column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />
+
                     <column>
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
@@ -82,25 +83,42 @@
 </div>
 
 <script type="text/javascript">
-     
-        function openEditWindow(e) {
-        var grid = this;
-        var button = e.target;
-        var row = $(button).closest("tr");
-            var dataItem = grid.dataItem(row);
-            
-           $(Title).val(dataItem.Title);
+    function openEditWindow(e) {
+        let grid = this;
+        let button = e.target;
+        let row = $(button).closest("tr");
+        let dataItem = grid.dataItem(row);
+
+        $(Id).val(dataItem.Id);
+        $(Title).val(dataItem.Title);
+        $(createBrand).attr("hidden", "hidden");
+        $(saveBrand).removeAttr('hidden');
+        $(cancel).removeAttr('hidden');
     }
-    
-    function Delete(e) {
-        //dont forget to show  confirm popup!!!
-        var grid = this;
-        var button = e.target;
-        var row = $(button).closest("tr");
-            var dataItem = grid.dataItem(row);
-             alert(dataItem.Id)
-         
+
+    function openDeleteWindow(e) {
+        e.preventDefault();
+        let grid = this;
+        let button = e.target;
+        let row = $(button).closest("tr");
+        let dataItem = grid.dataItem(row);
+
+        if (confirm("@Messages.DeleteCautionMessage")) {
+            $.post({
+                url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
+                data: dataItem.Id,
+                success: function (data) {
+                    $("#grid").data("kendoGrid").dataSource.read();
+                }
+            });
+        }
     }
+
+    function template(data) {
+        let path = String.raw`../@Constants.PathBrandImageRead/` + data.Image;
+        return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>`
+    }
+
     $(function () {
         $('.dropify').dropify({
             messages: {
@@ -113,8 +131,8 @@
 
         $(createBrand).on("click", function (e) {
             e.preventDefault();
-            var form = $(brandform)[0];
-            var data = new FormData(form);
+            let form = $(brandform)[0];
+            let data = new FormData(form);
 
             $.ajax({
                 type: "POST",
@@ -125,10 +143,60 @@
                 contentType: false,
                 cache: false,
                 success: function (data) {
-                    var grid = $('#grid').data('kendoGrid');
-                    grid.refresh();
+                    form.reset();
+                    $(".dropify-clear").click();
+                    $("#grid").data("kendoGrid").dataSource.read();
                 }
             });
-        })
+        });
+
+        $(saveBrand).on("click", function (e) {
+            e.preventDefault();
+            let form = $(brandform)[0];
+            let data = new FormData(form);
+
+            $.ajax({
+                type: "POST",
+                url: "@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)",
+                data: data,
+                enctype: 'multipart/form-data', // Important!!!!
+                processData: false,  //prevent jQuery transforming the data into a query string
+                contentType: false,
+                cache: false,
+                success: function (data) {
+                    form.reset();
+                    $(".dropify-clear").click();
+                    $("#grid").data("kendoGrid").dataSource.read();
+                },
+                complete: function () {
+                    $(createBrand).removeAttr("hidden");
+                    $(saveBrand).attr("hidden", "hidden");
+                    $(cancel).attr("hidden", "hidden");
+                }
+            });
+        });
+
+        $(cancel).on("click", function (e) {
+            e.preventDefault();
+            let form = $(brandform)[0];
+            form.reset();
+            $(".dropify-clear").click();
+            $(createBrand).removeAttr("hidden");
+            $(saveBrand).attr("hidden", "hidden");
+            $(cancel).attr("hidden", "hidden");
+        });
     });
 </script>
+
+<style type="text/css">
+    .brand-photo {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        background-size: 50px 50px;
+        background-position: center center;
+        vertical-align: middle;
+        line-height: 50px;
+        /*box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);*/
+    }
+</style>

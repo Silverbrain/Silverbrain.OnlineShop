@@ -9,6 +9,6 @@ namespace Silverbrain.OnlineShop.Entities.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public BrandImage Image { get; set; }
+        public virtual BrandImage Image { get; set; }
     }
 }

@@ -20,6 +20,12 @@ namespace Silverbrain.OnlineShop.DataLayer
         {
         }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+            base.OnConfiguring(optionsBuilder);
+        }
+
         public DbSet<Image> Images { get; set; }
         public DbSet<BrandImage> BrandImages { get; set; }
         public DbSet<Brand> Brands { get; set; }

@@ -70,6 +70,24 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to اخطار.
+        /// </summary>
+        public static string CautionTitle {
+            get {
+                return ResourceManager.GetString("CautionTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to تایید.
+        /// </summary>
+        public static string ConfirmButton {
+            get {
+                return ResourceManager.GetString("ConfirmButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to حذف.
         /// </summary>
         public static string DeleteButton {
@@ -102,6 +120,15 @@ namespace Silverbrain.OnlineShop.Resources {
         public static string Id {
             get {
                 return ResourceManager.GetString("Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عکس.
+        /// </summary>
+        public static string ImageInput {
+            get {
+                return ResourceManager.GetString("ImageInput", resourceCulture);
             }
         }
         

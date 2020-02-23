@@ -15,7 +15,7 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.2")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -261,8 +261,6 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     b.Property<DateTime?>("ModifiedDateTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
@@ -283,6 +281,9 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Mina")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

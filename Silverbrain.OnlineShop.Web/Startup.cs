@@ -18,6 +18,7 @@ using Silverbrain.OnlineShop.Web.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using Silverbrain.OnlineShop.Resources;
+using Silverbrain.OnlineShop.ViewModels.Settings;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -33,6 +34,7 @@ namespace Silverbrain.OnlineShop.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<SiteSettings>(options => Configuration.Bind(options));
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<OnlineShopDbContext>()
                 .AddDefaultTokenProviders();
@@ -40,30 +42,13 @@ namespace Silverbrain.OnlineShop.Web
             services.AddDbContext<OnlineShopDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("OnlineShopContext"),
                 x => x.MigrationsAssembly("Silverbrain.OnlineShop.DataLayer")));
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 1;
-                options.Password.RequireLowercase = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireNonAlphanumeric = false;
-
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
-                options.Lockout.MaxFailedAccessAttempts = 3;
-
-                options.User.RequireUniqueEmail = false;
-            });
-
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = "/Account/Account/Login";
                 options.Cookie.MaxAge = TimeSpan.FromDays(1);
             });
-
             services.AddAuthentication();
             services.AddAuthorization();
-
             services.AddKendo();
 
             services.AddRepositories();
@@ -94,7 +79,7 @@ namespace Silverbrain.OnlineShop.Web
 
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
             {
-                scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
+                //scope.ServiceProvider.GetRequiredService<OnlineShopDbContext>().Database.Migrate();
             }
 
             app.UseHttpsRedirection();
@@ -127,34 +112,6 @@ namespace Silverbrain.OnlineShop.Web
             //CreateRoles(services).Wait();
         }
 
-        //public async Task CreateRoles(IServiceProvider services)
-        //{
-        //    var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        //    var _userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-        //    List<string> roles = new List<string> { "Admin" };
-
-        //    foreach (string role in roles)
-        //    {
-        //        var roleExist = await _roleManager.RoleExistsAsync(role);
-        //        if (!roleExist)
-        //            _roleManager.CreateAsync(new IdentityRole(role)).Wait();
-        //    }
-
-        //    var _adminUser = await _userManager.FindByNameAsync("Admin");
-        //    if (_adminUser == null)
-        //    {
-        //        //in oreder to change the manager username and password, change the value of ManagerUser
-        //        //section in appsettings.json
-        //        var adminUser = new ApplicationUser
-        //        {
-        //            UserName = Configuration.GetSection("ManagerUser").GetValue<string>("UserName"),
-        //            Email = Configuration.GetSection("ManagerUser").GetValue<string>("Email")
-        //        };
-        //        var creatResult = await _userManager.CreateAsync(adminUser, Configuration.GetSection("ManagerUser").GetValue<string>("Password"));
-
-        //        if (creatResult.Succeeded)
-        //            await _userManager.AddToRoleAsync(adminUser, "Admin");
-        //    }
-        //}
+       
     }
 }
