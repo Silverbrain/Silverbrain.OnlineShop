@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.IServices;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Silverbrain.OnlineShop.Repositories;
+using Silverbrain.OnlineShop.Entities.Models;
 
 namespace Silverbrain.OnlineShop.Services
 {

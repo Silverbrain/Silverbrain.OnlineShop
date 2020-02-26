@@ -1,12 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Silverbrain.OnlineShop.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Silverbrain.OnlineShop.DataLayer
+namespace Silverbrain.OnlineShop.Entities.Configurations
 {
-    class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
+    public class ApplicationUserConfiguration : IEntityTypeConfiguration<ApplicationUser>
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {

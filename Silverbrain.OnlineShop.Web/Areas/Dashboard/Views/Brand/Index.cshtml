@@ -73,7 +73,7 @@
                     <column>
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
-                            <column-command  text="@Fields.DeleteButton" click="openDeleteWindow"></column-command>
+                            <column-command name="distroy" text="@Fields.DeleteButton" click="openDeleteWindow"></column-command>
                         </commands>
                     </column>
                 </columns>
@@ -97,17 +97,18 @@
     }
 
     function openDeleteWindow(e) {
-        alert("mina")
         e.preventDefault();
         let grid = this;
         let button = e.target;
         let row = $(button).closest("tr");
         let dataItem = grid.dataItem(row);
 
-        if (confirm("@Messages.DeleteCautionMessage")) {
+        alert(dataItem.Id);
+
+        if (confirm(`@Messages.DeleteCautionMessage`)) {
             $.post({
-                url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
-                data: dataItem.Id,
+                url: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)",
+                data: { Id: dataItem.Id },
                 success: function (data) {
                     $("#grid").data("kendoGrid").dataSource.read();
                 }

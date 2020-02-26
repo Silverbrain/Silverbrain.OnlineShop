@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels.Settings;
+using Silverbrain.OnlineShop.Entities.Models;
 
 namespace Silverbrain.OnlineShop.Web
 {

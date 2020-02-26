@@ -134,8 +134,8 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // POST: Brand/Delete/5
+        //[ValidateAntiForgeryToken]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult Delete([DataSourceRequest] DataSourceRequest request, int Id)
         {
             try

@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Silverbrain.OnlineShop.DataLayer;
+using Silverbrain.OnlineShop.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

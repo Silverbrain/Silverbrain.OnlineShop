@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Silverbrain.OnlineShop.DataLayer;
+using Silverbrain.OnlineShop.Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
