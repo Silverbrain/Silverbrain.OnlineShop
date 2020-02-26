@@ -91,6 +91,7 @@
 
         $(Id).val(dataItem.Id);
         $(Title).val(dataItem.Title);
+        $('#Image').val(dataItem.Image);
         $(createBrand).attr("hidden", "hidden");
         $(saveBrand).removeAttr('hidden');
         $(cancel).removeAttr('hidden');
@@ -118,7 +119,8 @@
 
     function template(data) {
         let path = String.raw`../@Constants.PathBrandImageRead/` + data.Image;
-        return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>`
+        return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
+<input class='imgName' type='hidden' value='${data.Image}'/>`
     }
 
     $(function () {

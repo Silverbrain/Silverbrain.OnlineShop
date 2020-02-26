@@ -112,14 +112,49 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         // POST: Brand/Edit/5
         //[ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Update([DataSourceRequest] DataSourceRequest request,
+        public async Task<ActionResult> Update([DataSourceRequest] DataSourceRequest request,
             BrandViewModel model)
         {
             try
             {
-                var brand = new Brand { Id = model.Id, Image = new BrandImage { Title = model.Image }, Title = model.Title };
-                _brandService.UpdateAsync(brand);
-                return Json(new[] { brand }.ToDataSourceResult(request, ModelState));
+                if (model.ImageFormFile == null)
+                {
+                    var brand = new Brand { Id = model.Id, Image = new BrandImage { Title = model.Image }, Title = model.Title };
+                    await _brandService.UpdateAsync(brand);
+                    return Json(true);
+                }
+                else
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFormFile.FileName);
+                    fileName = fileName.Trim('-');
+                    //var filepath = Path.Combine(_webHost.WebRootPath , "\\assets\\images\\brands");
+                    var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
+                    var imagePath = Path.Combine(filepath, fileName);
+
+                    if (model.ImageFormFile.Length > 0)
+                    {
+                        ///<summary>
+                        ///save new image into hard drive
+                        ///</summary>
+                        using (var stream = new FileStream(imagePath, FileMode.Create))
+                        {
+                            await model.ImageFormFile.CopyToAsync(stream);
+                            await stream.DisposeAsync();
+                        }
+
+                        ///<summary>
+                        ///delete the old image from the hard drive
+                        ///</summary>
+                        imagePath = Path.Combine(filepath, model.Image);
+                        if (System.IO.File.Exists(filepath))
+                            System.IO.File.Delete(imagePath);
+                    }
+
+                    var brand = new Brand { Id = model.Id, Image = new BrandImage { Title = fileName }, Title = model.Title };
+                    await _brandService.UpdateAsync(brand);
+
+                    return Json(true);
+                }
             }
             catch
             {
