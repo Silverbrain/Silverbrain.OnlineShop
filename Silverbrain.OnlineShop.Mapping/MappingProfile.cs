@@ -12,8 +12,7 @@ namespace Silverbrain.OnlineShop.Mapping
         public MappingProfile()
         {
             CreateMap<BrandViewModel, Brand>();
-            CreateMap<Brand, BrandViewModel>()
-                .ForMember(dest => dest.ImageFormFile, opt => opt.Ignore());
+            CreateMap<Brand, BrandViewModel>();
         }
     }
 }

@@ -1,11 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Silverbrain.OnlineShop.DataLayer;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Silverbrain.OnlineShop.Entities;
 
 namespace Silverbrain.OnlineShop.Repositories
 {
@@ -27,8 +23,8 @@ namespace Silverbrain.OnlineShop.Repositories
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<IList<TEntity>> ReadAllAsync() =>
-            await entities.ToListAsync();
+        public IQueryable<TEntity> ReadAll() =>
+            entities.AsQueryable();
 
         public async Task<TEntity> ReadAsync(string Id) =>
             await entities.FindAsync(Id);
@@ -38,8 +34,8 @@ namespace Silverbrain.OnlineShop.Repositories
 
         public async Task UpdateAsync(TEntity entity)
         {
-                entities.Update(entity);
-                await _dbContext.SaveChangesAsync();
+            entities.Update(entity);
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(string Id)
