@@ -1,4 +1,39 @@
-﻿
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@{
+    Layout = null;
+}
+
+@model BrandViewModel
+
+<input type="hidden" asp-for="Id" value="@Model.Id" />
+
+<div class="col-12 mb-20">
+    <label asp-for="Title">@Fields.TitleInput</label>
+    <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value="@Model.Title">
+</div>
+
+<!--File Upload-->
+@*<div class="col-12 mb-20">
+        <label for="formLayoutFile2">@Fields.UploadFile</label>
+        <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
+    </div>*@
+<!--File Upload-End-->
+
+<div id="submitButton" class="col-12 mb-20">
+    <button id="saveBrand" class="btn btn-success">@Fields.SaveButton</button>
+    <button id="cancel" class="btn btn-danger" onclick="getCreateForm()">@Fields.CancelButton</button>
+</div>
+
+<script>
+    $(function () {
+        $('#saveBrand').on('click', function (e) {
+            $.post({
+                url: "@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)",
+                data: $(brandForm)[0],
+                success: function (data) {
+                    refreshGrid();
+                    getCreateForm();
+                }
+            })
+        })
+    })
+</script>

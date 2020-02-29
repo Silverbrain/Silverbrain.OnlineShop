@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Silverbrain.OnlineShop.Repositories;
 using Silverbrain.OnlineShop.Entities.Models;
+using System.Linq;
 
 namespace Silverbrain.OnlineShop.Services
 {
@@ -45,7 +46,7 @@ namespace Silverbrain.OnlineShop.Services
         public async Task<ApplicationUser> GetAsync(string Id) =>
             await _repository.ReadAsync(Id);
 
-        public async Task<IEnumerable<ApplicationUser>> GetAllAsync() =>
-            await _repository.ReadAllAsync();
+        public IQueryable<ApplicationUser> GetAll() =>
+            _repository.ReadAll();
     }
 }

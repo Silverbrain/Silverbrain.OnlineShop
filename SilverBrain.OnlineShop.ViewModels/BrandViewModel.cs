@@ -13,8 +13,5 @@ namespace Silverbrain.OnlineShop.ViewModels
 
         [MaxLength(50)]
         public string Title { get; set; }
-
-        public string Image { get; set; }
-        public IFormFile ImageFormFile { get; set; }
     }
 }

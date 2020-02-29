@@ -3,6 +3,7 @@ using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,6 +14,6 @@ namespace Silverbrain.OnlineShop.IServices
         Task<SignInResult> LoginAsync(string userName, string password, bool isPersistent);
         Task LogOutAsync();
         Task<ApplicationUser> GetAsync(string Id);
-        Task<IEnumerable<ApplicationUser>> GetAllAsync();
+        IQueryable<ApplicationUser> GetAll();
     }
 }

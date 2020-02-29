@@ -96,9 +96,9 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 
         // GET: Brand/Edit/5
         [HttpGet]
-        public async Task<ActionResult> Update(int id)
+        public async Task<ActionResult> Update(int Id)
         {
-            var brand = await _brandService.ReadAsync(id);
+            var brand = await _brandService.ReadAsync(Id);
             return View(brand);
         }
 
