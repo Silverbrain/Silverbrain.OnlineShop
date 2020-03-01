@@ -20,20 +20,5 @@
 
 <div id="submitButton" class="col-12 mb-20">
     <button id="saveBrand" class="btn btn-success">@Fields.SaveButton</button>
-    <button id="cancel" class="btn btn-danger" onclick="getCreateForm()">@Fields.CancelButton</button>
+    <button id="cancel" class="btn btn-danger">@Fields.CancelButton</button>
 </div>
-
-<script>
-    $(function () {
-        $('#saveBrand').on('click', function (e) {
-            $.post({
-                url: "@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)",
-                data: $(brandForm)[0],
-                success: function (data) {
-                    refreshGrid();
-                    getCreateForm();
-                }
-            })
-        })
-    })
-</script>

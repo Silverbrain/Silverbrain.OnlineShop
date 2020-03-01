@@ -20,6 +20,7 @@ using Newtonsoft.Json.Serialization;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels.Settings;
 using Silverbrain.OnlineShop.Entities.Models;
+using Silverbrain.OnlineShop.Mapping;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -55,7 +56,7 @@ namespace Silverbrain.OnlineShop.Web
             services.AddRepositories();
             services.AddCustomServices();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddAutoMapper(typeof(MappingProfile));
 
             services
                .AddControllersWithViews()

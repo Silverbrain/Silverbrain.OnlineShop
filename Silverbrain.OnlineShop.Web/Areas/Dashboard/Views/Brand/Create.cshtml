@@ -20,48 +20,4 @@
 
 <div id="submitButton" class="col-12 mb-20">
     <button id="createBrand" class="btn btn-primary">@Fields.SendButton</button>
-    @*<input type="submit" value="@Fields.CancelButton" class="button button-danger">*@
 </div>
-
-<script>
-    $(function () {
-        @*$('.dropify').dropify({
-            messages: {
-                'default': '@Messages.UploadPlaceHolderMessage',
-                'replace': '@Messages.UploadPlaceHolderMessage',
-                'remove': '@Fields.DeleteButton',
-                'error': '@Messages.UploadFailureMessage'
-            },
-        });*@
-
-        $(createBrand).on("click", function (e) {
-            e.preventDefault();
-            let form = $(brandform)[0];
-            let data = new FormData(form);
-
-            @*$.ajax({
-                type: "POST",
-                url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
-                data: data,
-                enctype: 'multipart/form-data', // Important!!!!
-                processData: false,  //prevent jQuery transforming the data into a query string
-                contentType: false,
-                cache: false,
-                success: function (data) {
-                    form.reset();
-                    $(".dropify-clear").click();
-                    $("#grid").data("kendoGrid").dataSource.read();
-                }
-            });*@
-
-            $.post({
-                url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
-                data: $(brandform)[0],
-                success: function (data) {
-                    getCreateForm();
-                    refreshGrid();
-                }
-            })
-        });
-    })
-</script>
