@@ -39,7 +39,14 @@ namespace Silverbrain.OnlineShop.Repositories
         public async Task UpdateAsync(TEntity entity)
         {
                 entities.Update(entity);
+            try
+            {
                 await _dbContext.SaveChangesAsync();
+            }
+            catch (Exception exception)
+            {
+
+            }
         }
 
         public async Task DeleteAsync(string Id)

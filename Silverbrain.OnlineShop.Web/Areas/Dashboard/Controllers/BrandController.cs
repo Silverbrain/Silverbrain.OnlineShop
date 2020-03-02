@@ -119,7 +119,8 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             {
                 if (model.ImageFormFile == null)
                 {
-                    var brand = new Brand { Id = model.Id, Image = new BrandImage { Title = model.Image }, Title = model.Title };
+                    var brand = new Brand { Id = model.Id, Title = model.Title };
+                    brand.Image = new BrandImage { Title = model.Image };
                     await _brandService.UpdateAsync(brand);
                     return Json(true);
                 }
@@ -156,7 +157,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                     return Json(true);
                 }
             }
-            catch
+            catch (Exception ex)
             {
                 return BadRequest();
             }
