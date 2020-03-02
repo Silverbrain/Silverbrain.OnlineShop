@@ -35,6 +35,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // GET: Brand
+        [HttpGet]
         public ActionResult Index()
         {
             return View();
@@ -45,13 +46,8 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             Ok(await _brandService.ReadAsync(id));
 
         [HttpPost]
-        public async Task<ActionResult> ReadAll([DataSourceRequest] DataSourceRequest request)
-        {
-            var brands = await _brandService.ReadAllAsync();
-            var result = brands.Select(b => new BrandViewModel { Id = b.Id, Title = b.Title, Image = b.Image.Title }).ToList();
-
-            return Json(result.ToDataSourceResult(request));
-        }
+        public IActionResult ReadAll([DataSourceRequest] DataSourceRequest request) =>
+            Json(_brandService.ReadAll().ToDataSourceResult(request));
 
         // GET: Brand/Create
         [HttpGet]
@@ -67,121 +63,78 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         {
             try
             {
-                var ms = ModelState;
-                if (model != null)
+                if (ModelState.IsValid)
                 {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFormFile.FileName);
-                    fileName = fileName.Trim('-');
-                    //var filepath = Path.Combine(_webHost.WebRootPath , "\\assets\\images\\brands");
-                    var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
-                    var imagePath = Path.Combine(filepath, fileName);
+                    //var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFormFile.FileName);
+                    //fileName = fileName.Trim('-');
+                    ////var filepath = Path.Combine(_webHost.WebRootPath , "\\assets\\images\\brands");
+                    //var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
+                    //var imagePath = Path.Combine(filepath, fileName);
 
-                    if (model.ImageFormFile.Length > 0)
-                    {
-                        using var stream = new FileStream(imagePath, FileMode.Create);
-                        await model.ImageFormFile.CopyToAsync(stream);
-                        await stream.DisposeAsync();
-                    }
+                    //if (model.ImageFormFile.Length > 0)
+                    //{
+                    //    using var stream = new FileStream(imagePath, FileMode.Create);
+                    //    await model.ImageFormFile.CopyToAsync(stream);
+                    //    await stream.DisposeAsync();
+                    //}
 
-                    var brand = new Brand
-                    {
-                        Image = new BrandImage { Title = fileName },
-                        Title = model.Title
-                    };
-
-                    await _brandService.CreateAsync(brand);
+                    //var brand = new Brand
+                    //{
+                    //    Image = new BrandImage { Title = fileName },
+                    //};
+                    await _brandService.CreateAsync(model);
                     return Json(true);
                 }
 
-                HttpContext.Response.Headers.Append("error-message", ModelState.Values.ToString());
-                return BadRequest();
+                return BadRequest(ModelState);
             }
             catch (Exception e)
             {
-                HttpContext.Response.Headers.Append("error-message", e.Message.ToString());
-                return BadRequest();
+                return BadRequest(e);
             }
         }
 
         // GET: Brand/Edit/5
-        public ActionResult Edit(int id)
+        [HttpGet]
+        public async Task<ActionResult> Update(int Id)
         {
-            return View();
+            var brand = await _brandService.ReadAsync(Id);
+            return View(brand);
         }
 
         // POST: Brand/Edit/5
         //[ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Update([DataSourceRequest] DataSourceRequest request,
-            BrandViewModel model)
+        public async Task<ActionResult> Update(BrandViewModel model)
         {
             try
             {
-                if (model.ImageFormFile == null)
+                if (ModelState.IsValid)
                 {
-                    var brand = new Brand { Id = model.Id, Title = model.Title };
-                    brand.Image = new BrandImage { Title = model.Image };
-                    await _brandService.UpdateAsync(brand);
+                    await _brandService.UpdateAsync(model);
                     return Json(true);
                 }
-                else
-                {
-                    var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFormFile.FileName);
-                    fileName = fileName.Trim('-');
-                    //var filepath = Path.Combine(_webHost.WebRootPath , "\\assets\\images\\brands");
-                    var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
-                    var imagePath = Path.Combine(filepath, fileName);
-
-                    if (model.ImageFormFile.Length > 0)
-                    {
-                        ///<summary>
-                        ///save new image into hard drive
-                        ///</summary>
-                        using (var stream = new FileStream(imagePath, FileMode.Create))
-                        {
-                            await model.ImageFormFile.CopyToAsync(stream);
-                            await stream.DisposeAsync();
-                        }
-
-                        ///<summary>
-                        ///delete the old image from the hard drive
-                        ///</summary>
-                        imagePath = Path.Combine(filepath, model.Image);
-                        if (System.IO.File.Exists(filepath))
-                            System.IO.File.Delete(imagePath);
-                    }
-
-                    var brand = new Brand { Id = model.Id, Image = new BrandImage { Title = fileName }, Title = model.Title };
-                    await _brandService.UpdateAsync(brand);
-
-                    return Json(true);
-                }
+                return BadRequest(ModelState);
             }
-            catch (Exception ex)
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
-        }
-
-        // GET: Brand/Delete/5
-        public ActionResult Delete()
-        {
-            return View();
         }
 
         // POST: Brand/Delete/5
         //[ValidateAntiForgeryToken]
         [HttpPost]
-        public ActionResult Delete([DataSourceRequest] DataSourceRequest request, int Id)
+        public ActionResult Delete(int Id)
         {
             try
             {
                 _brandService.DeleteAsync(Id);
                 return Json(true);
             }
-            catch
+            catch(Exception e)
             {
-                return BadRequest();
+                return BadRequest(e);
             }
         }
     }

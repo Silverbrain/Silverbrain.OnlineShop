@@ -9,12 +9,9 @@ namespace Silverbrain.OnlineShop.ViewModels
 {
     public class BrandViewModel
     {
-        public int Id { get; set; } = 0;
+        public int? Id { get; set; } = 0;
 
         [MaxLength(50)]
         public string Title { get; set; }
-
-        public string Image { get; set; }
-        public IFormFile ImageFormFile { get; set; }
     }
 }

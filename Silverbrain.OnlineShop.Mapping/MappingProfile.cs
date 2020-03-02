@@ -7,13 +7,12 @@ using System.Text;
 
 namespace Silverbrain.OnlineShop.Mapping
 {
-    class MappingProfile : Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {
             CreateMap<BrandViewModel, Brand>();
-            CreateMap<Brand, BrandViewModel>()
-                .ForMember(dest => dest.ImageFormFile, opt => opt.Ignore());
+            CreateMap<Brand, BrandViewModel>();
         }
     }
 }

@@ -13,10 +13,6 @@ namespace Silverbrain.OnlineShop.Entities.Configurations
         {
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).HasMaxLength(50);
-            builder.HasOne(b => b.Image)
-                .WithOne(b => b.Brand)
-                .HasForeignKey<BrandImage>(b => b.BrandId)
-                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
