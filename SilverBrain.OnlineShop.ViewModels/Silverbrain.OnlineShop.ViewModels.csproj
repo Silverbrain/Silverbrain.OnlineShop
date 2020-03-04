@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Silverbrain.OnlineShop.Entities\Silverbrain.OnlineShop.Entities.csproj" />
+    <ProjectReference Include="..\SilverBrain.OnlineShop.Resources\Silverbrain.OnlineShop.Resources.csproj" />
   </ItemGroup>
 
 </Project>

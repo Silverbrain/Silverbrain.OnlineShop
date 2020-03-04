@@ -88,6 +88,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to این قسمت نمیتواند خالی باشد!.
+        /// </summary>
+        public static string ReqiredFieldErrorMessage {
+            get {
+                return ResourceManager.GetString("ReqiredFieldErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to اعمال تغییرات.
         /// </summary>
         public static string SaveButtonMessage {

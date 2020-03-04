@@ -1,14 +1,11 @@
-﻿@{ 
-    Layout = null;
-}
-
-@model BrandViewModel
+﻿@model BrandViewModel
 
 <input type="hidden" asp-for="Id" />
 
 <div class="col-12 mb-20">
     <label asp-for="Title">@Fields.TitleInput</label>
     <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput">
+    <span asp-validation-for="Title" class="text-danger"></span>
 </div>
 
 <!--File Upload-->
