@@ -9,15 +9,15 @@
     <div class="box-head">
         <h4 class="title">@Captions.CreateBrand</h4>
     </div>
-	<div class="box-body">
-		<form method="post" id="brandform" asp-controller="Brand" asp-action="Create">
-			<div id="BrandForm" class="row mbn-20">
-			</div>
-			<input type="button" value="@Fields.SendButton" onclick="submitForm('brandform')" class="btn btn-primary"></input>
+    <div class="box-body">
+        <form method="post" id="brandform" asp-controller="Brand" asp-action="Create">
+            <div id="BrandForm" class="row mbn-20">
+            </div>
+            <input type="button" value="@Fields.SendButton" onclick="submitForm('brandform')" class="btn btn-primary"></input>
 
-		</form>
-		<div id="alert"></div>
-	</div>
+        </form>
+        <div id="alert"></div>
+    </div>
 </div>
 
 <br />
@@ -64,24 +64,14 @@
 </div>
 
 <script type="text/javascript">
-
-	//$('#brandform').submit(function (e) {
-
- //  // Prevent default submit for ajax
- //  e.preventDefault();
-
- //       $.ajax({
-
- //       });
- //   });
 	function submitForm(divName) {
-   
+
         var formdata = new FormData($("#"+divName)[0]);
         var formAction = $("#"+divName).attr("action");
-        
-         
-    if ($("#" + divName).valid()) {
-          
+
+
+        if ($("#" + divName).valid()) {
+
             $.ajax({
                 url: formAction,
                 data: formdata,
@@ -94,15 +84,13 @@
                         getCreateForm();
                         $("#alert").html("عملیات با موفقیت  ذخیره گردید");
                     }
-                    
                 },
                 error: function (dataofconfirm) {
                     $(alert).html("عملیات با شکست مواجه شد")
                 }
             });
         }
-}
-
+    }
 	function template(data) {
 		let path = String.raw`../@Constants.PathBrandImageRead/` + data.Image;
 		return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
@@ -122,79 +110,67 @@
 		$("#grid").data("kendoGrid").dataSource.read();
     }
     $(document).ready(function () { getCreateForm();});
-	//function postBrand(url, data = null) {
-	//	if (data === null) {
-	//		let brand = $(brandform).serializeFormJSON();
-	//		$.post({
-	//			url: url,
-	//			data: brand,
-	//			success: null,
-	//			async: false
-	//		});
-	//	}
-	//	else {
-	//		$.post({
-	//			url: url,
-	//			data: data,
-	//			success: null,
-	//			async: false
-	//		});
-	//	}
+	function postBrand(url, data = null) {
+		if (data === null) {
+			let brand = $(brandform).serializeFormJSON();
+			$.post({
+				url: url,
+				data: brand,
+				success: null,
+				async: false
+			});
+		}
+		else {
+			$.post({
+				url: url,
+				data: data,
+				success: null,
+				async: false
+			});
+		}
 
-	//	refreshGrid();
-	//	getCreateForm();
-	//}
+		refreshGrid();
+		getCreateForm();
+	}
 	function getDataItem(grid, e)
 	{
 		let button = e.target;
 		let row = $(button).closest("tr");
 		return grid.dataItem(row);
 	}
-
 	function openEditWindow(e) {
-		//let grid = this;
-		//let button = e.target;
-		//let row = $(button).closest("tr");
-		//let dataItem = grid.dataItem(row);
 		let dataItem = getDataItem(this, e);
 		getUpdateForm(dataItem.Id);
 	}
-
 	function openDeleteWindow(e) {
 		e.preventDefault();
-		//let grid = this;
-		//let button = e.target;
-		//let row = $(button).closest("tr");
-		//let dataItem = grid.dataItem(row);
 		let dataItem = getDataItem(this, e);
 
-		if (confirm('@Messages.DeleteCautionMessage')) {
-			postBrand({ Id: dataItem.Id }, "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)");
+		if (confirm("@Html.Raw(Messages.DeleteCautionMessage)")) {
+			postBrand("@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)", { Id: dataItem.Id });
 		}
 	}
 
-	//$(function () {
-	//	getCreateForm();
+	$(function () {
+		//getCreateForm();
 
-	//	$.fn.serializeFormJSON = function () {
-	//		var o = {};
-	//		var a = this.serializeArray();
-	//		$.each(a, function () {
-	//			if (o[this.name]) {
-	//				if (!o[this.name].push) {
-	//					o[this.name] = [o[this.name]];
-	//				}
-	//				o[this.name].push(this.value || '');
-	//			} else {
-	//				o[this.name] = this.value || '';
-	//			}
-	//		});
-	//		return o;
-	//	};
+		$.fn.serializeFormJSON = function () {
+			var o = {};
+			var a = this.serializeArray();
+			$.each(a, function () {
+				if (o[this.name]) {
+					if (!o[this.name].push) {
+						o[this.name] = [o[this.name]];
+					}
+					o[this.name].push(this.value || '');
+				} else {
+					o[this.name] = this.value || '';
+				}
+			});
+			return o;
+        };
 
-	 
-
-		@*$(BrandForm).on("click", '#createBrand', event, function (e) {
+		$(BrandForm).on("click", '#createBrand', event, function (e) {
 			e.preventDefault();
 			postBrand("@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)");
 		});
@@ -207,8 +183,8 @@
 		$(BrandForm).on('click', '#cancel', event, function (e) {
 			e.preventDefault();
 			getCreateForm();
-		});*@
-	//});
+		});
+	});
 </script>
 
 <style type="text/css">

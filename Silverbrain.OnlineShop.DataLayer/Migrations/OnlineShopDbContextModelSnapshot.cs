@@ -267,42 +267,6 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.Image", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Discriminator")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Images");
-
-                    b.HasDiscriminator<string>("Discriminator").HasValue("Image");
-                });
-
-            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.BrandImage", b =>
-                {
-                    b.HasBaseType("Silverbrain.OnlineShop.Entities.Models.Image");
-
-                    b.Property<int>("BrandId")
-                        .HasColumnType("int");
-
-                    b.HasIndex("BrandId")
-                        .IsUnique()
-                        .HasFilter("[BrandId] IS NOT NULL");
-
-                    b.HasDiscriminator().HasValue("BrandImage");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -350,15 +314,6 @@ namespace Silverbrain.OnlineShop.DataLayer.Migrations
                     b.HasOne("Silverbrain.OnlineShop.Entities.Models.ApplicationUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Silverbrain.OnlineShop.Entities.Models.BrandImage", b =>
-                {
-                    b.HasOne("Silverbrain.OnlineShop.Entities.Models.Brand", "Brand")
-                        .WithOne("Image")
-                        .HasForeignKey("Silverbrain.OnlineShop.Entities.Models.BrandImage", "BrandId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
