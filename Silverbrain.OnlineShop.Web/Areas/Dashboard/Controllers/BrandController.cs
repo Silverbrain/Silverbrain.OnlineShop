@@ -1,21 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Threading.Tasks;
-using AutoMapper;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
-using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
+using System;
+using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 {
@@ -24,13 +15,11 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
     public class BrandController : Controller
     {
         private readonly IBrandService _brandService;
-        private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHost;
 
-        public BrandController(IBrandService brandService, IMapper mapper, IWebHostEnvironment webHost)
+        public BrandController(IBrandService brandService, IWebHostEnvironment webHost)
         {
             _brandService = brandService;
-            _mapper = mapper;
             _webHost = webHost;
         }
 
@@ -41,10 +30,6 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             return View();
         }
 
-        // GET: Brand/Details/5
-        public async Task<ActionResult> Read(int id) =>
-            Ok(await _brandService.ReadAsync(id));
-
         [HttpPost]
         public IActionResult ReadAll([DataSourceRequest] DataSourceRequest request) =>
             Json(_brandService.ReadAll().ToDataSourceResult(request));
@@ -53,7 +38,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            return PartialView();
         }
 
         // POST: Brand/Create
@@ -99,7 +84,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         public async Task<ActionResult> Update(int Id)
         {
             var brand = await _brandService.ReadAsync(Id);
-            return View(brand);
+            return PartialView(brand);
         }
 
         // POST: Brand/Edit/5
@@ -116,7 +101,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                 }
                 return BadRequest(ModelState);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e);
             }
@@ -132,7 +117,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                 _brandService.DeleteAsync(Id);
                 return Json(true);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e);
             }
