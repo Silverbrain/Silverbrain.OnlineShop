@@ -52,7 +52,8 @@ namespace Silverbrain.OnlineShop.Web
             services.AddAuthentication();
             services.AddAuthorization();
             services.AddKendo();
-
+            services.AddRazorPages()
+        .AddRazorRuntimeCompilation();
             services.AddRepositories();
             services.AddCustomServices();
 
