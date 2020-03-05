@@ -126,11 +126,17 @@
   <data name="DeleteCautionMessage" xml:space="preserve">
     <value>آیا از حذف این مورد اطمینان دارید؟</value>
   </data>
+  <data name="ErrorTransactionMessage" xml:space="preserve">
+    <value>عملیات با مشکل مواجه شد</value>
+  </data>
   <data name="ReqiredFieldErrorMessage" xml:space="preserve">
     <value>این قسمت نمیتواند خالی باشد!</value>
   </data>
   <data name="SaveButtonMessage" xml:space="preserve">
     <value>اعمال تغییرات</value>
+  </data>
+  <data name="SuccessfulTransactionMessage" xml:space="preserve">
+    <value>عملیات با موفقیت انجام شد</value>
   </data>
   <data name="UploadFailureMessage" xml:space="preserve">
     <value>ارسال فایل با مشکل مواجه شد</value>

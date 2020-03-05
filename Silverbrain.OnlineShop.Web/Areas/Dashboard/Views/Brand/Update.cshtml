@@ -1,20 +1,29 @@
 ﻿@model BrandViewModel
 
-<input type="hidden" asp-for="Id" value="@Model.Id" />
+<form method="post" id="brandform" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionUpdate">
 
-<div class="col-12 mb-20">
-    <label asp-for="Title">@Fields.TitleInput</label>
-    <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value="@Model.Title">
-</div>
+    <input type="hidden" asp-for="Id" value="@Model.Id" />
 
-<!--File Upload-->
-@*<div class="col-12 mb-20">
-        <label for="formLayoutFile2">@Fields.UploadFile</label>
-        <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
-    </div>*@
-<!--File Upload-End-->
+    <div class="col-12 mb-20">
+        <label asp-for="Title">@Fields.TitleInput</label>
+        <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value="@Model.Title">
+    </div>
 
-<div id="submitButton" class="col-12 mb-20">
-    <button id="saveBrand" class="btn btn-success">@Fields.SaveButton</button>
-    <button id="cancel" class="btn btn-danger">@Fields.CancelButton</button>
-</div>
+    <!--File Upload-->
+    @*<div class="col-12 mb-20">
+            <label for="formLayoutFile2">@Fields.UploadFile</label>
+            <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
+        </div>*@
+    <!--File Upload-End-->
+
+    <div id="submitButton" class="col-12 mb-20">
+        <input type="button" value="@Fields.SaveButton" onclick="submitForm('brandform')" class="btn btn-outline-success" />
+        <input type="button" value="@Fields.CancelButton" onclick="getCreateForm()" class="btn btn-outline-danger" />
+    </div>
+</form>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.validator.unobtrusive.parse("#brandform");
+    });
+</script>

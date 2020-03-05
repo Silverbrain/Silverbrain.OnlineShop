@@ -1,27 +1,28 @@
 ﻿@model BrandViewModel
-@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>*@
 
+<form method="post" id="brandform" asp-controller="Brand" asp-action="Create">
     <input type="hidden" asp-for="Id" />
 
     <div class="col-12 mb-20">
         <label asp-for="Title">@Fields.TitleInput</label>
         <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput">
-        
+        <span asp-validation-for="Title" class="text-danger"></span>
     </div>
 
-    <span asp-validation-for="Title" class="text-danger"></span>
-<!--File Upload-->
-@*<div class="col-12 mb-20">
-        <label for="formLayoutFile2">@Fields.UploadFile</label>
-        <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
-    </div>*@
-<!--File Upload-End-->
-<div id="submitButtonsds" class="col-12 mb-20">
+    <!--File Upload-->
+    @*<div class="col-12 mb-20">
+            <label for="formLayoutFile2">@Fields.UploadFile</label>
+            <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
+        </div>*@
+    <!--File Upload-End-->
+    <div id="submitButton" class="col-12 mb-20">
+        <input type="button" value="@Fields.SendButton" onclick="submitForm('brandform')" class="btn btn-primary" />
     </div>
-<script>
+
+</form>
+
+<script type="text/javascript">
     $(document).ready(function () {
-         $.validator.unobtrusive.parse("#brandform");
-    })
+		$.validator.unobtrusive.parse("#brandform");
+    });
 </script>

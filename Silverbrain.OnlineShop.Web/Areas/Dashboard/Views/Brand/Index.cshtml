@@ -9,14 +9,10 @@
     <div class="box-head">
         <h4 class="title">@Captions.CreateBrand</h4>
     </div>
-    <div class="box-body">
-        <form method="post" id="brandform" asp-controller="Brand" asp-action="Create">
-            <div id="BrandForm" class="row mbn-20">
-            </div>
-            <input type="button" value="@Fields.SendButton" onclick="submitForm('brandform')" class="btn btn-primary"></input>
+    <div id="box-body-container" class="box-body">
+        <div id="brand-form-container">
 
-        </form>
-        <div id="alert"></div>
+        </div>
     </div>
 </div>
 
@@ -43,7 +39,7 @@
                         </model>
                     </schema>
                 </datasource>
-
+                <filterable enabled="true" />
                 <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
                 </pageable>
                 <sortable enabled="true" />
@@ -54,7 +50,7 @@
                     <column>
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
-                            <column-command name="distroy" text="@Fields.DeleteButton" click="openDeleteWindow"></column-command>
+                            <column-command name="delete" text="@Fields.DeleteButton" click="openDeleteWindow"></column-command>
                         </commands>
                     </column>
                 </columns>
@@ -66,72 +62,68 @@
 <script type="text/javascript">
 	function submitForm(divName) {
 
-        var formdata = new FormData($("#"+divName)[0]);
+        var submitdata = new FormData($("#"+divName)[0]);
         var formAction = $("#"+divName).attr("action");
 
-
-        if ($("#" + divName).valid()) {
+        if ($("#" + divName).valid() || action != null) {
 
             $.ajax({
                 url: formAction,
-                data: formdata,
+                data: submitdata,
                 processData: false,
                 contentType: false,
                 type: 'POST',
-                success: function (data) {
-                    if (data) {
-						refreshGrid();
+                success: function (successdata) {
+                    if (successdata) {
+                        refreshGrid();
                         getCreateForm();
-                        $("#alert").html("عملیات با موفقیت  ذخیره گردید");
+                        addalert(successdata.Message, 'success');
                     }
                 },
-                error: function (dataofconfirm) {
-                    $(alert).html("عملیات با شکست مواجه شد")
+                error: function (errordata) {
+                    addalert(errordata.responseJSON.Message, 'danger');
                 }
             });
         }
     }
-	function template(data) {
+	@*function template(data) {
 		let path = String.raw`../@Constants.PathBrandImageRead/` + data.Image;
 		return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
 <input class='imgName' type='hidden' value='${data.Image}'/>`
-	}
+	}*@
+    function addalert(msg, type) {
+        let $box = $('#brand-form-container');
+        $box.append(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+${msg}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close" hidden>
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>`);
+        setTimeout(function () {
+            $('.alert').alert('close');
+        }, 5000);
+    }
 	function getCreateForm() {
-		$.get("@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)", function (data) {
-			$('#BrandForm').html(data);
-		});
+        $.get({
+            url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
+            success: function(data) {
+                $('#brand-form-container').html(data);
+            },
+            async: false
+        });
 	}
 	function getUpdateForm(id) {
-		$.get(`@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)/${id}`, function (data) {
-			$('#BrandForm').html(data);
-		})
+        $.get({
+            url: `@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)/${id}`,
+            success: function (data) {
+                $('#brand-form-container').html(data);
+            },
+            async: false
+        });
 	}
 	function refreshGrid() {
 		$("#grid").data("kendoGrid").dataSource.read();
     }
-    $(document).ready(function () { getCreateForm();});
-	function postBrand(url, data = null) {
-		if (data === null) {
-			let brand = $(brandform).serializeFormJSON();
-			$.post({
-				url: url,
-				data: brand,
-				success: null,
-				async: false
-			});
-		}
-		else {
-			$.post({
-				url: url,
-				data: data,
-				success: null,
-				async: false
-			});
-		}
-
-		refreshGrid();
-		getCreateForm();
-	}
 	function getDataItem(grid, e)
 	{
 		let button = e.target;
@@ -144,33 +136,49 @@
 	}
 	function openDeleteWindow(e) {
 		e.preventDefault();
-		let dataItem = getDataItem(this, e);
+        let dataItem = getDataItem(this, e);
 
-		if (confirm("@Html.Raw(Messages.DeleteCautionMessage)")) {
-			postBrand("@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)", { Id: dataItem.Id });
-		}
-	}
+        swal({
+            text: "@Html.Raw(Messages.DeleteCautionMessage)",
+            title: `برند: ${dataItem.Title}`,
+            icon: "warning",
+            dangerMode: true,
+            buttons: {
+                confirm: {
+                    text: "@Html.Raw(Fields.DeleteButton)",
+                    value: "confirm",
+                },
+                cancel: "@Html.Raw(Fields.CancelButton)"
+            },
+        })
+        .then((value) => {
+            if (value === "confirm") {
+                $.post({
+                    url: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)",
+                    data: { Id: dataItem.Id },
+                    success: function (successdata) {
+                        if (successdata) {
+                            refreshGrid();
+                            getCreateForm();
+                            addalert(successdata.Message, 'success');
+                        }
+                    },
+                    error(errordata) {
+                        if (errordata) {
+                            addalert(errordata.responseJSON.Message, 'danger');
+                        }
+                    }
+                })
+            }
+        });
+    }
+    $(document).ready(function () {
+        getCreateForm();
+		$.validator.unobtrusive.parse("#brandform");
+    });
 
-	$(function () {
-		//getCreateForm();
-
-		$.fn.serializeFormJSON = function () {
-			var o = {};
-			var a = this.serializeArray();
-			$.each(a, function () {
-				if (o[this.name]) {
-					if (!o[this.name].push) {
-						o[this.name] = [o[this.name]];
-					}
-					o[this.name].push(this.value || '');
-				} else {
-					o[this.name] = this.value || '';
-				}
-			});
-			return o;
-        };
-
-		$(BrandForm).on("click", '#createBrand', event, function (e) {
+    @*$(function () {
+        $(BrandForm).on("click", '#createBrand', event, function (e) {
 			e.preventDefault();
 			postBrand("@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)");
 		});
@@ -184,7 +192,7 @@
 			e.preventDefault();
 			getCreateForm();
 		});
-	});
+	});*@
 </script>
 
 <style type="text/css">

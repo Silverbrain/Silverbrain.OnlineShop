@@ -3,7 +3,9 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Silverbrain.OnlineShop.Common;
 using Silverbrain.OnlineShop.IServices;
+using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -68,14 +70,14 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                     //    Image = new BrandImage { Title = fileName },
                     //};
                     await _brandService.CreateAsync(model);
-                    return Json(true);
+                    return Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage });
                 }
 
-                return BadRequest(ModelState);
+                return BadRequest(Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage }));
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(new TransactionStatus { Type = TransactionStatus.StatusType.Error.ToString(), Message = Messages.ErrorTransactionMessage });
             }
         }
 
@@ -97,13 +99,13 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                 if (ModelState.IsValid)
                 {
                     await _brandService.UpdateAsync(model);
-                    return Json(true);
+                    return Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage });
                 }
-                return BadRequest(ModelState);
+                return BadRequest(Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage }));
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage }));
             }
         }
 
@@ -115,11 +117,11 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             try
             {
                 _brandService.DeleteAsync(Id);
-                return Json(true);
+                return Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage });
             }
             catch (Exception e)
             {
-                return BadRequest(e);
+                return BadRequest(Json(new TransactionStatus { Type = TransactionStatus.StatusType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage }));
             }
         }
     }

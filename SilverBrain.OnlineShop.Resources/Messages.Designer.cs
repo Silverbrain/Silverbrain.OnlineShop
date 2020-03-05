@@ -88,6 +88,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to عملیات با مشکل مواجه شد.
+        /// </summary>
+        public static string ErrorTransactionMessage {
+            get {
+                return ResourceManager.GetString("ErrorTransactionMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to این قسمت نمیتواند خالی باشد!.
         /// </summary>
         public static string ReqiredFieldErrorMessage {
@@ -102,6 +111,15 @@ namespace Silverbrain.OnlineShop.Resources {
         public static string SaveButtonMessage {
             get {
                 return ResourceManager.GetString("SaveButtonMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to عملیات با موفقیت انجام شد.
+        /// </summary>
+        public static string SuccessfulTransactionMessage {
+            get {
+                return ResourceManager.GetString("SuccessfulTransactionMessage", resourceCulture);
             }
         }
         
