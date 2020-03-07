@@ -117,31 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CancelButtonMessage" xml:space="preserve">
-    <value>انصراف از تغییرات</value>
-  </data>
-  <data name="DeleteButtonMessage" xml:space="preserve">
-    <value>پاک کردن</value>
-  </data>
   <data name="DeleteCautionMessage" xml:space="preserve">
     <value>آیا از حذف این مورد اطمینان دارید؟</value>
   </data>
   <data name="ErrorTransactionMessage" xml:space="preserve">
-    <value>عملیات با مشکل مواجه شد</value>
+    <value>عملیات با مشکل مواجه شد!</value>
   </data>
-  <data name="ReqiredFieldErrorMessage" xml:space="preserve">
+  <data name="RequiredFieldErrorMessage" xml:space="preserve">
     <value>این قسمت نمیتواند خالی باشد!</value>
   </data>
-  <data name="SaveButtonMessage" xml:space="preserve">
-    <value>اعمال تغییرات</value>
-  </data>
   <data name="SuccessfulTransactionMessage" xml:space="preserve">
-    <value>عملیات با موفقیت انجام شد</value>
+    <value>عملیات با موفقیت انجام شد!</value>
   </data>
   <data name="UploadFailureMessage" xml:space="preserve">
-    <value>ارسال فایل با مشکل مواجه شد</value>
+    <value>ارسال فایل با مشکل مواجه شد!</value>
   </data>
   <data name="UploadPlaceHolderMessage" xml:space="preserve">
-    <value>عکس مورد نظر را بکشید و رها کنید یا اینجا را کلیک کنید</value>
+    <value>عکس مورد نظر را بکشید و رها کنید یا اینجا را کلیک کنید.</value>
   </data>
 </root>

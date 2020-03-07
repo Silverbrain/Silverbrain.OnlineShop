@@ -1,4 +1,6 @@
-﻿using Silverbrain.OnlineShop.Entities.Models;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Silverbrain.OnlineShop.Common;
+using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -10,9 +12,9 @@ namespace Silverbrain.OnlineShop.IServices
 {
     public interface IBrandService
     {
-        public Task CreateAsync(BrandViewModel model);
-        public Task UpdateAsync(BrandViewModel model);
-        public Task DeleteAsync(int Id);
+        public Task<TransactionResult> CreateAsync(BrandViewModel model, ModelStateDictionary modelState);
+        public Task<TransactionResult> UpdateAsync(BrandViewModel model, ModelStateDictionary modelState);
+        public Task<TransactionResult> DeleteAsync(int Id);
         public Task<BrandViewModel> ReadAsync(int Id);
         public IQueryable<Brand> ReadAll();
     }

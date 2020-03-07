@@ -61,24 +61,6 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to انصراف از تغییرات.
-        /// </summary>
-        public static string CancelButtonMessage {
-            get {
-                return ResourceManager.GetString("CancelButtonMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to پاک کردن.
-        /// </summary>
-        public static string DeleteButtonMessage {
-            get {
-                return ResourceManager.GetString("DeleteButtonMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to آیا از حذف این مورد اطمینان دارید؟.
         /// </summary>
         public static string DeleteCautionMessage {
@@ -88,7 +70,7 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عملیات با مشکل مواجه شد.
+        ///   Looks up a localized string similar to عملیات با مشکل مواجه شد!.
         /// </summary>
         public static string ErrorTransactionMessage {
             get {
@@ -99,23 +81,14 @@ namespace Silverbrain.OnlineShop.Resources {
         /// <summary>
         ///   Looks up a localized string similar to این قسمت نمیتواند خالی باشد!.
         /// </summary>
-        public static string ReqiredFieldErrorMessage {
+        public static string RequiredFieldErrorMessage {
             get {
-                return ResourceManager.GetString("ReqiredFieldErrorMessage", resourceCulture);
+                return ResourceManager.GetString("RequiredFieldErrorMessage", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to اعمال تغییرات.
-        /// </summary>
-        public static string SaveButtonMessage {
-            get {
-                return ResourceManager.GetString("SaveButtonMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to عملیات با موفقیت انجام شد.
+        ///   Looks up a localized string similar to عملیات با موفقیت انجام شد!.
         /// </summary>
         public static string SuccessfulTransactionMessage {
             get {
@@ -124,7 +97,7 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ارسال فایل با مشکل مواجه شد.
+        ///   Looks up a localized string similar to ارسال فایل با مشکل مواجه شد!.
         /// </summary>
         public static string UploadFailureMessage {
             get {
@@ -133,7 +106,7 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عکس مورد نظر را بکشید و رها کنید یا اینجا را کلیک کنید.
+        ///   Looks up a localized string similar to عکس مورد نظر را بکشید و رها کنید یا اینجا را کلیک کنید..
         /// </summary>
         public static string UploadPlaceHolderMessage {
             get {

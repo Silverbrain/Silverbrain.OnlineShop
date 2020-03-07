@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Silverbrain.OnlineShop.Resources;
+using System.ComponentModel.DataAnnotations;
 
 namespace Silverbrain.OnlineShop.ViewModels
 {
@@ -12,7 +13,7 @@ namespace Silverbrain.OnlineShop.ViewModels
 
         /// <summary>Gets or sets the Brand title.</summary>
         [MaxLength(50)]
-        [Required(ErrorMessage = "نمیتواند خالی باشد")]
+        [Required(ErrorMessageResourceName = nameof(Messages.RequiredFieldErrorMessage), ErrorMessageResourceType = typeof(Messages))]
         public string Title { get; set; }
     }
 }

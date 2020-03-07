@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Silverbrain.OnlineShop.Common;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.Repositories;
+using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
@@ -22,14 +23,54 @@ namespace Silverbrain.OnlineShop.Services
             _mapper = mapper;
         }
 
-        public async Task CreateAsync(BrandViewModel model)
+        public async Task<TransactionResult> CreateAsync(BrandViewModel model, ModelStateDictionary modelState)
         {
-            var brand = _mapper.Map<Brand>(model);
-            await _repository.CreatAsync(brand);
+            try
+            {
+                if (modelState.IsValid)
+                {
+                    var brand = _mapper.Map<Brand>(model);
+                    await _repository.CreatAsync(brand);
+                    return new TransactionResult
+                    {
+                        Type = TransactionResult.ResultType.Success.ToString(),
+                        Message = Messages.SuccessfulTransactionMessage
+                    };
+                }
+                throw new Exception();
+            }
+            catch (Exception e)
+            {
+                return new TransactionResult
+                {
+                    Type = TransactionResult.ResultType.Error.ToString(),
+                    Message = Messages.ErrorTransactionMessage,
+                    Exception = e
+                };
+            }
         }
 
-        public async Task DeleteAsync(int Id) =>
-            await _repository.DeleteAsync(Id);
+        public async Task<TransactionResult> DeleteAsync(int Id)
+        {
+            try
+            {
+                await _repository.DeleteAsync(Id);
+                return new TransactionResult
+                {
+                    Type = TransactionResult.ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+            }
+            catch (Exception e)
+            {
+                return new TransactionResult
+                {
+                    Type = TransactionResult.ResultType.Error.ToString(),
+                    Message = Messages.ErrorTransactionMessage,
+                    Exception = e
+                };
+            }
+        }
 
         public IQueryable<Brand> ReadAll() =>
             _repository.ReadAll();
@@ -40,10 +81,31 @@ namespace Silverbrain.OnlineShop.Services
             return _mapper.Map<BrandViewModel>(brand);
         }
 
-        public async Task UpdateAsync(BrandViewModel model)
+        public async Task<TransactionResult> UpdateAsync(BrandViewModel model, ModelStateDictionary modelState)
         {
-            var brand = _mapper.Map<Brand>(model);
-            await _repository.UpdateAsync(brand);
+            try
+            {
+                if (modelState.IsValid)
+                {
+                    var brand = _mapper.Map<Brand>(model);
+                    await _repository.UpdateAsync(brand);
+                    return new TransactionResult
+                    {
+                        Type = TransactionResult.ResultType.Success.ToString(),
+                        Message = Messages.SuccessfulTransactionMessage
+                    };
+                }
+                throw new Exception();
+            }
+            catch (Exception e)
+            {
+                return new TransactionResult
+                {
+                    Type = TransactionResult.ResultType.Error.ToString(),
+                    Message = Messages.ErrorTransactionMessage,
+                    Exception = e
+                };
+            }
         }
     }
 }

@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Silverbrain.OnlineShop.Common\Silverbrain.OnlineShop.Common.csproj" />
     <ProjectReference Include="..\Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj" />
     <ProjectReference Include="..\Silverbrain.OnlineShop.IServices\Silverbrain.OnlineShop.IServices.csproj" />
     <ProjectReference Include="..\Silverbrain.OnlineShop.Mapping\Silverbrain.OnlineShop.Mapping.csproj" />

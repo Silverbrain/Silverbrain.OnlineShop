@@ -61,6 +61,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برند.
+        /// </summary>
+        public static string Brand {
+            get {
+                return ResourceManager.GetString("Brand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to برند ها.
         /// </summary>
         public static string BrandForm {
