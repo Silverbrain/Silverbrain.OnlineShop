@@ -75,16 +75,14 @@
                 type: 'POST',
                 success: function (result) {
                     if (result) {
-                        refreshGrid();
-                        getCreateForm();
                         switch (result.Type) {
                             case 'Success':
+                                refreshGrid();
+                                getCreateForm();
                                 addalert(result.Message, 'success');
                                 break;
                             case 'Error':
                                 addalert(result.Message, 'danger');
-                                console.info(result.Exception.Message);
-                                console.info(result.Exception.StackTraceString);
                                 break;
                         }
                     }
@@ -146,7 +144,7 @@ ${msg}
 
         swal({
             text: "@Html.Raw(Messages.DeleteCautionMessage)",
-            title: `@Captions.Brand: ${dataItem.Title}`,
+            title: `@Html.Raw(Captions.Brand): ${dataItem.Title}`,
             icon: "warning",
             dangerMode: true,
             buttons: {
@@ -159,26 +157,27 @@ ${msg}
         })
         .then((value) => {
             if (value === "confirm") {
-                $.post({
+                $.ajax({
                     url: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)",
                     data: { Id: dataItem.Id },
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
                     success: function (result) {
                         if (result) {
-                            refreshGrid();
-                            getCreateForm();
                             switch (result.Type) {
-                            case 'Success':
-                                addalert(result.Message, 'success');
-                                break;
-                            case 'Error':
-                                addalert(result.Message, 'danger');
-                                console.info(result.Exception.Message);
-                                console.info(result.Exception.StackTraceString);
-                                break;
+                                case 'Success':
+                                    refreshGrid();
+                                    getCreateForm();
+                                    addalert(result.Message, 'success');
+                                    break;
+                                case 'Error':
+                                    addalert(result.Message, 'danger');
+                                    break;
                             }
                         }
                     }
-                })
+                });
             }
         });
     }

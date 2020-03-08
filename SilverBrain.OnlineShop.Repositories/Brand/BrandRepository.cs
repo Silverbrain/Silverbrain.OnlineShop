@@ -16,18 +16,17 @@ namespace Silverbrain.OnlineShop.Repositories.Brand
             _dbContext = dbContext;
         }
 
-        public async Task<TransactionResult> CreateValidationAsync(Entities.Models.Brand brand)
-        {
-            var isUnique = await _dbContext.Brands.FirstOrDefaultAsync(b => b.Title == brand.Title) != null ? true : false;
+        public async Task<bool> IsUnique(string title) =>
+            await _dbContext.Brands.FirstOrDefaultAsync(b => b.Title == title) == null ? true : false;
 
-            return isUnique
+        public async Task<TransactionResult> CreateValidationAsync(Entities.Models.Brand brand) => 
+            await IsUnique(brand.Title)
                 ? new TransactionResult { Type = ResultType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage }
                 : new TransactionResult { Type = ResultType.Error.ToString(), Message = Messages.ItemExistsErrorMessage };
-        }
 
-        public async Task<TransactionResult> UpdateValidationAsync(Entities.Models.Brand brand)
-        {
-            throw new System.NotImplementedException();
-        }
+        public async Task<TransactionResult> UpdateValidationAsync(Entities.Models.Brand brand) =>
+            await IsUnique(brand.Title)
+                ? new TransactionResult { Type = ResultType.Success.ToString(), Message = Messages.SuccessfulTransactionMessage }
+                : new TransactionResult { Type = ResultType.Error.ToString(), Message = Messages.ItemExistsErrorMessage };
     }
 }

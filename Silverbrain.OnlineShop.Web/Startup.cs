@@ -1,26 +1,21 @@
 using AutoMapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Silverbrain.OnlineShop.Services;
-using Silverbrain.OnlineShop.Repositories;
-using Silverbrain.OnlineShop.DataLayer;
-using Silverbrain.OnlineShop.Web.Infrastructure;
-using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Serialization;
-using Silverbrain.OnlineShop.Resources;
-using Silverbrain.OnlineShop.ViewModels.Settings;
+using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.Mapping;
+using Silverbrain.OnlineShop.Repositories;
+using Silverbrain.OnlineShop.Services;
+using Silverbrain.OnlineShop.ViewModels.Settings;
+using Silverbrain.OnlineShop.Web.Infrastructure;
+using System;
 
 namespace Silverbrain.OnlineShop.Web
 {
@@ -53,7 +48,7 @@ namespace Silverbrain.OnlineShop.Web
             services.AddAuthorization();
             services.AddKendo();
             services.AddRazorPages()
-        .AddRazorRuntimeCompilation();
+                .AddRazorRuntimeCompilation();
             services.AddRepositories();
             services.AddCustomServices();
 
@@ -63,7 +58,6 @@ namespace Silverbrain.OnlineShop.Web
                .AddControllersWithViews()
                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new DefaultContractResolver());
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,13 +102,10 @@ namespace Silverbrain.OnlineShop.Web
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-
             app.UseCookiePolicy();
 
             app.AddUserWithRoles(services, Configuration).Wait();
             //CreateRoles(services).Wait();
         }
-
-       
     }
 }
