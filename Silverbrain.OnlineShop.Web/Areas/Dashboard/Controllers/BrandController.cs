@@ -41,7 +41,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // POST: Brand/Create
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<ActionResult> Create(BrandViewModel model)
         {
@@ -75,7 +75,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // POST: Brand/Edit/5
-        //[ValidateAntiForgeryToken]
+       [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<ActionResult> Update(BrandViewModel model)
         {
@@ -84,7 +84,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // POST: Brand/Delete/5
-        //[ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Delete(int Id)
         {
