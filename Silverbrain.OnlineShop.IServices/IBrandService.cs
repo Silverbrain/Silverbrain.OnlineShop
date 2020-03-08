@@ -12,8 +12,8 @@ namespace Silverbrain.OnlineShop.IServices
 {
     public interface IBrandService
     {
-        public Task<TransactionResult> CreateAsync(BrandViewModel model, ModelStateDictionary modelState);
-        public Task<TransactionResult> UpdateAsync(BrandViewModel model, ModelStateDictionary modelState);
+        public Task<TransactionResult> CreateAsync(BrandViewModel model);
+        public Task<TransactionResult> UpdateAsync(BrandViewModel model);
         public Task<TransactionResult> DeleteAsync(int Id);
         public Task<BrandViewModel> ReadAsync(int Id);
         public IQueryable<Brand> ReadAll();

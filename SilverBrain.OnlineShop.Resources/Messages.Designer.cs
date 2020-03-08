@@ -79,11 +79,29 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to این مورد تکراریست!.
+        /// </summary>
+        public static string ItemExistsErrorMessage {
+            get {
+                return ResourceManager.GetString("ItemExistsErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to این قسمت نمیتواند خالی باشد!.
         /// </summary>
         public static string RequiredFieldErrorMessage {
             get {
                 return ResourceManager.GetString("RequiredFieldErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to بروز خطا در ارتباط با سرور..
+        /// </summary>
+        public static string ServerErrorMessage {
+            get {
+                return ResourceManager.GetString("ServerErrorMessage", resourceCulture);
             }
         }
         

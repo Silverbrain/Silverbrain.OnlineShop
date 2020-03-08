@@ -3,7 +3,10 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Silverbrain.OnlineShop.Common;
+using Silverbrain.OnlineShop.Entities.Enums;
 using Silverbrain.OnlineShop.IServices;
+using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
 using System.Threading.Tasks;
 
@@ -62,7 +65,14 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             //{
             //    Image = new BrandImage { Title = fileName },
             //};
-            var result = await _brandService.CreateAsync(model, ModelState);
+            if (ModelState.IsValid)
+                return Json(await _brandService.CreateAsync(model));
+
+            var result = new TransactionResult
+            {
+                Type = ResultType.Error.ToString(),
+                Message = Messages.ErrorTransactionMessage
+            };
             return Json(result);
         }
 
@@ -79,7 +89,14 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult> Update(BrandViewModel model)
         {
-            var result = await _brandService.UpdateAsync(model, ModelState);
+            if (ModelState.IsValid)
+                return (Json(await _brandService.UpdateAsync(model)));
+
+            var result = new TransactionResult
+            {
+                Type = ResultType.Error.ToString(),
+                Message = Messages.ErrorTransactionMessage
+            };
             return Json(result);
         }
 

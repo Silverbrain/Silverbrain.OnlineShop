@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Silverbrain.OnlineShop.Common;
+using Silverbrain.OnlineShop.Entities.Enums;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.Repositories;
+using Silverbrain.OnlineShop.Repositories.Brand;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
 using System;
@@ -14,38 +16,39 @@ namespace Silverbrain.OnlineShop.Services
 {
     public class BrandService : IBrandService
     {
-        private readonly IGenericRepository<Brand> _repository;
+        private readonly IGenericRepository<Brand> _genericRepo;
+        private readonly IBrandRepository _brandRepo;
         private readonly IMapper _mapper;
 
-        public BrandService(IGenericRepository<Brand> repository, IMapper mapper)
+        public BrandService(IGenericRepository<Brand> repository, IMapper mapper, IBrandRepository brandRepo)
         {
-            _repository = repository;
+            _genericRepo = repository;
+            _brandRepo = brandRepo;
             _mapper = mapper;
         }
 
-        public async Task<TransactionResult> CreateAsync(BrandViewModel model, ModelStateDictionary modelState)
+        public async Task<TransactionResult> CreateAsync(BrandViewModel model)
         {
             try
             {
-                if (modelState.IsValid)
+                var brand = _mapper.Map<Brand>(model);
+                var validationResult = await _brandRepo.CreateValidationAsync(brand);
+                if (validationResult.Type == ResultType.Error.ToString())
+                    return validationResult;
+
+                await _genericRepo.CreatAsync(brand);
+                return new TransactionResult
                 {
-                    var brand = _mapper.Map<Brand>(model);
-                    await _repository.CreatAsync(brand);
-                    return new TransactionResult
-                    {
-                        Type = TransactionResult.ResultType.Success.ToString(),
-                        Message = Messages.SuccessfulTransactionMessage
-                    };
-                }
-                throw new Exception();
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
             }
-            catch (Exception e)
+            catch
             {
                 return new TransactionResult
                 {
-                    Type = TransactionResult.ResultType.Error.ToString(),
-                    Message = Messages.ErrorTransactionMessage,
-                    Exception = e
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
                 };
             }
         }
@@ -54,56 +57,55 @@ namespace Silverbrain.OnlineShop.Services
         {
             try
             {
-                await _repository.DeleteAsync(Id);
+                await _genericRepo.DeleteAsync(Id);
                 return new TransactionResult
                 {
-                    Type = TransactionResult.ResultType.Success.ToString(),
+                    Type = ResultType.Success.ToString(),
                     Message = Messages.SuccessfulTransactionMessage
                 };
             }
-            catch (Exception e)
+            catch
             {
                 return new TransactionResult
                 {
-                    Type = TransactionResult.ResultType.Error.ToString(),
-                    Message = Messages.ErrorTransactionMessage,
-                    Exception = e
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
                 };
             }
         }
 
         public IQueryable<Brand> ReadAll() =>
-            _repository.ReadAll();
+            _genericRepo.ReadAll();
 
         public async Task<BrandViewModel> ReadAsync(int Id)
         {
-            var brand = await _repository.ReadAsync(Id);
+            var brand = await _genericRepo.ReadAsync(Id);
             return _mapper.Map<BrandViewModel>(brand);
         }
 
-        public async Task<TransactionResult> UpdateAsync(BrandViewModel model, ModelStateDictionary modelState)
+        public async Task<TransactionResult> UpdateAsync(BrandViewModel model)
         {
             try
             {
-                if (modelState.IsValid)
+                var brand = _mapper.Map<Brand>(model);
+                var validationResult = await _brandRepo.UpdateValidationAsync(brand);
+                if (validationResult.Type == ResultType.Error.ToString())
+                    return validationResult;
+
+                await _genericRepo.UpdateAsync(brand);
+                return new TransactionResult
                 {
-                    var brand = _mapper.Map<Brand>(model);
-                    await _repository.UpdateAsync(brand);
-                    return new TransactionResult
-                    {
-                        Type = TransactionResult.ResultType.Success.ToString(),
-                        Message = Messages.SuccessfulTransactionMessage
-                    };
-                }
-                throw new Exception();
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+
             }
-            catch (Exception e)
+            catch
             {
                 return new TransactionResult
                 {
-                    Type = TransactionResult.ResultType.Error.ToString(),
-                    Message = Messages.ErrorTransactionMessage,
-                    Exception = e
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
                 };
             }
         }
