@@ -48,7 +48,7 @@ namespace Silverbrain.OnlineShop.Services
             {
                 using (var context = serviceScope.ServiceProvider.GetRequiredService<OnlineShopDbContext>())
                 {
-                    context.Database.Migrate();
+                    //context.Database.Migrate();
                 }
             }
         }
