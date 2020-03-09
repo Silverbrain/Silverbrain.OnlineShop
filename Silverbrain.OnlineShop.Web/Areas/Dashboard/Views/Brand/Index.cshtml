@@ -157,12 +157,9 @@ ${msg}
         })
         .then((value) => {
             if (value === "confirm") {
-                $.ajax({
+                $.post({
                     url: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)",
                     data: { Id: dataItem.Id },
-                    processData: false,
-                    contentType: false,
-                    type: 'POST',
                     success: function (result) {
                         if (result) {
                             switch (result.Type) {
@@ -176,6 +173,9 @@ ${msg}
                                     break;
                             }
                         }
+                    },
+                    error: function (errorData) {
+                        console.error(errorData);
                     }
                 });
             }
