@@ -31,8 +31,8 @@ namespace Silverbrain.OnlineShop.Services
         {
             try
             {
+                var validationResult = await _brandRepo.CreateValidationAsync(model);
                 var brand = _mapper.Map<Brand>(model);
-                var validationResult = await _brandRepo.CreateValidationAsync(brand);
                 if (validationResult.Type == ResultType.Error.ToString())
                     return validationResult;
 
@@ -87,8 +87,8 @@ namespace Silverbrain.OnlineShop.Services
         {
             try
             {
+                var validationResult = await _brandRepo.UpdateValidationAsync(model);
                 var brand = _mapper.Map<Brand>(model);
-                var validationResult = await _brandRepo.UpdateValidationAsync(brand);
                 if (validationResult.Type == ResultType.Error.ToString())
                     return validationResult;
 
@@ -100,7 +100,7 @@ namespace Silverbrain.OnlineShop.Services
                 };
 
             }
-            catch
+            catch(Exception e)
             {
                 return new TransactionResult
                 {

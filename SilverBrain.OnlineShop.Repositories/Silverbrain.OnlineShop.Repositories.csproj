@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Silverbrain.OnlineShop.DataLayer\Silverbrain.OnlineShop.DataLayer.csproj" />
     <ProjectReference Include="..\Silverbrain.OnlineShop.Entities\Silverbrain.OnlineShop.Entities.csproj" />
     <ProjectReference Include="..\SilverBrain.OnlineShop.Resources\Silverbrain.OnlineShop.Resources.csproj" />
+    <ProjectReference Include="..\SilverBrain.OnlineShop.ViewModels\Silverbrain.OnlineShop.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>
