@@ -1,29 +1,7 @@
-﻿@model BrandViewModel
+﻿@{
+    Layout = "~/Areas/Dashboard/Views/Brand/_ButtonLayout.cshtml";
+}
+@model BrandViewModel
 
-<form method="post" id="brandform" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionUpdate">
-
-    <input type="hidden" asp-for="Id" value="@Model.Id" />
-
-    <div class="col-12 mb-20">
-        <label asp-for="Title">@Fields.TitleInput</label>
-        <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value="@Model.Title">
-    </div>
-
-    <!--File Upload-->
-    @*<div class="col-12 mb-20">
-            <label for="formLayoutFile2">@Fields.UploadFile</label>
-            <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
-        </div>*@
-    <!--File Upload-End-->
-
-    <div id="submitButton" class="col-12 mb-20">
-        <input type="button" value="@Fields.SaveButton" onclick="submitForm('brandform')" class="btn btn-outline-success" />
-        <input type="button" value="@Fields.CancelButton" onclick="getCreateForm()" class="btn btn-outline-danger" />
-    </div>
-</form>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-        $.validator.unobtrusive.parse("#brandform");
-    });
-</script>
+<button id="updatebtn" type="button" onclick="submitForm('brandform', this); return false;" class="btn btn-outline-success" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionUpdate" asp-area="@Constants.AreaManagement">@Fields.SaveButton</button>
+<input type="button" value="@Fields.CancelButton" onclick="getCreateForm()" class="btn btn-outline-danger" />

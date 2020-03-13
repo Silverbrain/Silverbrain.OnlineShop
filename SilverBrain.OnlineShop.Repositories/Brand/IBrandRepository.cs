@@ -6,7 +6,7 @@ namespace Silverbrain.OnlineShop.Repositories.Brand
 {
     public interface IBrandRepository
     {
-        Task<TransactionResult> CreateValidationAsync(BrandViewModel brand);
-        Task<TransactionResult> UpdateValidationAsync(BrandViewModel brand);
+        Task<bool> CreateValidationAsync(BrandViewModel brand);
+        Task<bool> UpdateValidationAsync(BrandViewModel brand);
     }
 }

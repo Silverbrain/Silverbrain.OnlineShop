@@ -1,4 +1,6 @@
 (function ($) {
+    kendo.culture("fa-IR");
+
     "use strict";
 /*--
     Commons Variables

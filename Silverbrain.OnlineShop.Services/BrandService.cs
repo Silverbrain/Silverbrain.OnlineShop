@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Silverbrain.OnlineShop.Common;
 using Silverbrain.OnlineShop.Entities.Enums;
 using Silverbrain.OnlineShop.Entities.Models;
@@ -8,7 +7,6 @@ using Silverbrain.OnlineShop.Repositories;
 using Silverbrain.OnlineShop.Repositories.Brand;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -33,10 +31,14 @@ namespace Silverbrain.OnlineShop.Services
             {
                 var validationResult = await _brandRepo.CreateValidationAsync(model);
                 var brand = _mapper.Map<Brand>(model);
-                if (validationResult.Type == ResultType.Error.ToString())
-                    return validationResult;
+                if (!validationResult)
+                    return new TransactionResult
+                    {
+                        Type = ResultType.Error.ToString(),
+                        Message = Messages.ItemExistsErrorMessage
+                    };
 
-                await _genericRepo.CreatAsync(brand);
+                await _genericRepo.UpdateAsync(brand);
                 return new TransactionResult
                 {
                     Type = ResultType.Success.ToString(),
@@ -89,8 +91,12 @@ namespace Silverbrain.OnlineShop.Services
             {
                 var validationResult = await _brandRepo.UpdateValidationAsync(model);
                 var brand = _mapper.Map<Brand>(model);
-                if (validationResult.Type == ResultType.Error.ToString())
-                    return validationResult;
+                if (!validationResult)
+                    return new TransactionResult
+                    {
+                        Type = ResultType.Error.ToString(),
+                        Message = Messages.ErrorTransactionMessage
+                    };
 
                 await _genericRepo.UpdateAsync(brand);
                 return new TransactionResult
@@ -98,9 +104,8 @@ namespace Silverbrain.OnlineShop.Services
                     Type = ResultType.Success.ToString(),
                     Message = Messages.SuccessfulTransactionMessage
                 };
-
             }
-            catch(Exception e)
+            catch
             {
                 return new TransactionResult
                 {

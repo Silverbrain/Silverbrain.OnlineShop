@@ -40,7 +40,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
         // POST: Brand/Create
@@ -81,7 +81,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         public async Task<ActionResult> Update(int Id)
         {
             var brand = await _brandService.ReadAsync(Id);
-            return PartialView(brand);
+            return View(brand);
         }
 
         // POST: Brand/Edit/5
@@ -101,7 +101,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         // POST: Brand/Delete/5
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<IActionResult> Delete(int Id)
         {

@@ -44,13 +44,14 @@
                 </pageable>
                 <sortable enabled="true" />
                 <columns>
+                    <column selectable="true" width="50" />
                     <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
                     @*<column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />*@
 
                     <column>
                         <commands>
-                            <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow"></column-command>
-                            <column-command name="delete" text="@Fields.DeleteButton" click="openDeleteWindow"></column-command>
+                            <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow" icon-class="ti-pencil-alt icon" template="#=buttonTemplate(data)#"></column-command>
+                            <column-command name="delete" text="@Fields.DeleteButton" click="openDeleteWindow" icon-class="ti-trash icon" template="#=buttonTemplate(data)#"></column-command>
                         </commands>
                     </column>
                 </columns>
@@ -60,10 +61,10 @@
 </div>
 
 <script type="text/javascript">
-	function submitForm(divName) {
-
+    function submitForm(divName, e) {
         var submitdata = new FormData($("#"+divName)[0]);
-        var formAction = $("#"+divName).attr("action");
+        //var formAction = $("#"+btnName).attr("action");
+        var formAction = e.formAction;
 
         if ($("#" + divName).valid() || action != null) {
 
@@ -90,22 +91,62 @@
             });
         }
     }
+    function buttonTemplate(data) {
+        //return `<a role="button" class="k-button k-button-icontext ${data.className}" href="#"><span class="${data.iconClass}"></span>${data.text}</a>`
+        return `<a role="button" class="btn ${data.className}" href="#"><span class="${data.iconClass}"></span></a>`
+    }
 	@*function template(data) {
 		let path = String.raw`../@Constants.PathBrandImageRead/` + data.Image;
 		return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
 <input class='imgName' type='hidden' value='${data.Image}'/>`
 	}*@
     function addalert(msg, type) {
-        let $box = $('#brand-form-container');
-        $box.append(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
-${msg}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close" hidden>
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>`);
-        setTimeout(function () {
-            $('.alert').alert('close');
-        }, 5000);
+//        let $box = $('#brand-form-container');
+//        $box.append(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
+//${msg}
+//    <button type="button" class="close" data-dismiss="alert" aria-label="Close" hidden>
+//        <span aria-hidden="true">&times;</span>
+//    </button>
+//</div>`);
+        toastr.options = {
+            tapToDismiss: true,
+            toastClass: 'toast',
+            containerId: 'toast-container',
+            debug: false,
+            closeButton: false,
+            showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
+            showDuration: 300,
+            showEasing: 'swing', //swing and linear are built into jQuery
+            onShown: undefined,
+            hideMethod: 'fadeOut',
+            hideDuration: 1000,
+            hideEasing: 'swing',
+            onHidden: undefined,
+            closeMethod: false,
+            closeDuration: false,
+            closeEasing: false,
+            closeOnHover: true,
+
+            extendedTimeOut: 0,
+            iconClass: 'toast-info',
+            positionClass: 'toast-top-right',
+            timeOut: 0, // Set timeOut and extendedTimeOut to 0 to make it sticky
+            titleClass: 'toast-title',
+            messageClass: 'toast-message',
+            escapeHtml: false,
+            target: 'body',
+            closeHtml: '<button type="button"><span class="ti-close"></span></button>',
+            closeClass: 'toast-close-button',
+            newestOnTop: true,
+            preventDuplicates: false,
+            progressBar: false,
+            progressClass: 'toast-progress',
+            rtl: true
+        };
+        toastr.error(msg, 'خطا');
+        toastr.success(msg, 'موفقیت');
+        toastr.warning(msg, 'اخطار');
+        toastr.info(msg, 'اطلاعات');
     }
 	function getCreateForm() {
         $.get({
@@ -175,7 +216,7 @@ ${msg}
                         }
                     },
                     error: function (errorData) {
-                        console.error(errorData);
+                        console.log(errorData);
                     }
                 });
             }
@@ -185,23 +226,6 @@ ${msg}
         getCreateForm();
 		$.validator.unobtrusive.parse("#brandform");
     });
-
-    @*$(function () {
-        $(BrandForm).on("click", '#createBrand', event, function (e) {
-			e.preventDefault();
-			postBrand("@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)");
-		});
-
-		$(BrandForm).on('click', '#saveBrand', event, function (e) {
-			e.preventDefault();
-			postBrand("@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)");
-		});
-
-		$(BrandForm).on('click', '#cancel', event, function (e) {
-			e.preventDefault();
-			getCreateForm();
-		});
-	});*@
 </script>
 
 <style type="text/css">
@@ -213,6 +237,21 @@ ${msg}
         background-position: center center;
         vertical-align: middle;
         line-height: 50px;
-        /*box-shadow: inset 0 0 1px #999, inset 0 0 10px rgba(0,0,0,.2);*/
+    }
+
+    .k-grid-edit:hover {
+        /*border-color: #28a745;*/
+        color: #28a745;
+    }
+
+    .k-grid-delete:hover {
+        /*border-color: #dc3545;*/
+        color: #dc3545;
+    }
+
+    .icon {
+        margin: 0.2em;
+        font-weight: 100;
+        font-size: 1.25em;
     }
 </style>

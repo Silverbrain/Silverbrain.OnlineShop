@@ -4470,8 +4470,20 @@ a.badge-dark.badge-outline {
           transform: rotate(360deg);
 }
 
-#toast-container .toast .toast-title {
+#toast-container .toast {
   font-size: 16px;
+}
+
+.toast .toast-title{
+    font-size: 1.5em;
+}
+
+.toast > span {
+    display: inline;
+    position: fixed;
+    left: 0.5em;
+    top: calc(50% - 1em/2);
+    font-size: 2em;
 }
 
 #toast-container .toast .toast-message > div {
@@ -4534,19 +4546,23 @@ a.badge-dark.badge-outline {
 }
 
 #toast-container .toast.toast-success {
-  background-color: #29db2d;
+  background-color: #d4edda;
+  border-color: #155724;
 }
 
 #toast-container .toast.toast-info {
-  background-color: #17a2b8;
+    background-color: #d1ecf1;
+    border-color: #0c5460;
 }
 
 #toast-container .toast.toast-warning {
-  background-color: #ff9666;
+    background-color: #fff3cd;
+    border-color: #856404;
 }
 
 #toast-container .toast.toast-error {
-  background-color: #fd427c;
+  background-color: #f8d7da;
+  border-color: #721c24;
 }
 
 /*----------------------------------------*/

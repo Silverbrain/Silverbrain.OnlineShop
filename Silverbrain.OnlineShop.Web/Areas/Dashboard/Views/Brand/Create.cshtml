@@ -1,28 +1,6 @@
-﻿@model BrandViewModel
+﻿@{
+    Layout = "~/Areas/Dashboard/Views/Brand/_ButtonLayout.cshtml";
+}
+@model BrandViewModel
 
-<form method="post" id="brandform" asp-controller="Brand" asp-action="Create">
-    <input type="hidden" asp-for="Id" />
-
-    <div class="col-12 mb-20">
-        <label asp-for="Title">@Fields.TitleInput</label>
-        <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput">
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
-
-    <!--File Upload-->
-    @*<div class="col-12 mb-20">
-            <label for="formLayoutFile2">@Fields.UploadFile</label>
-            <input type="file" id="imageform" class="dropify" asp-for="ImageFormFile">
-        </div>*@
-    <!--File Upload-End-->
-    <div id="submitButton" class="col-12 mb-20">
-        <input type="button" value="@Fields.SendButton" onclick="submitForm('brandform')" class="btn btn-primary" />
-    </div>
-
-</form>
-
-<script type="text/javascript">
-    $(document).ready(function () {
-		$.validator.unobtrusive.parse("#brandform");
-    });
-</script>
+    <button type="button" id="createbtn" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionCreate" asp-area="@Constants.AreaManagement">@Fields.SendButton</button>
