@@ -108,6 +108,22 @@ body {
   position: relative;
 }
 
+td[role="gridcell"] {
+    font-size: 1rem;
+    font-family: iransansweb;
+    font-weight: 400;
+    line-height: 1em;
+}
+
+input.input-validation-error {
+    margin-bottom: 1em;
+}
+
+span.field-validation-error > span {
+    margin-right: 1.2em;
+    display: list-item;
+}
+
 body[dir="rtl"] {
   text-align: right;
 }

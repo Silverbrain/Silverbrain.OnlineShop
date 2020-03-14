@@ -48,7 +48,7 @@
                     <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
                     @*<column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />*@
 
-                    <column>
+                    <column width="150">
                         <commands>
                             <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow" icon-class="ti-pencil-alt icon" template="#=buttonTemplate(data)#"></column-command>
                             <column-command name="delete" text="@Fields.DeleteButton" click="openDeleteWindow" icon-class="ti-trash icon" template="#=buttonTemplate(data)#"></column-command>
@@ -61,33 +61,52 @@
 </div>
 
 <script type="text/javascript">
-    function submitForm(divName, e) {
-        var submitdata = new FormData($("#"+divName)[0]);
+    function success(result) {
+        if (result) {
+            switch (result.Type) {
+                case 'Success':
+                    refreshGrid();
+                    getCreateForm();
+                    addalert(result.Message, 'success', '@Html.Raw(Fields.ToasterSuccessTitle)');
+                    break;
+                case 'Error':
+                    addalert(result.Message, 'error', '@Html.Raw(Fields.ToasterErrorTitle)');
+                    break;
+            }
+        }
+    }
+    function submitForm(divName, e, data = null) {
+        var submitdata = data !== null ? data : new FormData($("#"+divName)[0]);
         //var formAction = $("#"+btnName).attr("action");
         var formAction = e.formAction;
 
-        if ($("#" + divName).valid() || action != null) {
+        if (data !== null) {
+            $.post({
+                url: formAction,
+                data: submitdata,
+                success: function (result) {
+                    success(result);
+                },
+                error: function (errorData) {
+                    console.log(errorData);
+                }
+            });
+            return;
+        }
 
+        if ($("#" + divName).valid()) {
             $.ajax({
                 url: formAction,
                 data: submitdata,
                 processData: false,
-                contentType: false,
+                contentType:  false,
                 type: 'POST',
                 success: function (result) {
-                    if (result) {
-                        switch (result.Type) {
-                            case 'Success':
-                                refreshGrid();
-                                getCreateForm();
-                                addalert(result.Message, 'success');
-                                break;
-                            case 'Error':
-                                addalert(result.Message, 'danger');
-                                break;
-                        }
+                    success(result);
+                },
+                error: function (errorData) {
+                        console.log(errorData);
                     }
-                }
             });
         }
     }
@@ -100,53 +119,23 @@
 		return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
 <input class='imgName' type='hidden' value='${data.Image}'/>`
 	}*@
-    function addalert(msg, type) {
-//        let $box = $('#brand-form-container');
-//        $box.append(`<div class="alert alert-${type} alert-dismissible fade show" role="alert">
-//${msg}
-//    <button type="button" class="close" data-dismiss="alert" aria-label="Close" hidden>
-//        <span aria-hidden="true">&times;</span>
-//    </button>
-//</div>`);
+    function addalert(msg, type, title) {
         toastr.options = {
             tapToDismiss: true,
-            toastClass: 'toast',
-            containerId: 'toast-container',
-            debug: false,
             closeButton: false,
-            showMethod: 'fadeIn', //fadeIn, slideDown, and show are built into jQuery
-            showDuration: 300,
-            showEasing: 'swing', //swing and linear are built into jQuery
-            onShown: undefined,
-            hideMethod: 'fadeOut',
-            hideDuration: 1000,
-            hideEasing: 'swing',
-            onHidden: undefined,
-            closeMethod: false,
-            closeDuration: false,
-            closeEasing: false,
-            closeOnHover: true,
-
-            extendedTimeOut: 0,
-            iconClass: 'toast-info',
-            positionClass: 'toast-top-right',
-            timeOut: 0, // Set timeOut and extendedTimeOut to 0 to make it sticky
-            titleClass: 'toast-title',
-            messageClass: 'toast-message',
-            escapeHtml: false,
-            target: 'body',
+            showDuration: 100,
+            hideDuration: 100,
+            extendedTimeOut: 200,
+            timeOut: 3000, // Set timeOut and extendedTimeOut to 0 to make it sticky
             closeHtml: '<button type="button"><span class="ti-close"></span></button>',
             closeClass: 'toast-close-button',
             newestOnTop: true,
             preventDuplicates: false,
             progressBar: false,
-            progressClass: 'toast-progress',
-            rtl: true
+            rtl: true,
+            positionClass: 'toast-top-center'
         };
-        toastr.error(msg, 'خطا');
-        toastr.success(msg, 'موفقیت');
-        toastr.warning(msg, 'اخطار');
-        toastr.info(msg, 'اطلاعات');
+        toastr[type](msg,title);
     }
 	function getCreateForm() {
         $.get({
@@ -182,6 +171,7 @@
 	function openDeleteWindow(e) {
 		e.preventDefault();
         let dataItem = getDataItem(this, e);
+        let $action = $('<button />');
 
         swal({
             text: "@Html.Raw(Messages.DeleteCautionMessage)",
@@ -198,27 +188,13 @@
         })
         .then((value) => {
             if (value === "confirm") {
-                $.post({
-                    url: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)",
-                    data: { Id: dataItem.Id },
-                    success: function (result) {
-                        if (result) {
-                            switch (result.Type) {
-                                case 'Success':
-                                    refreshGrid();
-                                    getCreateForm();
-                                    addalert(result.Message, 'success');
-                                    break;
-                                case 'Error':
-                                    addalert(result.Message, 'danger');
-                                    break;
-                            }
-                        }
-                    },
-                    error: function (errorData) {
-                        console.log(errorData);
-                    }
-                });
+                $action.formAction = "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)";
+                let $token = $('form > input[name="__RequestVerificationToken"]').val();
+                let $data = {
+                    __RequestVerificationToken: $token,
+                    Id: dataItem.Id
+                };
+                submitForm('brandform' , $action, $data);
             }
         });
     }

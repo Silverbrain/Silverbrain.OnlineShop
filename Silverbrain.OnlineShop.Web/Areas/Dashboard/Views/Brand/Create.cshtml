@@ -1,6 +1,6 @@
 ﻿@{
-    Layout = "~/Areas/Dashboard/Views/Brand/_ButtonLayout.cshtml";
+    Layout = "~/Areas/Dashboard/Views/Brand/_FormLayout.cshtml";
 }
 @model BrandViewModel
 
-    <button type="button" id="createbtn" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionCreate" asp-area="@Constants.AreaManagement">@Fields.SendButton</button>
+<button type="button" id="createbtn" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionCreate" asp-area="@Constants.AreaManagement">@Fields.SaveButton</button>

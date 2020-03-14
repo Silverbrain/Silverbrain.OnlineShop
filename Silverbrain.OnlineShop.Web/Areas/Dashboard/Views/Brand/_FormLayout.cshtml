@@ -4,13 +4,14 @@
 @model BrandViewModel
 
 <form method="post" id="brandform">
-
     <input type="hidden" asp-for="Id" value=@(Model != null ? $"{Model.Id}" : "") />
 
     <div class="col-12 mb-20">
         <label asp-for="Title">@Fields.TitleInput</label>
         <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value=@(Model != null ? $"{Model.Title}" : "")>
         <span asp-validation-for="Title" class="text-danger"></span>
+        <br />
+        @RenderBody()
     </div>
 
     <!--File Upload-->
@@ -20,7 +21,6 @@
         </div>*@
     <!--File Upload-End-->
 
-    @RenderBody()
 </form>
 
 <script type="text/javascript">

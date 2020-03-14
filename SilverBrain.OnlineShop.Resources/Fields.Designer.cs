@@ -169,6 +169,24 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to خطا.
+        /// </summary>
+        public static string ToasterErrorTitle {
+            get {
+                return ResourceManager.GetString("ToasterErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to موفقیت.
+        /// </summary>
+        public static string ToasterSuccessTitle {
+            get {
+                return ResourceManager.GetString("ToasterSuccessTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to آپلود فایل.
         /// </summary>
         public static string UploadFile {

@@ -13745,7 +13745,7 @@ button.toast-close-button {
 }
 
 .toast-top-center {
-    top: 0;
+    top: 1em;
     right: 0;
     width: 100%
 }
