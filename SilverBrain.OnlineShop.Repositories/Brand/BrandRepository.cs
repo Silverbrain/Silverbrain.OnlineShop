@@ -17,21 +17,13 @@ namespace Silverbrain.OnlineShop.Repositories.Brand
             _dbContext = dbContext;
         }
 
-        public async Task<bool> IsUnique(string title)
-        {
-            var result = await _dbContext.Brands.AsNoTracking().AnyAsync(b => b.Title.Equals(title));
-            return !result;
-        }
+        public async Task<bool> IsUnique(BrandViewModel brand)
+           => !await _dbContext.Brands.AsNoTracking().AnyAsync(b => b.Id != brand.Id &&  b.Title.Equals(brand.Title));
 
         public async Task<bool> CreateValidationAsync(BrandViewModel brand) =>
-            await IsUnique(brand.Title) ? true : false;
+            await IsUnique(brand);
 
         public async Task<bool> UpdateValidationAsync(BrandViewModel brand)
-        {
-            if (await _dbContext.Brands.AnyAsync(b => b.Id == brand.Id && b.Title == brand.Title))
-                return true;
-
-            return await IsUnique(brand.Title) ? true : false;
-        }
+        => await IsUnique(brand);
     }
 }
