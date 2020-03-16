@@ -126,6 +126,9 @@
   <data name="CreateBrand" xml:space="preserve">
     <value>ایجاد برند</value>
   </data>
+  <data name="EditBrand" xml:space="preserve">
+    <value>تغییر برند</value>
+  </data>
   <data name="UsersForm" xml:space="preserve">
     <value>کاربران</value>
   </data>

@@ -1,0 +1,6 @@
+﻿@* this partial view is going to contain create part of form  *@
+@model BrandViewModel
+
+<partial name="_CreateOrEdit" for="@Model"/>
+<button type="button" id="createbtn" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionCreate" asp-area="@Constants.AreaManagement">@Fields.SaveButton</button>
+<input type="button" value="@Fields.ClearButton" onclick="getForm('@Constants.ActionCreate', '@Constants.ControllerBrand')" class="btn btn-warning" />

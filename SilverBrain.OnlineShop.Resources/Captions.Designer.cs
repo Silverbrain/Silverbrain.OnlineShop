@@ -88,6 +88,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to تغییر برند.
+        /// </summary>
+        public static string EditBrand {
+            get {
+                return ResourceManager.GetString("EditBrand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to کاربران.
         /// </summary>
         public static string UsersForm {

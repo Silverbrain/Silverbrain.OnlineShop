@@ -1,7 +1,5 @@
-﻿@{
-    Layout = "~/Areas/Dashboard/Views/Brand/_FormLayout.cshtml";
-}
-@model BrandViewModel
+﻿@model BrandViewModel
 
+<partial name="_CreateOrEdit" model="@Model" />
 <button id="updatebtn" type="button" onclick="submitForm('brandform', this); return false;" class="btn btn-outline-success" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionUpdate" asp-area="@Constants.AreaManagement">@Fields.SaveButton</button>
-<input type="button" value="@Fields.CancelButton" onclick="getCreateForm()" class="btn btn-outline-danger" />
+<input type="button" value="@Fields.CancelButton" onclick="getForm('@Constants.ActionCreate', '@Constants.ControllerBrand')" class="btn btn-outline-danger" />

@@ -123,6 +123,9 @@
   <data name="CautionTitle" xml:space="preserve">
     <value>اخطار</value>
   </data>
+  <data name="ClearButton" xml:space="preserve">
+    <value>شروع مجدد</value>
+  </data>
   <data name="ConfirmButton" xml:space="preserve">
     <value>تایید</value>
   </data>

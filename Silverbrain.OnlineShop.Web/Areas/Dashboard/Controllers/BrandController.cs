@@ -40,7 +40,8 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            TempData["form-title"] = Captions.CreateBrand;
+            return PartialView("_Create");
         }
 
         // POST: Brand/Create
@@ -81,7 +82,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         public async Task<ActionResult> Update(int Id)
         {
             var brand = await _brandService.ReadAsync(Id);
-            return View(brand);
+            return PartialView("_Update", brand);
         }
 
         // POST: Brand/Edit/5

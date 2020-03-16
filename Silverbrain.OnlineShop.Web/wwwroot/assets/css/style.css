@@ -108,6 +108,12 @@ body {
   position: relative;
 }
 
+th.k-header > a.k-link {
+    font-family: IRANYekan;
+    font-size: 1.3em;
+    font-weight: 700;
+}
+
 td[role="gridcell"] {
     font-size: 1rem;
     font-family: iransansweb;
@@ -864,9 +870,10 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 }
 
 .box .box-head .title {
-  font-size: 16px;
-  font-weight: 600;
-  margin: 0;
+    font-family: IRANYekan;
+    font-size: 1.5em;
+    font-weight: 700;
+    margin: 0;
 }
 
 .box .box-head p {
@@ -4496,7 +4503,7 @@ a.badge-dark.badge-outline {
 
 .toast > span {
     display: inline;
-    position: fixed;
+    position: absolute;
     left: 0.5em;
     top: calc(50% - 1em/2);
     font-size: 2em;

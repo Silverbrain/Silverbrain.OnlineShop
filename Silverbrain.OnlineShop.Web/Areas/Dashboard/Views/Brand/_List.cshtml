@@ -1,0 +1,34 @@
+﻿<div class="k-rtl">
+    <kendo-grid name="grid">
+        <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
+            <transport>
+                <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+            </transport>
+            <schema>
+                <model id="@nameof(BrandViewModel.Id)">
+                    <fields>
+                        <field name="@nameof(BrandViewModel.Id)" type="number"></field>
+                        <field name="@nameof(BrandViewModel.Title)"></field>
+                    </fields>
+                </model>
+            </schema>
+        </datasource>
+        <filterable enabled="true" />
+        <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
+        </pageable>
+        <sortable enabled="true" />
+        <columns>
+            <column selectable="true" width="50" />
+            <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
+            @*<column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />*@
+
+            <column width="150">
+                <commands>
+                    <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow" icon-class="ti-pencil-alt icon" template="#=buttonTemplate(data)#"></column-command>
+                    <column-command name="delete" text="@Fields.DeleteButton" click="openDeleteWindow" icon-class="ti-trash icon" template="#=buttonTemplate(data)#"></column-command>
+                </commands>
+            </column>
+        </columns>
+    </kendo-grid>
+</div>

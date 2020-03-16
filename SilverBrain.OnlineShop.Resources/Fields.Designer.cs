@@ -79,6 +79,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to شروع مجدد.
+        /// </summary>
+        public static string ClearButton {
+            get {
+                return ResourceManager.GetString("ClearButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تایید.
         /// </summary>
         public static string ConfirmButton {

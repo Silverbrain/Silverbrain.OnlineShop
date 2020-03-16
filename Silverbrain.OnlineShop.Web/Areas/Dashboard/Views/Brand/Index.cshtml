@@ -10,9 +10,8 @@
         <h4 class="title">@Captions.CreateBrand</h4>
     </div>
     <div id="box-body-container" class="box-body">
-        <div id="brand-form-container">
-
-        </div>
+        <form id="brandform" method="post">
+        </form>
     </div>
 </div>
 
@@ -23,40 +22,7 @@
         <h4 class="title">@Captions.BrandForm</h4>
     </div>
     <div class="box-body">
-        <div class="k-rtl">
-            <kendo-grid name="grid">
-                <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
-                    <transport>
-                        <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                        <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                    </transport>
-                    <schema>
-                        <model id="@nameof(BrandViewModel.Id)">
-                            <fields>
-                                <field name="@nameof(BrandViewModel.Id)" type="number"></field>
-                                <field name="@nameof(BrandViewModel.Title)"></field>
-                            </fields>
-                        </model>
-                    </schema>
-                </datasource>
-                <filterable enabled="true" />
-                <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
-                </pageable>
-                <sortable enabled="true" />
-                <columns>
-                    <column selectable="true" width="50" />
-                    <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
-                    @*<column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />*@
-
-                    <column width="150">
-                        <commands>
-                            <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow" icon-class="ti-pencil-alt icon" template="#=buttonTemplate(data)#"></column-command>
-                            <column-command name="delete" text="@Fields.DeleteButton" click="openDeleteWindow" icon-class="ti-trash icon" template="#=buttonTemplate(data)#"></column-command>
-                        </commands>
-                    </column>
-                </columns>
-            </kendo-grid>
-        </div>
+        <partial name="_List.cshtml" />
     </div>
 </div>
 
@@ -66,7 +32,7 @@
             switch (result.Type) {
                 case 'Success':
                     refreshGrid();
-                    getCreateForm();
+                    getForm('@Constants.ActionCreate', '@Constants.ControllerBrand');
                     addalert(result.Message, 'success', '@Html.Raw(Fields.ToasterSuccessTitle)');
                     break;
                 case 'Error':
@@ -111,7 +77,6 @@
         }
     }
     function buttonTemplate(data) {
-        //return `<a role="button" class="k-button k-button-icontext ${data.className}" href="#"><span class="${data.iconClass}"></span>${data.text}</a>`
         return `<a role="button" class="btn ${data.className}" href="#"><span class="${data.iconClass}"></span></a>`
     }
 	@*function template(data) {
@@ -125,10 +90,10 @@
             closeButton: false,
             showDuration: 100,
             hideDuration: 100,
-            extendedTimeOut: 200,
-            timeOut: 3000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-            closeHtml: '<button type="button"><span class="ti-close"></span></button>',
-            closeClass: 'toast-close-button',
+            extendedTimeOut: 0,
+            timeOut: 0, // Set timeOut and extendedTimeOut to 0 to make it sticky
+            //closeHtml: '<button type="button"><span class="ti-close"></span></button>',
+            //closeClass: 'toast-close-button',
             newestOnTop: true,
             preventDuplicates: false,
             progressBar: false,
@@ -137,24 +102,29 @@
         };
         toastr[type](msg,title);
     }
-	function getCreateForm() {
+    function getForm(action, controller, id = null) {
+        let $url = (id !== null)
+            ? `/@Constants.AreaManagement/${controller}/${action}`
+            : `/@Constants.AreaManagement/${controller}/${action}/${id}`;
+        let $data = { Id: id };
+
         $.get({
-            url: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
+            url: $url,
+            data: $data,
             success: function(data) {
-                $('#brand-form-container').html(data);
+                $('#brandform').html(data);
+                switch (action) {
+                    case "@Constants.ActionCreate":
+                        $('.box-head .title').html('@Captions.CreateBrand');
+                        break;
+                    case "@Constants.ActionUpdate":
+                        $('.box-head .title').html('@Captions.EditBrand');
+                        break;
+                }
             },
             async: false
         });
-	}
-	function getUpdateForm(id) {
-        $.get({
-            url: `@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)/${id}`,
-            success: function (data) {
-                $('#brand-form-container').html(data);
-            },
-            async: false
-        });
-	}
+    }
 	function refreshGrid() {
 		$("#grid").data("kendoGrid").dataSource.read();
     }
@@ -166,7 +136,7 @@
 	}
 	function openEditWindow(e) {
 		let dataItem = getDataItem(this, e);
-		getUpdateForm(dataItem.Id);
+		getForm('@Constants.ActionUpdate', '@Constants.ControllerBrand',dataItem.Id);
 	}
 	function openDeleteWindow(e) {
 		e.preventDefault();
@@ -199,7 +169,7 @@
         });
     }
     $(document).ready(function () {
-        getCreateForm();
+        getForm('@Constants.ActionCreate', '@Constants.ControllerBrand');
 		$.validator.unobtrusive.parse("#brandform");
     });
 </script>

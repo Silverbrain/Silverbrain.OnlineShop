@@ -1,0 +1,8 @@
+﻿@model BrandViewModel
+
+@Html.AntiForgeryToken()
+<input type="hidden" asp-for="Id" value=@(Model != null ? $"{Model.Id}" : "") />
+<label asp-for="Title">@Fields.TitleInput</label>
+<input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value=@(Model != null ? $"{Model.Title}" : "")>
+<span asp-validation-for="Title" class="text-danger"></span>
+<br />
