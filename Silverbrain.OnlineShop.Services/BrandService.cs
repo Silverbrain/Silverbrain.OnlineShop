@@ -44,12 +44,7 @@ namespace Silverbrain.OnlineShop.Services
                         Message = Messages.ItemExistsErrorMessage
                     };
 
-                await UpdateAsync(brand);
-                return new TransactionResult
-                {
-                    Type = ResultType.Success.ToString(),
-                    Message = Messages.SuccessfulTransactionMessage
-                };
+                return await CreatAsync(brand);
             }
             catch
             {
@@ -82,12 +77,7 @@ namespace Silverbrain.OnlineShop.Services
                         Message = Messages.ErrorTransactionMessage
                     };
 
-                await UpdateAsync(brand);
-                return new TransactionResult
-                {
-                    Type = ResultType.Success.ToString(),
-                    Message = Messages.SuccessfulTransactionMessage
-                };
+                return await UpdateAsync(brand);
             }
             catch
             {

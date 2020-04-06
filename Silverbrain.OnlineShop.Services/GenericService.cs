@@ -9,23 +9,39 @@ using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
-    public class GenericService<TEntity,TKey> : IGenericService<TEntity, TKey>
+    public class GenericService<TEntity, TKey> : IGenericService<TEntity, TKey>
     where TEntity : class
-   
+
     {
         protected readonly OnlineShopDbContext _dbContext;
         protected readonly DbSet<TEntity> entities;
-         
+
         public GenericService(OnlineShopDbContext dbContext)
         {
             _dbContext = dbContext ?? throw new ArgumentException(nameof(dbContext));
             entities = _dbContext.Set<TEntity>();
         }
 
-        public async Task CreatAsync(TEntity entity)
+        public async Task<TransactionResult> CreatAsync(TEntity entity)
         {
-            await entities.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await entities.AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
+                return new TransactionResult
+                {
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+            }
+            catch
+            {
+                return new TransactionResult
+                {
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
+                };
+            }
         }
 
         public IQueryable<TEntity> ReadAll() =>
@@ -34,13 +50,27 @@ namespace Silverbrain.OnlineShop.Services
         public async Task<TEntity> ReadAsync(TKey Id) =>
             await entities.FindAsync(Id);
 
-
-        public async Task UpdateAsync(TEntity entity)
+        public async Task<TransactionResult> UpdateAsync(TEntity entity)
         {
-            entities.Update(entity);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                entities.Update(entity);
+                await _dbContext.SaveChangesAsync();
+                return new TransactionResult
+                {
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+            }
+            catch
+            {
+                return new TransactionResult
+                {
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
+                };
+            }
         }
-        
 
         public async Task<TransactionResult> DeleteAsync(TKey Id)
         {
@@ -63,8 +93,5 @@ namespace Silverbrain.OnlineShop.Services
                 };
             }
         }
-
-
-       
     }
 }

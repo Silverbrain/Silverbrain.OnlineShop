@@ -1,28 +1,26 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
-    public class AccountManagementServiceProvider : IAccountManagementService
+    public class AccountManagementServiceProvider : ApplicationUserService, IAccountManagementService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IGenericService<ApplicationUser,int> _repository;
 
         public AccountManagementServiceProvider(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IGenericService<ApplicationUser, int> repository)
+            OnlineShopDbContext dbContext) : base(dbContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
-            _repository = repository;
         }
 
         public async Task<SignInResult> LoginAsync(string userName, string password, bool isPersistent)
@@ -41,9 +39,9 @@ namespace Silverbrain.OnlineShop.Services
         }
 
         public async Task<ApplicationUser> GetAsync(string Id) =>
-            await _repository.ReadAsync(Convert.ToInt32(Id));
+            await ReadAsync(Id);
 
         public IQueryable<ApplicationUser> GetAll() =>
-            _repository.ReadAll();
+            ReadAll();
     }
 }
