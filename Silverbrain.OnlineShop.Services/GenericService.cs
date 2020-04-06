@@ -2,6 +2,7 @@
 using Silverbrain.OnlineShop.Common;
 using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Enums;
+using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.Resources;
 using System;
 using System.Linq;
