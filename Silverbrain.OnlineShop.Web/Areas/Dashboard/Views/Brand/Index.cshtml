@@ -7,10 +7,11 @@
 <!--<script src="~/assets/js/plugins/dropify/dropify.min.js"></script>-->
 <div class="box">
     <div class="box-head">
-        <h4 class="title">@Captions.CreateBrand</h4>
+        <h4 id="form-title" class="title">@Captions.CreateBrand</h4>
     </div>
     <div id="box-body-container" class="box-body">
         <form id="brandform" method="post">
+            <partial name="_Create" />
         </form>
     </div>
 </div>
@@ -22,7 +23,7 @@
         <h4 class="title">@Captions.BrandForm</h4>
     </div>
     <div class="box-body">
-        <partial name="_List.cshtml" />
+        <partial name="_List" />
     </div>
 </div>
 
@@ -72,7 +73,7 @@
                 },
                 error: function (errorData) {
                         console.log(errorData);
-                    }
+                }
             });
         }
     }
@@ -90,8 +91,8 @@
             closeButton: false,
             showDuration: 100,
             hideDuration: 100,
-            extendedTimeOut: 0,
-            timeOut: 0, // Set timeOut and extendedTimeOut to 0 to make it sticky
+            extendedTimeOut: 500,
+            timeOut: 3000, // Set timeOut and extendedTimeOut to 0 to make it sticky
             //closeHtml: '<button type="button"><span class="ti-close"></span></button>',
             //closeClass: 'toast-close-button',
             newestOnTop: true,
@@ -115,10 +116,10 @@
                 $('#brandform').html(data);
                 switch (action) {
                     case "@Constants.ActionCreate":
-                        $('.box-head .title').html('@Captions.CreateBrand');
+                        $('#form-title').html('@Captions.CreateBrand');
                         break;
                     case "@Constants.ActionUpdate":
-                        $('.box-head .title').html('@Captions.EditBrand');
+                        $('#form-title').html('@Captions.EditBrand');
                         break;
                 }
             },
@@ -169,7 +170,6 @@
         });
     }
     $(document).ready(function () {
-        getForm('@Constants.ActionCreate', '@Constants.ControllerBrand');
 		$.validator.unobtrusive.parse("#brandform");
     });
 </script>

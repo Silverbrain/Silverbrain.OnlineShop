@@ -3,15 +3,15 @@ using Silverbrain.OnlineShop.DataLayer;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Silverbrain.OnlineShop.Repositories
+namespace Silverbrain.OnlineShop.Services
 {
-    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
-        where TEntity : class
+    public class GenericService<TEntity> : IGenericService<TEntity>
+    where TEntity : class
     {
         private readonly OnlineShopDbContext _dbContext;
         private DbSet<TEntity> entities;
 
-        public GenericRepository(OnlineShopDbContext dbContext)
+        public GenericService(OnlineShopDbContext dbContext)
         {
             _dbContext = dbContext;
             entities = _dbContext.Set<TEntity>();

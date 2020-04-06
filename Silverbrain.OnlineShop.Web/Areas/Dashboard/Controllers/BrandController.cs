@@ -40,7 +40,6 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            TempData["form-title"] = Captions.CreateBrand;
             return PartialView("_Create");
         }
 

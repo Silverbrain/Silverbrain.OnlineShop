@@ -1,19 +1,22 @@
 ﻿.nav-panel {
     height: 54px;
-    background: #cd2a2a;
+    background: #ef394e;
     box-shadow: 0 1px rgba(0, 0, 0, .04), inset 0 -1px rgba(0, 0, 0, .04);
     color: #ffffff;
 }
+.nav-panel__logo svg {
+    fill:#ffffff
+}
 .btn-primary, .btn-primary.disabled, .btn-primary:disabled {
-    border-color: #ff0000;
-    background: #ff0000;
+    border-color: #ef394e;
+    background: #ef394e;
     color: #ffffff;
     fill: #ffffff;
 }
 .block-features__icon {
     width: 48px;
     height: 48px;
-    fill: #ff0000;
+    fill: #ef394e;
     margin-left: 20px;
 }
 .block-slideshow .owl-carousel .owl-dot.active {
