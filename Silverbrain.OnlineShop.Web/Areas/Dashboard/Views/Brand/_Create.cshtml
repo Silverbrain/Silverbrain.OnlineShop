@@ -2,5 +2,5 @@
 @model BrandViewModel
 
 <partial name="_CreateOrEdit" for="@Model"/>
-<input type="button" id="createbtn" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionCreate" asp-area="@Constants.AreaManagement" />
-<input type="button" value="@Fields.ClearButton" onclick="getForm('@Constants.ActionCreate', '@Constants.ControllerBrand')" class="btn btn-warning" />
+<input type="button" id="createbtn" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" formaction="@Constants.ControllerBrand/@Constants.ActionCreate"/>
+<input type="button" value="@Fields.ClearButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-warning" />

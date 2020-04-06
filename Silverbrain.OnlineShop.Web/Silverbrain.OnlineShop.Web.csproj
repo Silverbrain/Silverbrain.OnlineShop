@@ -50,6 +50,7 @@
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
     <Folder Include="wwwroot\assets\images\brands\" />
+    <Folder Include="wwwroot\assets\js\Shop\" />
   </ItemGroup>
 
 

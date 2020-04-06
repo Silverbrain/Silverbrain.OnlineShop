@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
 }
 
@@ -26,152 +25,27 @@
         <partial name="_List" />
     </div>
 </div>
-
+<script src="~/assets/js/ManagementDashboard/Brand/Index.js"></script>
 <script type="text/javascript">
-    function success(result) {
-        if (result) {
-            switch (result.Type) {
-                case 'Success':
-                    refreshGrid();
-                    getForm('@Constants.ActionCreate', '@Constants.ControllerBrand');
-                    addalert(result.Message, 'success', '@Html.Raw(Fields.ToasterSuccessTitle)');
-                    break;
-                case 'Error':
-                    addalert(result.Message, 'error', '@Html.Raw(Fields.ToasterErrorTitle)');
-                    break;
-            }
-        }
-    }
-    function submitForm(divName, e, data = null) {
-        var submitdata = data !== null ? data : new FormData($("#"+divName)[0]);
-        //var formAction = $("#"+btnName).attr("action");
-        var formAction = e.formAction;
-
-        if (data !== null) {
-            $.post({
-                url: formAction,
-                data: submitdata,
-                success: function (result) {
-                    success(result);
-                },
-                error: function (errorData) {
-                    console.log(errorData);
-                }
-            });
-            return;
-        }
-
-        if ($("#" + divName).valid()) {
-            $.ajax({
-                url: formAction,
-                data: submitdata,
-                processData: false,
-                contentType:  false,
-                type: 'POST',
-                success: function (result) {
-                    success(result);
-                },
-                error: function (errorData) {
-                        console.log(errorData);
-                }
-            });
-        }
-    }
-    function buttonTemplate(data) {
-        return `<a role="button" class="btn ${data.className}" href="#"><span class="${data.iconClass}"></span></a>`
-    }
-	@*function template(data) {
-		let path = String.raw`../@Constants.PathBrandImageRead/` + data.Image;
-		return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
-<input class='imgName' type='hidden' value='${data.Image}'/>`
-	}*@
-    function addalert(msg, type, title) {
-        toastr.options = {
-            tapToDismiss: true,
-            closeButton: false,
-            showDuration: 100,
-            hideDuration: 100,
-            extendedTimeOut: 500,
-            timeOut: 3000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-            //closeHtml: '<button type="button"><span class="ti-close"></span></button>',
-            //closeClass: 'toast-close-button',
-            newestOnTop: true,
-            preventDuplicates: false,
-            progressBar: false,
-            rtl: true,
-            positionClass: 'toast-top-center'
-        };
-        toastr[type](msg,title);
-    }
-    function getForm(action, controller, id = null) {
-        let $url = (id !== null)
-            ? `/@Constants.AreaManagement/${controller}/${action}`
-            : `/@Constants.AreaManagement/${controller}/${action}/${id}`;
-        let $data = { Id: id };
-
-        $.get({
-            url: $url,
-            data: $data,
-            success: function(data) {
-                $('#brandform').html(data);
-                switch (action) {
-                    case "@Constants.ActionCreate":
-                        $('#form-title').html('@Captions.CreateBrand');
-                        break;
-                    case "@Constants.ActionUpdate":
-                        $('#form-title').html('@Captions.EditBrand');
-                        break;
-                }
-            },
-            async: false
-        });
-    }
-	function refreshGrid() {
-		$("#grid").data("kendoGrid").dataSource.read();
-    }
-	function getDataItem(grid, e)
-	{
-		let button = e.target;
-		let row = $(button).closest("tr");
-		return grid.dataItem(row);
-	}
-	function openEditWindow(e) {
-		let dataItem = getDataItem(this, e);
-		getForm('@Constants.ActionUpdate', '@Constants.ControllerBrand',dataItem.Id);
-	}
-	function openDeleteWindow(e) {
-		e.preventDefault();
-        let dataItem = getDataItem(this, e);
-        let $action = $('<button />');
-
-        swal({
-            text: "@Html.Raw(Messages.DeleteCautionMessage)",
-            title: `@Html.Raw(Captions.Brand): ${dataItem.Title}`,
-            icon: "warning",
-            dangerMode: true,
-            buttons: {
-                confirm: {
-                    text: "@Html.Raw(Fields.DeleteButton)",
-                    value: "confirm",
-                },
-                cancel: "@Html.Raw(Fields.CancelButton)"
-            },
-        })
-        .then((value) => {
-            if (value === "confirm") {
-                $action.formAction = "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)";
-                let $token = $('form > input[name="__RequestVerificationToken"]').val();
-                let $data = {
-                    __RequestVerificationToken: $token,
-                    Id: dataItem.Id
-                };
-                submitForm('brandform' , $action, $data);
-            }
-        });
-    }
-    $(document).ready(function () {
-		$.validator.unobtrusive.parse("#brandform");
-    });
+    Constants = {
+        UrlActionCreate: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
+        UrlActionUpdate: "@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)",
+        UrlActionDelete: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)"
+    };
+    Fields = {
+        HtmlRawToasterSuccessTitle: "@Html.Raw(Fields.ToasterSuccessTitle)",
+        HtmlRawToasterErrorTitle: "@Html.Raw(Fields.ToasterErrorTitle)",
+        HtmlRawDeleteButton: "@Html.Raw(Fields.DeleteButton)",
+        HtmlRawCancelButton: "@Html.Raw(Fields.CancelButton)"
+    };
+    Captions = {
+        CreateBrand: "@Captions.CreateBrand",
+        EditBrand: "@Captions.EditBrand",
+        HtmlRawBrand: "@Html.Raw(Captions.Brand)"
+    };
+    Messages = {
+        HtmlRawDeleteCautionMessage: "@Html.Raw(Messages.DeleteCautionMessage)"
+    };
 </script>
 
 <style type="text/css">

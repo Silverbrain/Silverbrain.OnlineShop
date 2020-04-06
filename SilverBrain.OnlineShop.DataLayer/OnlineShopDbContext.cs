@@ -27,6 +27,7 @@ namespace Silverbrain.OnlineShop.DataLayer
         }
 
         public DbSet<Brand> Brands { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

@@ -1,5 +1,5 @@
 ﻿@model BrandViewModel
 
 <partial name="_CreateOrEdit" model="@Model" />
-<input id="updatebtn" type="button" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-outline-success" asp-controller="@Constants.ControllerBrand" asp-action="@Constants.ActionUpdate" asp-area="@Constants.AreaManagement" />
-<input type="button" value="@Fields.CancelButton" onclick="getForm('@Constants.ActionCreate', '@Constants.ControllerBrand')" class="btn btn-outline-danger" />
+<input id="updatebtn" type="button" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-outline-success" formaction="@Constants.ControllerBrand/@Constants.ActionUpdate" />
+<input type="button" value="@Fields.CancelButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-outline-danger" />
