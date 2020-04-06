@@ -27,8 +27,11 @@
 }
 
 .mobile-header__panel {
-    background: #cd2a2a;
+    background: #ef394e;
     box-shadow: 0 1px rgba(0, 0, 0, .04), inset 0 -1px rgba(0, 0, 0, .04);
     color: #3d464d;
     position: relative
+}
+.mobile-header__logo svg, .mobile-header__menu-button svg, .indicator--mobile svg {
+    fill: #ffffff
 }
