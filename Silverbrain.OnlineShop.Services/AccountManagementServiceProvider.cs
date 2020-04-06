@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -11,12 +12,12 @@ namespace Silverbrain.OnlineShop.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IGenericService<ApplicationUser> _repository;
+        private readonly IGenericService<ApplicationUser,int> _repository;
 
         public AccountManagementServiceProvider(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IGenericService<ApplicationUser> repository)
+            IGenericService<ApplicationUser, int> repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -40,7 +41,7 @@ namespace Silverbrain.OnlineShop.Services
         }
 
         public async Task<ApplicationUser> GetAsync(string Id) =>
-            await _repository.ReadAsync(Id);
+            await _repository.ReadAsync(Convert.ToInt32(Id));
 
         public IQueryable<ApplicationUser> GetAll() =>
             _repository.ReadAll();

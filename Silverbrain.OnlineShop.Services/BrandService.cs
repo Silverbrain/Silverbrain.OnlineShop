@@ -12,17 +12,14 @@ using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
-    public class BrandService : IBrandService
+    public class BrandService : GenericService<Brand,int>, IBrandService
     {
-        private readonly IGenericService<Brand> _generic;
-        private readonly OnlineShopDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public BrandService(IGenericService<Brand> repository, IMapper mapper, OnlineShopDbContext dbContext)
+        public BrandService(OnlineShopDbContext dbContext, IMapper mapper)
+            : base(dbContext)
         {
-            _generic = repository;
             _mapper = mapper;
-            _dbContext = dbContext;
         }
 
         public async Task<bool> IsUnique(BrandViewModel brand)
@@ -47,7 +44,7 @@ namespace Silverbrain.OnlineShop.Services
                         Message = Messages.ItemExistsErrorMessage
                     };
 
-                await _generic.UpdateAsync(brand);
+                await UpdateAsync(brand);
                 return new TransactionResult
                 {
                     Type = ResultType.Success.ToString(),
@@ -64,33 +61,11 @@ namespace Silverbrain.OnlineShop.Services
             }
         }
 
-        public async Task<TransactionResult> DeleteAsync(int Id)
-        {
-            try
-            {
-                await _generic.DeleteAsync(Id);
-                return new TransactionResult
-                {
-                    Type = ResultType.Success.ToString(),
-                    Message = Messages.SuccessfulTransactionMessage
-                };
-            }
-            catch
-            {
-                return new TransactionResult
-                {
-                    Type = ResultType.Error.ToString(),
-                    Message = Messages.ServerErrorMessage
-                };
-            }
-        }
-
-        public IQueryable<Brand> ReadAll() =>
-            _generic.ReadAll();
+       
 
         public async Task<BrandViewModel> ReadAsync(int Id)
         {
-            var brand = await _generic.ReadAsync(Id);
+            var brand = await ReadAsync(Id);
             return _mapper.Map<BrandViewModel>(brand);
         }
 
@@ -107,7 +82,7 @@ namespace Silverbrain.OnlineShop.Services
                         Message = Messages.ErrorTransactionMessage
                     };
 
-                await _generic.UpdateAsync(brand);
+                await UpdateAsync(brand);
                 return new TransactionResult
                 {
                     Type = ResultType.Success.ToString(),

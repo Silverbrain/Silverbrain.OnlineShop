@@ -1,19 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Silverbrain.OnlineShop.Common;
 using Silverbrain.OnlineShop.DataLayer;
+using Silverbrain.OnlineShop.Entities.Enums;
+using Silverbrain.OnlineShop.Resources;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
-    public class GenericService<TEntity> : IGenericService<TEntity>
+    public class GenericService<TEntity,TKey> : IGenericService<TEntity, TKey>
     where TEntity : class
+   
     {
-        private readonly OnlineShopDbContext _dbContext;
-        private DbSet<TEntity> entities;
-
+        protected readonly OnlineShopDbContext _dbContext;
+        protected readonly DbSet<TEntity> entities;
+         
         public GenericService(OnlineShopDbContext dbContext)
         {
-            _dbContext = dbContext;
+            _dbContext = dbContext ?? throw new ArgumentException(nameof(dbContext));
             entities = _dbContext.Set<TEntity>();
         }
 
@@ -26,28 +31,40 @@ namespace Silverbrain.OnlineShop.Services
         public IQueryable<TEntity> ReadAll() =>
             entities.AsQueryable();
 
-        public async Task<TEntity> ReadAsync(string Id) =>
+        public async Task<TEntity> ReadAsync(TKey Id) =>
             await entities.FindAsync(Id);
 
-        public async Task<TEntity> ReadAsync(int Id) =>
-            await entities.FindAsync(Id);
 
         public async Task UpdateAsync(TEntity entity)
         {
             entities.Update(entity);
             await _dbContext.SaveChangesAsync();
         }
+        
 
-        public async Task DeleteAsync(string Id)
+        public async Task<TransactionResult> DeleteAsync(TKey Id)
         {
-            entities.Remove(entities.Find(Id));
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                entities.Remove(entities.Find(Id));
+                await _dbContext.SaveChangesAsync();
+                return new TransactionResult
+                {
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+            }
+            catch
+            {
+                return new TransactionResult
+                {
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
+                };
+            }
         }
 
-        public async Task DeleteAsync(int Id)
-        {
-            entities.Remove(entities.Find(Id));
-            await _dbContext.SaveChangesAsync();
-        }
+
+       
     }
 }

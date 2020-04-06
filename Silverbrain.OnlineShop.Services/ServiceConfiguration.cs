@@ -12,7 +12,7 @@ namespace Silverbrain.OnlineShop.Services
             services.AddScoped(typeof(IAccountManagementService), typeof(AccountManagementServiceProvider));
             services.AddScoped(typeof(IBrandService), typeof(BrandService));
             services.AddScoped<IIdentityDbInitializer, IdentityDbInitializer>();
-            services.AddTransient(typeof(IGenericService<>), typeof(GenericService<>));
+          ///  services.AddTransient(typeof(IGenericService<int>), typeof(GenericService<>));
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
