@@ -22,3 +22,10 @@
 .block-slideshow__slide-text,.block-slideshow--layout--full .block-slideshow__slide-title {
     color: white;
 }
+
+.mobile-header__panel {
+    background: #cd2a2a;
+    box-shadow: 0 1px rgba(0, 0, 0, .04), inset 0 -1px rgba(0, 0, 0, .04);
+    color: #3d464d;
+    position: relative
+}
