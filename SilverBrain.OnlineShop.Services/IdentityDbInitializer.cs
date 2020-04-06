@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -9,9 +8,7 @@ using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.ViewModels.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
@@ -22,8 +19,8 @@ namespace Silverbrain.OnlineShop.Services
         private readonly ILogger<IdentityDbInitializer> _logger;
         private readonly IServiceScopeFactory _scopeFactory;
 
-        public IdentityDbInitializer( 
-            IServiceScopeFactory scopeFactory, 
+        public IdentityDbInitializer(
+            IServiceScopeFactory scopeFactory,
             IOptionsSnapshot<SiteSettings> adminUserSeedOptions,
             ILogger<IdentityDbInitializer> logger
             )
@@ -78,12 +75,11 @@ namespace Silverbrain.OnlineShop.Services
                 }
             }
         }
-       
+
         public async Task<IdentityResult> SeedDatabaseWithAdminUserAsync(IServiceProvider services)
         {
             var _roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
             var _userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
-
 
             var adminUserSeed = _adminUserSeedOptions.Value.AdminUserSeed;
             if (adminUserSeed == null)

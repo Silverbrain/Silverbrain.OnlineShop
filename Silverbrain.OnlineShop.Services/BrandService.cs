@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Silverbrain.OnlineShop.Common;
+using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Enums;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
-using Silverbrain.OnlineShop.Repositories;
-using Silverbrain.OnlineShop.Repositories.Brand;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
 using System.Linq;
@@ -14,22 +14,31 @@ namespace Silverbrain.OnlineShop.Services
 {
     public class BrandService : IBrandService
     {
-        private readonly IGenericRepository<Brand> _genericRepo;
-        private readonly IBrandRepository _brandRepo;
+        private readonly IGenericService<Brand> _generic;
+        private readonly OnlineShopDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public BrandService(IGenericRepository<Brand> repository, IMapper mapper, IBrandRepository brandRepo)
+        public BrandService(IGenericService<Brand> repository, IMapper mapper, OnlineShopDbContext dbContext)
         {
-            _genericRepo = repository;
-            _brandRepo = brandRepo;
+            _generic = repository;
             _mapper = mapper;
+            _dbContext = dbContext;
         }
+
+        public async Task<bool> IsUnique(BrandViewModel brand)
+           => !await _dbContext.Brands.AsNoTracking().AnyAsync(b => b.Id != brand.Id && b.Title.Equals(brand.Title));
+
+        public async Task<bool> CreateValidationAsync(BrandViewModel brand) =>
+            await IsUnique(brand);
+
+        public async Task<bool> UpdateValidationAsync(BrandViewModel brand)
+        => await IsUnique(brand);
 
         public async Task<TransactionResult> CreateAsync(BrandViewModel model)
         {
             try
             {
-                var validationResult = await _brandRepo.CreateValidationAsync(model);
+                var validationResult = await CreateValidationAsync(model);
                 var brand = _mapper.Map<Brand>(model);
                 if (!validationResult)
                     return new TransactionResult
@@ -38,7 +47,7 @@ namespace Silverbrain.OnlineShop.Services
                         Message = Messages.ItemExistsErrorMessage
                     };
 
-                await _genericRepo.UpdateAsync(brand);
+                await _generic.UpdateAsync(brand);
                 return new TransactionResult
                 {
                     Type = ResultType.Success.ToString(),
@@ -59,7 +68,7 @@ namespace Silverbrain.OnlineShop.Services
         {
             try
             {
-                await _genericRepo.DeleteAsync(Id);
+                await _generic.DeleteAsync(Id);
                 return new TransactionResult
                 {
                     Type = ResultType.Success.ToString(),
@@ -77,11 +86,11 @@ namespace Silverbrain.OnlineShop.Services
         }
 
         public IQueryable<Brand> ReadAll() =>
-            _genericRepo.ReadAll();
+            _generic.ReadAll();
 
         public async Task<BrandViewModel> ReadAsync(int Id)
         {
-            var brand = await _genericRepo.ReadAsync(Id);
+            var brand = await _generic.ReadAsync(Id);
             return _mapper.Map<BrandViewModel>(brand);
         }
 
@@ -89,7 +98,7 @@ namespace Silverbrain.OnlineShop.Services
         {
             try
             {
-                var validationResult = await _brandRepo.UpdateValidationAsync(model);
+                var validationResult = await UpdateValidationAsync(model);
                 var brand = _mapper.Map<Brand>(model);
                 if (!validationResult)
                     return new TransactionResult
@@ -98,7 +107,7 @@ namespace Silverbrain.OnlineShop.Services
                         Message = Messages.ErrorTransactionMessage
                     };
 
-                await _genericRepo.UpdateAsync(brand);
+                await _generic.UpdateAsync(brand);
                 return new TransactionResult
                 {
                     Type = ResultType.Success.ToString(),

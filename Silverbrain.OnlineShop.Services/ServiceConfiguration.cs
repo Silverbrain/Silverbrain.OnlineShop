@@ -1,12 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
-using Silverbrain.OnlineShop.DataLayer;
-using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
-using Silverbrain.OnlineShop.Repositories;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Silverbrain.OnlineShop.Services
 {
@@ -17,7 +12,7 @@ namespace Silverbrain.OnlineShop.Services
             services.AddScoped(typeof(IAccountManagementService), typeof(AccountManagementServiceProvider));
             services.AddScoped(typeof(IBrandService), typeof(BrandService));
             services.AddScoped<IIdentityDbInitializer, IdentityDbInitializer>();
-            //services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+            services.AddTransient(typeof(IGenericService<>), typeof(GenericService<>));
             services.Configure<IdentityOptions>(options =>
             {
                 options.Password.RequireDigit = false;
@@ -29,7 +24,6 @@ namespace Silverbrain.OnlineShop.Services
                 options.Lockout.MaxFailedAccessAttempts = 3;
                 options.User.RequireUniqueEmail = false;
             });
-           
         }
     }
 }

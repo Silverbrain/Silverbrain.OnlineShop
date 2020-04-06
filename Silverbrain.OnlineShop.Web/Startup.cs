@@ -11,7 +11,6 @@ using Newtonsoft.Json.Serialization;
 using Silverbrain.OnlineShop.DataLayer;
 using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.Mapping;
-using Silverbrain.OnlineShop.Repositories;
 using Silverbrain.OnlineShop.Services;
 using Silverbrain.OnlineShop.ViewModels.Settings;
 using Silverbrain.OnlineShop.Web.Infrastructure;
@@ -49,7 +48,6 @@ namespace Silverbrain.OnlineShop.Web
             services.AddKendo();
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
-            services.AddRepositories();
             services.AddCustomServices();
 
             services.AddAutoMapper(typeof(MappingProfile));

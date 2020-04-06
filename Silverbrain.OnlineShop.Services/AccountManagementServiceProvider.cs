@@ -1,12 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Silverbrain.OnlineShop.IServices;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Silverbrain.OnlineShop.Repositories;
 using Silverbrain.OnlineShop.Entities.Models;
+using Silverbrain.OnlineShop.IServices;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
@@ -15,12 +11,12 @@ namespace Silverbrain.OnlineShop.Services
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly IGenericRepository<ApplicationUser> _repository;
+        private readonly IGenericService<ApplicationUser> _repository;
 
         public AccountManagementServiceProvider(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            IGenericRepository<ApplicationUser> repository)
+            IGenericService<ApplicationUser> repository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
