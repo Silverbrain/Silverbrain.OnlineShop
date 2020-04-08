@@ -18,32 +18,22 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
     {
         private readonly IBrandService _brandService;
         private readonly IWebHostEnvironment _webHost;
-
         public BrandController(IBrandService brandService, IWebHostEnvironment webHost)
         {
             _brandService = brandService;
             _webHost = webHost;
         }
 
-        // GET: Brand
         [HttpGet]
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public ActionResult Index()=> View();
 
         [HttpPost]
         public IActionResult ReadAll([DataSourceRequest] DataSourceRequest request) =>
             Json(_brandService.ReadAll().ToDataSourceResult(request));
 
-        // GET: Brand/Create
         [HttpGet]
-        public ActionResult Create()
-        {
-            return PartialView("_Create");
-        }
+        public ActionResult Create() => PartialView();
 
-        // POST: Brand/Create
         [ValidateAntiForgeryToken]
         [HttpPost]
         public async Task<ActionResult> Create(BrandViewModel model)
@@ -65,29 +55,25 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             //{
             //    Image = new BrandImage { Title = fileName },
             //};
+            TransactionResult transactionResult = new TransactionResult();
             if (ModelState.IsValid)
-                return Json(await _brandService.CreateAsync(model));
-
-            var result = new TransactionResult
+                transactionResult = await _brandService.CreateAsync(model);
+            else
             {
-                Type = ResultType.Error.ToString(),
-                Message = Messages.ErrorTransactionMessage
+                transactionResult.IsSuccess = false;
+                transactionResult.Type = ResultType.Error.ToString();
+                transactionResult.Message = Messages.ErrorTransactionMessage;
             };
-            return Json(result);
+            return Json(transactionResult);
         }
 
-        // GET: Brand/Edit/5
         [HttpGet]
-        public async Task<ActionResult> Update(int Id)
-        {
-            var brand = await _brandService.ReadAsync(Id);
-            return PartialView("_Update", brand);
-        }
+        public async Task<ActionResult> Edit(int Id) => PartialView(await _brandService.GetByIdAsync(Id));
 
-        // POST: Brand/Edit/5
-       [ValidateAntiForgeryToken]
+
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Update(BrandViewModel model)
+        public async Task<ActionResult> Edit(BrandViewModel model)
         {
             if (ModelState.IsValid)
                 return (Json(await _brandService.UpdateAsync(model)));
@@ -100,13 +86,8 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             return Json(result);
         }
 
-        // POST: Brand/Delete/5
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<IActionResult> Delete(int Id)
-        {
-            var result = await _brandService.DeleteAsync(Id);
-            return Json(result);
-        }
+        public async Task<IActionResult> Delete(int Id) => Json(await _brandService.DeleteAsync(Id));
     }
 }

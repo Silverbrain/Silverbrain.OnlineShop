@@ -39,7 +39,7 @@ namespace Silverbrain.OnlineShop.Services
         }
 
         public async Task<ApplicationUser> GetAsync(string Id) =>
-            await ReadAsync(Id);
+            await FindAsync(Id);
 
         public IQueryable<ApplicationUser> GetAll() =>
             ReadAll();

@@ -20,7 +20,7 @@ namespace Silverbrain.OnlineShop.Resources
         public static string ActionLogout { get; set; } = "LogOut";
         public static string ActionLogin { get; set; } = "Login";
         public static string ActionCreate { get; set; } = "Create";
-        public static string ActionUpdate { get; set; } = "Update";
+        public static string ActionEdit { get; set; } = "Edit";
         public static string ActionDelete { get; set; } = "Delete";
         public static string ActionRead { get; set; } = "Read";
         public static string ActionReadAll { get; set; } = "ReadAll";

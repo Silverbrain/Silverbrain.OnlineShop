@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Services
 {
-    public class BrandService : GenericService<Brand,int>, IBrandService
+    public class BrandService : GenericService<Brand, int>, IBrandService
     {
         private readonly IMapper _mapper;
 
@@ -35,54 +35,77 @@ namespace Silverbrain.OnlineShop.Services
         {
             try
             {
-                var validationResult = await CreateValidationAsync(model);
-                var brand = _mapper.Map<Brand>(model);
-                if (!validationResult)
+                if (!await CreateValidationAsync(model))
                     return new TransactionResult
                     {
+                        IsSuccess = false,
                         Type = ResultType.Error.ToString(),
                         Message = Messages.ItemExistsErrorMessage
                     };
-
-                return await CreatAsync(brand);
+                Brand brand = _mapper.Map<Brand>(model);
+                TransactionResult transactionResult = await AddAsync(brand);
+                if (transactionResult.IsSuccess)
+                    transactionResult = await SaveChangesAsync();
+                return transactionResult;
             }
             catch
             {
                 return new TransactionResult
                 {
+                    IsSuccess = false,
                     Type = ResultType.Error.ToString(),
                     Message = Messages.ServerErrorMessage
                 };
             }
         }
 
-       
-
-        public async Task<BrandViewModel> ReadAsync(int Id)
+        public async Task<BrandViewModel> GetByIdAsync(int Id)
         {
-            var brand = await ReadAsync(Id);
+            var brand = await FindAsync(Id);
             return _mapper.Map<BrandViewModel>(brand);
         }
-
-        public async Task<TransactionResult> UpdateAsync(BrandViewModel model)
+        public async Task<TransactionResult> DeleteAsync(int id)
         {
             try
-            {
-                var validationResult = await UpdateValidationAsync(model);
-                var brand = _mapper.Map<Brand>(model);
-                if (!validationResult)
-                    return new TransactionResult
-                    {
-                        Type = ResultType.Error.ToString(),
-                        Message = Messages.ErrorTransactionMessage
-                    };
-
-                return await UpdateAsync(brand);
+            { 
+                TransactionResult transactionResult = Remove(id);
+                if (transactionResult.IsSuccess)
+                    transactionResult = await SaveChangesAsync();
+                return transactionResult;
             }
             catch
             {
                 return new TransactionResult
                 {
+                    IsSuccess = false,
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
+                };
+            }
+        }
+        public async Task<TransactionResult> UpdateAsync(BrandViewModel model)
+        {
+            try
+            {
+                var validationResult = await UpdateValidationAsync(model);
+                if (!validationResult)
+                    return new TransactionResult
+                    {
+                        IsSuccess = false,
+                        Type = ResultType.Error.ToString(),
+                        Message = Messages.ErrorTransactionMessage
+                    };
+                var brand = _mapper.Map<Brand>(model);
+                TransactionResult transactionResult = Update(brand);
+                if (transactionResult.IsSuccess)
+                    transactionResult = await SaveChangesAsync();
+                return transactionResult;
+            }
+            catch
+            {
+                return new TransactionResult
+                {
+                    IsSuccess = false,
                     Type = ResultType.Error.ToString(),
                     Message = Messages.ServerErrorMessage
                 };

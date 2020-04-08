@@ -22,15 +22,14 @@ namespace Silverbrain.OnlineShop.Services
             _dbContext = dbContext ?? throw new ArgumentException(nameof(dbContext));
             entities = _dbContext.Set<TEntity>();
         }
-
-        public async Task<TransactionResult> CreatAsync(TEntity entity)
+        public async Task<TransactionResult> AddAsync(TEntity entity)
         {
             try
             {
                 await entities.AddAsync(entity);
-                await _dbContext.SaveChangesAsync();
                 return new TransactionResult
                 {
+                    IsSuccess=true,
                     Type = ResultType.Success.ToString(),
                     Message = Messages.SuccessfulTransactionMessage
                 };
@@ -39,6 +38,29 @@ namespace Silverbrain.OnlineShop.Services
             {
                 return new TransactionResult
                 {
+                    IsSuccess=false,
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
+                };
+            }
+        }
+        public async Task<TransactionResult> SaveChangesAsync()
+        {
+            try
+            {
+                await _dbContext.SaveChangesAsync();
+                return new TransactionResult
+                {
+                    IsSuccess=true,
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+            }
+            catch
+            {
+                return new TransactionResult
+                {
+                    IsSuccess=false,
                     Type = ResultType.Error.ToString(),
                     Message = Messages.ServerErrorMessage
                 };
@@ -48,17 +70,17 @@ namespace Silverbrain.OnlineShop.Services
         public IQueryable<TEntity> ReadAll() =>
             entities.AsQueryable();
 
-        public async Task<TEntity> ReadAsync(TKey Id) =>
+        public async Task<TEntity> FindAsync(TKey Id) =>
             await entities.FindAsync(Id);
 
-        public async Task<TransactionResult> UpdateAsync(TEntity entity)
+        public TransactionResult Update(TEntity entity)
         {
             try
             {
                 entities.Update(entity);
-                await _dbContext.SaveChangesAsync();
                 return new TransactionResult
                 {
+                    IsSuccess= true,
                     Type = ResultType.Success.ToString(),
                     Message = Messages.SuccessfulTransactionMessage
                 };
@@ -67,32 +89,34 @@ namespace Silverbrain.OnlineShop.Services
             {
                 return new TransactionResult
                 {
+                    IsSuccess = false,
+                    Type = ResultType.Error.ToString(),
+                    Message = Messages.ServerErrorMessage
+                };
+            }
+        }
+        public TransactionResult Remove(TKey Id)
+        {
+            try
+            {
+                entities.Remove(entities.Find(Id));
+                return new TransactionResult
+                {
+                    IsSuccess = true,
+                    Type = ResultType.Success.ToString(),
+                    Message = Messages.SuccessfulTransactionMessage
+                };
+            }
+            catch
+            {
+                return new TransactionResult
+                {
+                    IsSuccess = false,
                     Type = ResultType.Error.ToString(),
                     Message = Messages.ServerErrorMessage
                 };
             }
         }
 
-        public async Task<TransactionResult> DeleteAsync(TKey Id)
-        {
-            try
-            {
-                entities.Remove(entities.Find(Id));
-                await _dbContext.SaveChangesAsync();
-                return new TransactionResult
-                {
-                    Type = ResultType.Success.ToString(),
-                    Message = Messages.SuccessfulTransactionMessage
-                };
-            }
-            catch
-            {
-                return new TransactionResult
-                {
-                    Type = ResultType.Error.ToString(),
-                    Message = Messages.ServerErrorMessage
-                };
-            }
-        }
     }
 }

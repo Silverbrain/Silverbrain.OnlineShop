@@ -3,7 +3,7 @@
         <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
             <transport>
                 <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                <update url="@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+                <update url="@Url.Action(Constants.ActionEdit, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
             </transport>
             <schema>
                 <model id="@nameof(BrandViewModel.Id)">

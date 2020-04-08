@@ -4,17 +4,15 @@ using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.IServices
 {
-    public interface IGenericService<TEntity,TKey>
+    public interface IGenericService<TEntity, TKey>
     where TEntity : class
     {
+        Task<TransactionResult> SaveChangesAsync();
+        Task<TransactionResult> AddAsync(TEntity entity);
         IQueryable<TEntity> ReadAll();
+        Task<TEntity> FindAsync(TKey Id);
+        TransactionResult Update(TEntity entity);
+        TransactionResult Remove(TKey Id);
 
-        Task<TEntity> ReadAsync(TKey Id);
-
-        Task<TransactionResult> CreatAsync(TEntity entity);
-
-        Task<TransactionResult> UpdateAsync(TEntity entity);
-
-        Task<TransactionResult> DeleteAsync(TKey Id);
     }
 }

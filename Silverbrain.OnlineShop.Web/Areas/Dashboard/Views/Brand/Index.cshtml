@@ -10,7 +10,7 @@
     </div>
     <div id="box-body-container" class="box-body">
         <form id="brandform" method="post">
-            <partial name="_Create" />
+            <partial name="Create" />
         </form>
     </div>
 </div>
@@ -29,7 +29,7 @@
 <script type="text/javascript">
     Constants = {
         UrlActionCreate: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
-        UrlActionUpdate: "@Url.Action(Constants.ActionUpdate, Constants.ControllerBrand)",
+        UrlActionUpdate: "@Url.Action(Constants.ActionEdit, Constants.ControllerBrand)",
         UrlActionDelete: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)"
     };
     Fields = {

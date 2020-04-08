@@ -8,10 +8,11 @@ namespace Silverbrain.OnlineShop.IServices
 {
     public interface IBrandService:IGenericService<Brand,int>
     {
+        Task<BrandViewModel> GetByIdAsync(int Id);
         public Task<TransactionResult> CreateAsync(BrandViewModel model);
 
         public Task<TransactionResult> UpdateAsync(BrandViewModel model);
-        public new Task<BrandViewModel> ReadAsync(int Id);
+        Task<TransactionResult> DeleteAsync(int id);
         public new IQueryable<Brand> ReadAll();
     }
 }
