@@ -28,11 +28,15 @@ namespace Silverbrain.OnlineShop.DataLayer
 
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Slider> Sliders { get; set; }
+        public DbSet<BrandImage> BrandImages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new BrandConfiguration());
             builder.ApplyConfiguration(new ApplicationUserConfiguration());
+            builder.ApplyConfiguration(new BrandImageConfiguration());
+            builder.ApplyConfiguration(new ImageConfiguration());
+            builder.ApplyConfiguration(new SliderConfiguration());
 
             base.OnModelCreating(builder);
             //to add ShadowProperties

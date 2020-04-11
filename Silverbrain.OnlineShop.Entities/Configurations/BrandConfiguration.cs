@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Silverbrain.OnlineShop.Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Silverbrain.OnlineShop.Entities.Configurations
 {
@@ -13,6 +10,9 @@ namespace Silverbrain.OnlineShop.Entities.Configurations
         {
             builder.HasKey(b => b.Id);
             builder.Property(b => b.Title).HasMaxLength(50);
+            builder.HasOne(b => b.Image)
+                .WithOne(bi => bi.Brand)
+                .HasForeignKey<BrandImage>(bi => bi.Brand_Id);
         }
     }
 }

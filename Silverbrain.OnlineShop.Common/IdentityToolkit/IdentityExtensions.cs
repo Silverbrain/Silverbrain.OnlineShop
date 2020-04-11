@@ -1,15 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Claims;
 using System.Security.Principal;
-using System.Text;
 
 namespace Silverbrain.OnlineShop.Common.IdentityToolkit
 {
     public static class IdentityExtensions
     {
-         public static T GetUserId<T>(this IIdentity identity) where T : IConvertible
+        public static T GetUserId<T>(this IIdentity identity) where T : IConvertible
         {
             var firstValue = identity?.GetUserClaimValue(ClaimTypes.NameIdentifier);
             return firstValue != null
@@ -22,11 +20,13 @@ namespace Silverbrain.OnlineShop.Common.IdentityToolkit
             return "0a0fc099-5265-46a3-a11b-ffa70e50adab0a0fc099-5265-46a3-a11b-ffa70e50adab";
             //return identity?.GetUserClaimValue(ClaimTypes.NameIdentifier);
         }
+
         public static string GetUserClaimValue(this IIdentity identity, string claimType)
         {
             var identity1 = identity as ClaimsIdentity;
             return identity1?.FindFirstValue(claimType);
         }
+
         public static string FindFirstValue(this ClaimsIdentity identity, string claimType)
         {
             return identity?.FindFirst(claimType)?.Value;
