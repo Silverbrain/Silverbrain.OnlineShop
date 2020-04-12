@@ -33,7 +33,14 @@ function success(result) {
     }
 }
 function submitForm(formId, e, data = null) {
-    var submitdata = data !== null ? data : new FormData($("#" + formId)[0]);
+    var submitdata;
+    if (data !== null)
+        submitdata = data;
+    else {
+        var file = $("#" + formId);
+        submitdata = new FormData(file[0]);
+        //submitdata = new FormData($("#" + formId)[0]);
+    }
     //var formAction = $("#"+btnName).attr("action");
     var formAction = e.formAction;
 

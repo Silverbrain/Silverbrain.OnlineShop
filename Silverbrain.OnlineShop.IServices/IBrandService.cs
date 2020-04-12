@@ -13,6 +13,6 @@ namespace Silverbrain.OnlineShop.IServices
 
         public Task<TransactionResult> UpdateAsync(BrandViewModel model);
         Task<TransactionResult> DeleteAsync(int id);
-        public new IQueryable<Brand> ReadAll();
+        //public new IQueryable<Brand> ReadAll();
     }
 }

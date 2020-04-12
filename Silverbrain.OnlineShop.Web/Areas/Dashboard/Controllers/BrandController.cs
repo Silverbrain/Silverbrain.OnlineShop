@@ -8,6 +8,8 @@ using Silverbrain.OnlineShop.Entities.Enums;
 using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
@@ -25,7 +27,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         }
 
         [HttpGet]
-        public ActionResult Index()=> View();
+        public ActionResult Index() => View();
 
         [HttpPost]
         public IActionResult ReadAll([DataSourceRequest] DataSourceRequest request) =>
@@ -38,26 +40,31 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(BrandViewModel model)
         {
-            //var fileName = Guid.NewGuid().ToString() + Path.GetExtension(model.ImageFormFile.FileName);
-            //fileName = fileName.Trim('-');
-            ////var filepath = Path.Combine(_webHost.WebRootPath , "\\assets\\images\\brands");
-            //var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
-            //var imagePath = Path.Combine(filepath, fileName);
-
-            //if (model.ImageFormFile.Length > 0)
-            //{
-            //    using var stream = new FileStream(imagePath, FileMode.Create);
-            //    await model.ImageFormFile.CopyToAsync(stream);
-            //    await stream.DisposeAsync();
-            //}
-
-            //var brand = new Brand
-            //{
-            //    Image = new BrandImage { Title = fileName },
-            //};
             TransactionResult transactionResult = new TransactionResult();
             if (ModelState.IsValid)
+            {
+                var imageFile = Request.Form.Files[0];
+                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                fileName = fileName.Trim('-');
+                var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
+
+                var imagePath = Path.Combine(filepath, fileName);
+
+                if (model.ImageFormFile.Length > 0)
+                {
+                    using var stream = new FileStream(imagePath, FileMode.Create);
+                    await model.ImageFormFile.CopyToAsync(stream);
+                    await stream.DisposeAsync();
+                }
+
+                var brand = new Brand
+                {
+                    Image = new BrandImage { Title = fileName },
+                };
+
+
                 transactionResult = await _brandService.CreateAsync(model);
+            }
             else
             {
                 transactionResult.IsSuccess = false;

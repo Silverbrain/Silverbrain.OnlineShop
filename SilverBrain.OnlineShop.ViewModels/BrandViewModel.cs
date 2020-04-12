@@ -1,4 +1,5 @@
-﻿using Silverbrain.OnlineShop.Resources;
+﻿using Silverbrain.OnlineShop.Entities.Models;
+using Silverbrain.OnlineShop.Resources;
 using System.ComponentModel.DataAnnotations;
 
 namespace Silverbrain.OnlineShop.ViewModels
@@ -15,5 +16,8 @@ namespace Silverbrain.OnlineShop.ViewModels
         [MaxLength(50)]
         [Required(ErrorMessageResourceName = nameof(Messages.RequiredFieldErrorMessage), ErrorMessageResourceType = typeof(Messages))]
         public string Title { get; set; }
+
+
+        public BrandImage Image { get; set; }
     }
 }

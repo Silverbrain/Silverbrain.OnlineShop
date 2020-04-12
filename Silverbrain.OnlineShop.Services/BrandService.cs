@@ -42,6 +42,12 @@ namespace Silverbrain.OnlineShop.Services
                         Type = ResultType.Error.ToString(),
                         Message = Messages.ItemExistsErrorMessage
                     };
+                //////////////////////////////////////////////////////image//////////////////////////////////////
+                #region image_process
+
+                #endregion
+                ///////////////////////////////////////////////////eof image/////////////////////////////////////
+
                 Brand brand = _mapper.Map<Brand>(model);
                 TransactionResult transactionResult = await AddAsync(brand);
                 if (transactionResult.IsSuccess)

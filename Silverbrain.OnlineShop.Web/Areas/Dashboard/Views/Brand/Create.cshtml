@@ -1,6 +1,27 @@
 ﻿@* this partial view is going to contain create part of form  *@
 @model BrandViewModel
+<div class="row">
+    <partial name="_CreateOrEdit" for="@Model" />
 
-<partial name="_CreateOrEdit" for="@Model"/>
-<input type="button" id="createbtn" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" formaction="@Constants.ControllerBrand/@Constants.ActionCreate"/>
-<input type="button" value="@Fields.ClearButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-warning" />
+    <div class="col-md-6 col-sm-12">
+        <label asp-for="Image.Title">@Fields.ImageInput</label>
+        <input asp-for="Image.Title" type="file" class="dropify" />
+        <span asp-validation-for="Image.Title"></span>
+    </div>
+    <script type="text/javascript">
+        var Messages = {
+            UploadPlaceHolderMessage: "@Html.Raw(Messages.UploadPlaceHolderMessage)"
+        };
+        var Fields = {
+            DeleteButton: "@Html.Raw(Fields.DeleteButton)"
+        };
+    </script>
+    <script src="~/ManagementDashboard/JS/Brand/Create.js"></script>
+
+    <div class="row">
+        <div class="col">
+            <input type="button" id="createbtn" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" formaction="@Constants.ControllerBrand/@Constants.ActionCreate" />
+            <input type="button" value="@Fields.ClearButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-warning" />
+        </div>
+    </div>
+</div>
