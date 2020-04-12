@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Silverbrain.OnlineShop.Common;
 using Silverbrain.OnlineShop.Entities.Enums;
+using Silverbrain.OnlineShop.Entities.Models;
 using Silverbrain.OnlineShop.IServices;
 using Silverbrain.OnlineShop.Resources;
 using Silverbrain.OnlineShop.ViewModels;
@@ -20,6 +21,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
     {
         private readonly IBrandService _brandService;
         private readonly IWebHostEnvironment _webHost;
+
         public BrandController(IBrandService brandService, IWebHostEnvironment webHost)
         {
             _brandService = brandService;
@@ -44,24 +46,24 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             if (ModelState.IsValid)
             {
                 var imageFile = Request.Form.Files[0];
+
                 var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
                 fileName = fileName.Trim('-');
                 var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
 
+                if (!Directory.Exists(filepath))
+                    Directory.CreateDirectory(filepath);
+
                 var imagePath = Path.Combine(filepath, fileName);
 
-                if (model.ImageFormFile.Length > 0)
+                if (imageFile.Length > 0)
                 {
                     using var stream = new FileStream(imagePath, FileMode.Create);
-                    await model.ImageFormFile.CopyToAsync(stream);
+                    await imageFile.CopyToAsync(stream);
                     await stream.DisposeAsync();
                 }
 
-                var brand = new Brand
-                {
-                    Image = new BrandImage { Title = fileName },
-                };
-
+                model.Image = new BrandImage { Title = fileName };
 
                 transactionResult = await _brandService.CreateAsync(model);
             }
@@ -76,7 +78,6 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 
         [HttpGet]
         public async Task<ActionResult> Edit(int Id) => PartialView(await _brandService.GetByIdAsync(Id));
-
 
         [ValidateAntiForgeryToken]
         [HttpPost]
