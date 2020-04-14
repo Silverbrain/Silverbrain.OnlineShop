@@ -18,6 +18,6 @@ namespace Silverbrain.OnlineShop.ViewModels
         public string Title { get; set; }
 
 
-        public BrandImage Image { get; set; }
+        public string ImageName { get; set; }
     }
 }

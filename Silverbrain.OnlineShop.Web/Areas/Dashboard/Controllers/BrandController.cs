@@ -47,7 +47,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             {
                 var imageFile = Request.Form.Files[0];
 
-                var fileName = Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                var fileName = model.Title + Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
                 fileName = fileName.Trim('-');
                 var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
 
@@ -63,7 +63,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
                     await stream.DisposeAsync();
                 }
 
-                model.Image = new BrandImage { Title = fileName };
+                model.ImageName = fileName;
 
                 transactionResult = await _brandService.CreateAsync(model);
             }
@@ -84,7 +84,29 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
         public async Task<ActionResult> Edit(BrandViewModel model)
         {
             if (ModelState.IsValid)
+            {
+                var imageFile = Request.Form.Files[0];
+
+                var fileName = model.Title + Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
+                fileName = fileName.Trim('-');
+                var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
+
+                if (!Directory.Exists(filepath))
+                    Directory.CreateDirectory(filepath);
+
+                var imagePath = Path.Combine(filepath, fileName);
+
+                if (imageFile.Length > 0)
+                {
+                    using var stream = new FileStream(imagePath, FileMode.Create);
+                    await imageFile.CopyToAsync(stream);
+                    await stream.DisposeAsync();
+                }
+
+                model.ImageName = fileName;
+
                 return (Json(await _brandService.UpdateAsync(model)));
+            }
 
             var result = new TransactionResult
             {

@@ -11,7 +11,6 @@ namespace Silverbrain.OnlineShop.Services
         {
             services.AddScoped(typeof(IAccountManagementService), typeof(AccountManagementServiceProvider));
             services.AddScoped(typeof(IBrandService), typeof(BrandService));
-            services.AddScoped(typeof(IImageService), typeof(ImageService));
             services.AddScoped<IIdentityDbInitializer, IdentityDbInitializer>();
           ///  services.AddTransient(typeof(IGenericService<int>), typeof(GenericService<>));
             services.Configure<IdentityOptions>(options =>

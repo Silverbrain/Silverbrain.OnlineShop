@@ -133,7 +133,7 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to عکس.
+        ///   Looks up a localized string similar to تصویر.
         /// </summary>
         public static string ImageInput {
             get {

@@ -1,5 +1,104 @@
 ﻿@model BrandViewModel
+@{
+    var imagePath = Model.ImageName == null ? "" : ".." + Constants.PathBrandImage + '/' + Model.ImageName;
+}
+<div class="row">
+    <partial name="_CreateOrEdit" model="@Model" />
 
-<partial name="_CreateOrEdit" model="@Model" />
-<input id="updatebtn" type="button" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-outline-success" formaction="@Constants.ControllerBrand/@Constants.ActionEdit" />
-<input type="button" value="@Fields.CancelButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-outline-danger" />
+    <style type="text/css">
+        .img-edit {
+            border-style: solid;
+            border-width: 0.07rem;
+            border-radius: 5px;
+            border-color: rgb(221, 221, 221);
+            background-color: #fff;
+        }
+
+        .img-view {
+            max-height: 300px;
+            max-width: 300px;
+            margin-top: 0.2rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .img-edit-btn {
+            border-right-style: solid;
+            border-right-width: 0.07rem;
+            border-color: rgb(221, 221, 221);
+            padding: 0.4rem;
+        }
+
+        .img-input-file {
+            display: none;
+        }
+
+        #img-cancel {
+            display: none;
+        }
+
+        #img-cancel.visible {
+            display: block;
+        }
+
+        .img-edit-btn a {
+            height: 2rem;
+            padding: 0;
+            border-style: none;
+            line-height: 1.2rem;
+            font-size: 1.2rem;
+        }
+
+        .img-edit-btn a span {
+            line-height: 1.7;
+        }
+    </style>
+
+    <div class="col-md-6 col-sm-12">
+        <label asp-for="ImageName">@Fields.ImageInput</label>
+        <div class="img-edit row">
+            <input id="img-brand-file" class="img-input-file" asp-for="ImageName" type="file" />
+            <div class="col"></div>
+            <div class="col-6 img-view">
+                <img id="img-brand-current" src="@imagePath" alt="@Model.Title" height="300" width="300" />
+            </div>
+            <div class="col"></div>
+            <div class="col-1 img-edit-btn">
+                <a id="img-cancel" href="#" class="btn btn-block btn-outline-secondary"><span class="ti-close"></span></a>
+                <a id="img-change" href="#" class="btn btn-block btn-outline-info mt-2"><span class="ti-pencil-alt"></span></a>
+                <a id="img-delete" href="#" class="btn btn-block btn-outline-danger"><span class="ti-trash"></span></a>
+            </div>
+        </div>
+        <span asp-validation-for="ImageName"></span>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <input id="updatebtn" type="button" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-outline-success" formaction="@Constants.ControllerBrand/@Constants.ActionEdit" />
+            <input type="button" value="@Fields.CancelButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-outline-danger" />
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        $('#img-change').on('click', function (e) {
+            e.preventDefault;
+            var input = $('#img-brand-file');
+            input.click();
+        });
+        $('#img-delete').on('click', function (e) {
+            e.preventDefault();
+            $('#img-brand-current').attr('src', '');
+            $('#img-brand-file').val(null);
+        });
+        $('#img-brand-file').on('change', function (e) {
+            $('#img-cancel').addClass('visible');
+            var reader = new FileReader();
+            var file = e.target.files[0];
+
+            reader.onload = function (event) {
+                $('#img-brand-current').attr('src',event.target.result);
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+</script>
