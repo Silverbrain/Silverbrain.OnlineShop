@@ -57,7 +57,7 @@
         <label asp-for="ImageName">@Fields.ImageInput</label>
         <div class="img-edit row">
             <input type="hidden" asp-for="ImageName" value=@(Model != null ? $"{Model.ImageName}" : string.Empty) />
-            <input id="img-brand-file" class="img-input-file" type="file" />
+            <input id="img-brand-file" name="file" class="img-input-file" type="file" />
             <div class="col"></div>
             <div class="col-6 img-view">
                 <img id="img-brand-current" src="@imagePath" alt="@Model.Title" height="300" width="300" />

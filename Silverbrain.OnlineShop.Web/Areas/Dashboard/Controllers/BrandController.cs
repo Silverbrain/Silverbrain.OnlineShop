@@ -81,7 +81,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Edit(BrandViewModel model)
+        public async Task<ActionResult> Edit(BrandViewModel model, IFormFile file)
         {
             if (ModelState.IsValid)
             {

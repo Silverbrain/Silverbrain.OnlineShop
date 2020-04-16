@@ -7,6 +7,16 @@
   <ItemGroup>
     <Compile Remove="Migrations\20200224153755_Brands.cs" />
     <Compile Remove="Migrations\20200224153755_Brands.Designer.cs" />
+    <Compile Remove="Migrations\20200304191900_brands.cs" />
+    <Compile Remove="Migrations\20200304191900_brands.Designer.cs" />
+    <Compile Remove="Migrations\20200406135448_Slider.cs" />
+    <Compile Remove="Migrations\20200406135448_Slider.Designer.cs" />
+    <Compile Remove="Migrations\20200406140345_Slider2.cs" />
+    <Compile Remove="Migrations\20200406140345_Slider2.Designer.cs" />
+    <Compile Remove="Migrations\20200411190236_image.cs" />
+    <Compile Remove="Migrations\20200411190236_image.Designer.cs" />
+    <Compile Remove="Migrations\20200413063054_image-rm.cs" />
+    <Compile Remove="Migrations\20200413063054_image-rm.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
