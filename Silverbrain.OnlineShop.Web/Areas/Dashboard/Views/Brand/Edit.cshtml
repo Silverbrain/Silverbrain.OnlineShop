@@ -56,7 +56,8 @@
     <div class="col-md-6 col-sm-12">
         <label asp-for="ImageName">@Fields.ImageInput</label>
         <div class="img-edit row">
-            <input id="img-brand-file" class="img-input-file" asp-for="ImageName" type="file" />
+            <input type="hidden" asp-for="ImageName" value=@(Model != null ? $"{Model.ImageName}" : string.Empty) />
+            <input id="img-brand-file" class="img-input-file" type="file" />
             <div class="col"></div>
             <div class="col-6 img-view">
                 <img id="img-brand-current" src="@imagePath" alt="@Model.Title" height="300" width="300" />
@@ -81,7 +82,7 @@
 <script type="text/javascript">
     $(function () {
         $('#img-change').on('click', function (e) {
-            e.preventDefault;
+            e.preventDefault();
             var input = $('#img-brand-file');
             input.click();
         });
@@ -89,11 +90,13 @@
             e.preventDefault();
             $('#img-brand-current').attr('src', '');
             $('#img-brand-file').val(null);
+            $('#ImageName').val(null);
         });
         $('#img-brand-file').on('change', function (e) {
             $('#img-cancel').addClass('visible');
             var reader = new FileReader();
             var file = e.target.files[0];
+            $('#ImageName').val(file.name);
 
             reader.onload = function (event) {
                 $('#img-brand-current').attr('src',event.target.result);

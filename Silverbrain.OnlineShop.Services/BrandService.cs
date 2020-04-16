@@ -67,7 +67,9 @@ namespace Silverbrain.OnlineShop.Services
 
         public async Task<BrandViewModel> GetByIdAsync(int Id)
         {
+            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             var brand = await FindAsync(Id);
+            _dbContext.ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.TrackAll;
             return _mapper.Map<BrandViewModel>(brand);
         }
         public async Task<TransactionResult> DeleteAsync(int id)
