@@ -1,10 +1,119 @@
 ﻿@model BrandViewModel
 
 @Html.AntiForgeryToken()
-
+@{
+    var imagePath = "";
+    if (Model != null)
+        imagePath = Model.ImageName == null ? "" : ".." + Constants.PathBrandImage + '/' + Model.ImageName;
+}
+<link href="~/ManagementDashboard/CSS/Edit.css" rel="stylesheet" />
 <div class="col-md-6 col-sm-12">
     <input type="hidden" asp-for="Id" value=@(Model != null ? $"{Model.Id}" : "") />
-    <label asp-for="Title">@Fields.TitleInput</label>
+    <label asp-for="Title" class="required"><span>@Fields.TitleInput</span></label>
     <input asp-for="Title" type="text" class="form-control" placeholder="@Fields.TitleInput" value=@(Model != null ? $"{Model.Title}" : "")>
     <span asp-validation-for="Title" class="text-danger"></span>
 </div>
+<div class="col-md-6 col-sm-12">
+    <label asp-for="ImageName" class="required"><span>@Fields.ImageInput</span></label>
+    <div class="img-edit row">
+        <input type="text" asp-for="ImageName" value=@(Model != null ? $"{Model.ImageName}" : string.Empty) style="display:none;" />
+        <input id="img-brand-file" name="file" class="img-input-file" type="file" />
+        <div class="col px-0"></div>
+        <div class="col-md-6 col-sm-12 img-view">
+            @if (Model == null)
+            {
+                <div class="col-12">
+                    <img id="img-brand-current" class="" src="~/assets/images/image-upload-icon2.png" height="180" width="180" style="margin-top: 40px;" />
+                </div>
+                <div class="col-12">
+                    <p class="text-center mt-2">تصویر را انتخاب کنید</p>
+                </div>
+            }
+            else
+            {
+                <div class="col-12">
+                    <img id="img-brand-current" class="changed" src="@imagePath" alt="@Model.ImageName" height="180" width="180" style="margin-top: 40px;" />
+                </div>
+                <div class="col-12">
+                    <p class="text-center mt-2 hide">تصویر را انتخاب کنید</p>
+                </div>
+            }
+        </div>
+        <div class="col px-0"></div>
+        <div class="col-md-1 col-sm-12 img-edit-btn">
+            @if (Model == null)
+            {
+                <a id="img-change" href="#" class="btn btn-block btn-outline-success mt-2"><span class="ti-plus"></span></a>
+                <a id="img-delete" href="#" class="btn btn-block btn-outline-danger"><span class="ti-trash"></span></a>
+            }
+            else
+            {
+                <a id="img-cancel" href="#" class="btn btn-block btn-outline-secondary"><span class="ti-close"></span></a>
+                <a id="img-change" href="#" class="btn btn-block btn-outline-info mt-2"><span class="ti-pencil-alt"></span></a>
+                <a id="img-delete" href="#" class="btn btn-block btn-outline-danger visible"><span class="ti-trash"></span></a>
+            }
+        </div>
+    </div>
+    <span class="text-danger" asp-validation-for="ImageName"></span>
+</div>
+<script type="text/javascript">
+    $(function () {
+        var currentImage = '@(Model != null ? $"{imagePath}" : null)';
+        var currentImageName = '@(Model != null ? $"{Model.ImageName}" : null)';
+        var curruntTitle = '@(Model != null ? $"{Model.Title}" : null)';
+
+        $('#img-cancel').on('click', function (event) {
+            event.preventDefault();
+            $('#img-cancel').removeClass('visible');
+
+            $('#img-delete').addClass('visible');
+            $('.img-view img').addClass('changed');
+            $('.img-view p').addClass('hide');
+
+            $('#img-brand-current').attr('src', currentImage);
+            $('#img-brand-current').attr('alt', curruntTitle);
+
+            $('#img-brand-file').val(null);
+            $('#ImageName').val(currentImageName);
+        });
+        $('#img-change').on('click', function (e) {
+            e.preventDefault();
+            var input = $('#img-brand-file');
+            input.click();
+        });
+        $('.img-view').on('click', function (e) {
+            e.preventDefault();
+            var input = $('#img-brand-file');
+            input.click();
+        });
+        $('#img-delete').on('click', function (e) {
+            e.preventDefault();
+            if (!$('#img-cancel').hasClass('visible'))
+                $('#img-cancel').addClass('visible')
+
+            $('#img-delete').removeClass('visible')
+            $('#img-brand-current').attr('src', '../assets/images/image-upload-icon.png');
+
+            $('#img-brand-file').val(null);
+            $('#ImageName').val(null);
+
+            $('.img-view p').removeClass('hide');
+            $('.img-view img').removeClass('changed');
+        });
+        $('#img-brand-file').on('change', function (e) {
+            $('#img-cancel').addClass('visible');
+            $('#img-delete').addClass('visible');
+            $('.img-view p').addClass('hide');
+            $('.img-view img').addClass('changed');
+
+            var reader = new FileReader();
+            var file = e.target.files[0];
+            $('#ImageName').val(file.name);
+
+            reader.onload = function (event) {
+                $('#img-brand-current').attr('src', event.target.result);
+            }
+            reader.readAsDataURL(file);
+        });
+    });
+</script>

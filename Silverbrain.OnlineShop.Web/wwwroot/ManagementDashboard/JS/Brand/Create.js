@@ -12,5 +12,9 @@ $(function () {
             'replace': Messages.UploadPlaceHolderMessage,
             'remove': Fields.DeleteButton
         }
-    })
+    });
+    $('#brandform').on("change", "#img-create-file", function (event) {
+        var file = event.target.files[0];
+        $('#ImageName').val(file.name);
+    });
 });

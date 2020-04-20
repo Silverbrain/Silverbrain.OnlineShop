@@ -39,9 +39,7 @@ function submitForm(formId, e, data = null) {
     else {
         var file = $("#" + formId);
         submitdata = new FormData(file[0]);
-        //submitdata = new FormData($("#" + formId)[0]);
     }
-    //var formAction = $("#"+btnName).attr("action");
     var formAction = e.formAction;
 
     if (data !== null) {
@@ -57,8 +55,8 @@ function submitForm(formId, e, data = null) {
         });
         return;
     }
-
-    if ($("#" + formId).valid()) {
+    var valid = $("#" + formId).valid();
+    if (valid) {
         $.ajax({
             url: formAction,
             data: submitdata,

@@ -1,22 +1,15 @@
 ﻿@* this partial view is going to contain create part of form  *@
 @model BrandViewModel
+<link href="~/ManagementDashboard/CSS/Create.css" rel="stylesheet" />
 <div class="row">
     <partial name="_CreateOrEdit" for="@Model" />
 
-    <div class="col-md-6 col-sm-12">
-        <label asp-for="ImageName">@Fields.ImageInput</label>
-        <input asp-for="ImageName" type="file" class="dropify" />
-        <span asp-validation-for="ImageName"></span>
-    </div>
-    <script type="text/javascript">
-        var Messages = {
-            UploadPlaceHolderMessage: "@Html.Raw(Messages.UploadPlaceHolderMessage)"
-        };
-        var Fields = {
-            DeleteButton: "@Html.Raw(Fields.DeleteButton)"
-        };
-    </script>
-    <script src="~/ManagementDashboard/JS/Brand/Create.js"></script>
+    <!--<div class="col-md-6 col-sm-12">
+        <label asp-for="ImageFile" class="required"><span>@Fields.ImageInput</span></label>
+        @*<input asp-for="ImageName" type="text" value=""/>*@
+        <input asp-for="ImageFile" id="img-create-file" name="file" type="file" class="dropify" image />
+        <span asp-validation-for="ImageFile" class="text-danger"></span>
+    </div>-->
 
     <div class="row">
         <div class="col">
@@ -25,3 +18,12 @@
         </div>
     </div>
 </div>
+<script type="text/javascript">
+        var Messages = {
+            UploadPlaceHolderMessage: "@Html.Raw(Messages.UploadPlaceHolderMessage)"
+        };
+        var Fields = {
+            DeleteButton: "@Html.Raw(Fields.DeleteButton)"
+        };
+</script>
+<script src="~/ManagementDashboard/JS/Brand/Create.js"></script>

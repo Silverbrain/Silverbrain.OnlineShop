@@ -90,8 +90,7 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 
                 if (model.ImageName != null)
                 {
-                    var imageFile = Request.Form.Files[0];
-                    if (brand.ImageName != imageFile.FileName)
+                    if (brand.ImageName != file.FileName)
                     {
                         await DeleteImageAsync(filePath, brand.ImageName);
                     }

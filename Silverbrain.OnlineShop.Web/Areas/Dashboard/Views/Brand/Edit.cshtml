@@ -1,60 +1,11 @@
 ﻿@model BrandViewModel
-@{
-    var imagePath = Model.ImageName == null ? "" : ".." + Constants.PathBrandImage + '/' + Model.ImageName;
-}
+
 <div class="row">
     <partial name="_CreateOrEdit" model="@Model" />
+    
 
-    <style type="text/css">
-        .img-edit {
-            border-style: solid;
-            border-width: 0.07rem;
-            border-radius: 5px;
-            border-color: rgb(221, 221, 221);
-            background-color: #fff;
-        }
-
-        .img-view {
-            max-height: 300px;
-            max-width: 300px;
-            margin-top: 0.2rem;
-            margin-bottom: 0.2rem;
-        }
-
-        .img-edit-btn {
-            border-right-style: solid;
-            border-right-width: 0.07rem;
-            border-color: rgb(221, 221, 221);
-            padding: 0.4rem;
-        }
-
-        .img-input-file {
-            display: none;
-        }
-
-        #img-cancel {
-            display: none;
-        }
-
-        #img-cancel.visible {
-            display: block;
-        }
-
-        .img-edit-btn a {
-            height: 2rem;
-            padding: 0;
-            border-style: none;
-            line-height: 1.2rem;
-            font-size: 1.2rem;
-        }
-
-        .img-edit-btn a span {
-            line-height: 1.7;
-        }
-    </style>
-
-    <div class="col-md-6 col-sm-12">
-        <label asp-for="ImageName">@Fields.ImageInput</label>
+    @*<div class="col-md-6 col-sm-12">
+        <label asp-for="ImageName" class="required"><span>@Fields.ImageInput</span></label>
         <div class="img-edit row">
             <input type="hidden" asp-for="ImageName" value=@(Model != null ? $"{Model.ImageName}" : string.Empty) />
             <input id="img-brand-file" name="file" class="img-input-file" type="file" />
@@ -70,7 +21,7 @@
             </div>
         </div>
         <span asp-validation-for="ImageName"></span>
-    </div>
+    </div>*@
 
     <div class="row">
         <div class="col">
@@ -79,29 +30,3 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
-    $(function () {
-        $('#img-change').on('click', function (e) {
-            e.preventDefault();
-            var input = $('#img-brand-file');
-            input.click();
-        });
-        $('#img-delete').on('click', function (e) {
-            e.preventDefault();
-            $('#img-brand-current').attr('src', '');
-            $('#img-brand-file').val(null);
-            $('#ImageName').val(null);
-        });
-        $('#img-brand-file').on('change', function (e) {
-            $('#img-cancel').addClass('visible');
-            var reader = new FileReader();
-            var file = e.target.files[0];
-            $('#ImageName').val(file.name);
-
-            reader.onload = function (event) {
-                $('#img-brand-current').attr('src',event.target.result);
-            }
-            reader.readAsDataURL(file);
-        });
-    });
-</script>
