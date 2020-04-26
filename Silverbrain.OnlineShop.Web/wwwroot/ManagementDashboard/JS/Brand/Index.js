@@ -28,7 +28,7 @@ function success(result) {
         }
     }
 }
-function submitForm(formId, e, data = null) {
+function submitForm(formId, formAction, data = null) {
     var submitdata;
     if (data !== null)
         submitdata = data;
@@ -36,7 +36,6 @@ function submitForm(formId, e, data = null) {
         var file = $("#" + formId);
         submitdata = new FormData(file[0]);
     }
-    var formAction = e.formAction;
 
     if (data !== null) {
         $.post({
