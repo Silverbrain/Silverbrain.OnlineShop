@@ -1,21 +1,17 @@
-﻿var Constants = {
-    UrlActionCreate: null,
-    UrlActionUpdate: null,
-    UrlActionDelete: null,
-};
-var Fields = {
-    HtmlRawToasterSuccessTitle: null,
-    HtmlRawToasterErrorTitle: null,
-    HtmlRawDeleteButton: null,
-    HtmlRawCancelButton: null,
-};
-var Captions = {
-    CreateBrand: null,
-    EditBrand: null,
-    HtmlRawBrand: null,
-};
-var Messages = {
-    HtmlRawDeleteCautionMessage: null,
+﻿toastr.options = {
+    tapToDismiss: true,
+    closeButton: false,
+    showDuration: 100,
+    hideDuration: 100,
+    extendedTimeOut: 500,
+    timeOut: 3000, // Set timeOut and extendedTimeOut to 0 to make it sticky
+    //closeHtml: '<button type="button"><span class="ti-close"></span></button>',
+    //closeClass: 'toast-close-button',
+    newestOnTop: true,
+    preventDuplicates: false,
+    progressBar: false,
+    rtl: true,
+    positionClass: 'toast-top-center'
 };
 
 function success(result) {
@@ -24,10 +20,10 @@ function success(result) {
             case 'Success':
                 refreshGrid();
                 getForm(Constants.UrlActionCreate);
-                addalert(result.Message, 'success', Fields.HtmlRawToasterSuccessTitle);
+                notify(result.Message, 'success', Fields.HtmlRawToasterSuccessTitle);
                 break;
             case 'Error':
-                addalert(result.Message, 'error', Fields.HtmlRawToasterErrorTitle);
+                notify(result.Message, 'error', Fields.HtmlRawToasterErrorTitle);
                 break;
         }
     }
@@ -80,22 +76,7 @@ function buttonTemplate(data) {
 //    return String.raw`<div class="brand-photo" style="background-image: url(${String.raw`${path}`});"></div>
 //    <input class='imgName' type='hidden' value='${data.Image}' />`
 //} *@
-function addalert(msg, type, title) {
-    toastr.options = {
-        tapToDismiss: true,
-        closeButton: false,
-        showDuration: 100,
-        hideDuration: 100,
-        extendedTimeOut: 500,
-        timeOut: 3000, // Set timeOut and extendedTimeOut to 0 to make it sticky
-        //closeHtml: '<button type="button"><span class="ti-close"></span></button>',
-        //closeClass: 'toast-close-button',
-        newestOnTop: true,
-        preventDuplicates: false,
-        progressBar: false,
-        rtl: true,
-        positionClass: 'toast-top-center'
-    };
+function notify(msg, type, title) {
     toastr[type](msg, title);
 }
 function getForm(action, id = null) {
@@ -124,16 +105,16 @@ function getForm(action, id = null) {
 function refreshGrid() {
     $("#grid").data("kendoGrid").dataSource.read();
 }
+function openEditWindow(e) {
+    let dataItem = getDataItem(this, e);
+    getForm(Constants.UrlActionUpdate, dataItem.Id);
+}
 function getDataItem(grid, e) {
     let button = e.target;
     let row = $(button).closest("tr");
     return grid.dataItem(row);
 }
-function openEditWindow(e) {
-    let dataItem = getDataItem(this, e);
-    getForm(Constants.UrlActionUpdate, dataItem.Id);
-}
-function openDeleteWindow(e) {
+function confirmDelete(e) {
     e.preventDefault();
     let dataItem = getDataItem(this, e);
     let $action = $('<button />');

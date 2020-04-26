@@ -17,7 +17,7 @@ namespace Silverbrain.OnlineShop.ViewModels
         [Required(ErrorMessageResourceName = nameof(Messages.RequiredFieldErrorMessage), ErrorMessageResourceType = typeof(Messages))]
         public string Title { get; set; }
 
-        [Required(ErrorMessageResourceName = nameof(Messages.RequiredFieldErrorMessage), ErrorMessageResourceType =typeof(Messages))]
+        //[Required(ErrorMessageResourceName = nameof(Messages.RequiredFieldErrorMessage), ErrorMessageResourceType =typeof(Messages))]
         public string ImageName { get; set; }
     }
 }

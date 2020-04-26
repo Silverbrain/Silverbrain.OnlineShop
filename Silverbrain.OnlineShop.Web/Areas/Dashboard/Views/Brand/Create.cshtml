@@ -1,29 +1,16 @@
-﻿@* this partial view is going to contain create part of form  *@
-@model BrandViewModel
-<link href="~/ManagementDashboard/CSS/Create.css" rel="stylesheet" />
-<div class="row">
-    <partial name="_CreateOrEdit" for="@Model" />
+﻿@model BrandViewModel
+<link href="~/ManagementDashboard/CSS/Brand/Create.css" rel="stylesheet" />
+<script src="~/ManagementDashboard/JS/Brand/Create.js"></script>
 
-    <!--<div class="col-md-6 col-sm-12">
-        <label asp-for="ImageFile" class="required"><span>@Fields.ImageInput</span></label>
-        @*<input asp-for="ImageName" type="text" value=""/>*@
-        <input asp-for="ImageFile" id="img-create-file" name="file" type="file" class="dropify" image />
-        <span asp-validation-for="ImageFile" class="text-danger"></span>
-    </div>-->
+<partial name="_CreateOrEdit" for="@Model" />
 
-    <div class="row">
-        <div class="col">
-            <input type="button" id="createbtn" value="@Fields.SaveButton" onclick="submitForm('brandform', this); return false;" class="btn btn-primary" formaction="@Constants.ControllerBrand/@Constants.ActionCreate" />
-            <input type="button" value="@Fields.ClearButton" onclick="getForm('@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)')" class="btn btn-warning" />
+<div class="container m-3">
+    <div class="row mx-0 px-0 align-items-center justify-content-center">
+        <div class="my-1 col-md-3 col-6">
+            <input type="button" id="createbtn" class="btn btn-block btn-primary" value="@Fields.SaveButton" formaction="@Constants.ControllerBrand/@Constants.ActionCreate" />
+        </div>
+        <div class="my-1 col-md-3 col-6">
+            <input type="button" id="cancelCratebtn" class="btn btn-block btn-warning" value="@Fields.ClearButton" />
         </div>
     </div>
 </div>
-<script type="text/javascript">
-        var Messages = {
-            UploadPlaceHolderMessage: "@Html.Raw(Messages.UploadPlaceHolderMessage)"
-        };
-        var Fields = {
-            DeleteButton: "@Html.Raw(Fields.DeleteButton)"
-        };
-</script>
-<script src="~/ManagementDashboard/JS/Brand/Create.js"></script>

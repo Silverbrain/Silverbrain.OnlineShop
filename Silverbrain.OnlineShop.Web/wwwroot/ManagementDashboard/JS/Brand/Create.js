@@ -1,20 +1,11 @@
-﻿//Messages = {
-//    UploadPlaceHolderMessage: null
-//};
-//Fields = {
-//    DeleteButton: null
-//};
-
-$(function () {
-    $('.dropify').dropify({
-        messages: {
-            'default': Messages.UploadPlaceHolderMessage,
-            'replace': Messages.UploadPlaceHolderMessage,
-            'remove': Fields.DeleteButton
-        }
+﻿$(function () {
+    $('#brandform').on('click', '#createbtn', function (e) {
+        e.preventDefault();
+        submitForm('brandform', this);
     });
-    $('#brandform').on("change", "#img-create-file", function (event) {
-        var file = event.target.files[0];
-        $('#ImageName').val(file.name);
+
+    $('#brandform').on('click', '#cancelCratebtn', function (e) {
+        e.preventDefault();
+        getForm(Constants.UrlActionCreate);
     });
 });

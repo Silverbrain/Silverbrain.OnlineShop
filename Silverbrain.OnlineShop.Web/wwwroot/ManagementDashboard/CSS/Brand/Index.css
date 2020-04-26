@@ -1,0 +1,33 @@
+﻿.required span::after {
+    content:"*";
+    color: red;
+}
+
+input.input-validation-error {
+    border-color: rgba(255, 0, 0, 0.50);
+    box-shadow: 1px 0px 2px rgba(255, 0, 0, 0.30), 0px 1px 2px rgba(255, 0, 0, 0.50), -1px 0px 2px rgba(255, 0, 0, 0.50), 0px -1px 2px rgba(255, 0, 0, 0.50);
+}
+
+.brand-photo {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    background-size: 50px 50px;
+    background-position: center center;
+    vertical-align: middle;
+    line-height: 50px;
+}
+
+.k-grid-edit:hover {
+    color: #28a745;
+}
+
+.k-grid-delete:hover {
+    color: #dc3545;
+}
+
+.icon {
+    margin: 0.2em;
+    font-weight: 100;
+    font-size: 1.25em;
+}

@@ -29,15 +29,16 @@ namespace Silverbrain.OnlineShop.Web.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(UserViewModel model)
+        public async Task<IActionResult> Login(UserViewModel model,[FromQuery] string returnUrl)
         {
+            returnUrl = returnUrl ?? Url.Content("~/");
             model.UserName = model.Email;
             var result = await _accountService.LoginAsync(model.UserName, model.Password, model.IsPersistence);
 
             if (result.Succeeded)
-                return RedirectToAction("Index", "Home", new { area = "Dashboard" });
+                return LocalRedirect(returnUrl);
             else
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Account", new  { area = "Account" });
         }
 
         [HttpGet]

@@ -21,11 +21,13 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
     {
         private readonly IBrandService _brandService;
         private readonly IWebHostEnvironment _webHost;
+        private readonly string filePath;
 
         public BrandController(IBrandService brandService, IWebHostEnvironment webHost)
         {
             _brandService = brandService;
             _webHost = webHost;
+            filePath = _webHost.WebRootPath + Constants.PathBrandImage;
         }
 
         [HttpGet]
@@ -40,32 +42,22 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Create(BrandViewModel model)
+        public async Task<ActionResult> Create(BrandViewModel model, IFormFile imageFile)
         {
             TransactionResult transactionResult = new TransactionResult();
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && imageFile != null)
             {
-                var imageFile = Request.Form.Files[0];
-
-                var fileName = model.Title + Guid.NewGuid().ToString() + Path.GetExtension(imageFile.FileName);
-                fileName = fileName.Trim('-');
-                var filepath = _webHost.WebRootPath + Constants.PathBrandImage;
-
-                if (!Directory.Exists(filepath))
-                    Directory.CreateDirectory(filepath);
-
-                var imagePath = Path.Combine(filepath, fileName);
-
-                if (imageFile.Length > 0)
+                try
                 {
-                    using var stream = new FileStream(imagePath, FileMode.Create);
-                    await imageFile.CopyToAsync(stream);
-                    await stream.DisposeAsync();
+                    model.ImageName = await SaveImageAsync(imageFile, filePath, model.Title);
+                    transactionResult = await _brandService.CreateAsync(model);
                 }
-
-                model.ImageName = fileName;
-
-                transactionResult = await _brandService.CreateAsync(model);
+                catch
+                {
+                    transactionResult.IsSuccess = false;
+                    transactionResult.Type = ResultType.Error.ToString();
+                    transactionResult.Message = Messages.ErrorTransactionMessage;
+                }
             }
             else
             {
@@ -81,38 +73,58 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
 
         [ValidateAntiForgeryToken]
         [HttpPost]
-        public async Task<ActionResult> Edit(BrandViewModel model, IFormFile file)
+        public async Task<ActionResult> Edit(BrandViewModel model, IFormFile imageFile)
         {
+            TransactionResult result = new TransactionResult();
+
             if (ModelState.IsValid)
             {
-                var filePath = _webHost.WebRootPath + Constants.PathBrandImage;
-                var brand = await _brandService.GetByIdAsync((int)model.Id);
-
-                if (model.ImageName != null)
+                try
                 {
-                    if (brand.ImageName != file.FileName)
+                    if(imageFile != null)
                     {
-                        await DeleteImageAsync(filePath, brand.ImageName);
+                        await DeleteImageAsync(filePath, model.ImageName);
+                        model.ImageName = await SaveImageAsync(imageFile, filePath, model.Title);
                     }
 
-                    model.ImageName = await SaveImageAsync(Request.Form.Files[0], filePath, model.Title);
+                    result = await _brandService.UpdateAsync(model);
                 }
-                else
+                catch
                 {
-                    if (!string.IsNullOrEmpty(brand.ImageName))
-                    {
-                        await DeleteImageAsync(filePath, brand.ImageName);
-                    }
+                    result.IsSuccess = false;
+                    result.Type = ResultType.Error.ToString();
+                    result.Message = Messages.ErrorTransactionMessage;
                 }
-
-                return (Json(await _brandService.UpdateAsync(model)));
+            }
+            else
+            {
+                result.IsSuccess = false;
+                result.Type = ResultType.Error.ToString();
+                result.Message = Messages.ErrorTransactionMessage;
             }
 
-            var result = new TransactionResult
+            return Json(result);
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            TransactionResult result = new TransactionResult();
+            try
             {
-                Type = ResultType.Error.ToString(),
-                Message = Messages.ErrorTransactionMessage
-            };
+                var brand = await _brandService.FindAsync(Id);
+                if (!string.IsNullOrEmpty(brand.ImageName))
+                    await DeleteImageAsync(filePath, brand.ImageName);
+                
+                result = await _brandService.DeleteAsync(Id);
+            }
+            catch
+            {
+                result.IsSuccess = false;
+                result.Type = ResultType.Error.ToString();
+                result.Message = Messages.ErrorTransactionMessage;
+            }
             return Json(result);
         }
 
@@ -150,18 +162,6 @@ namespace Silverbrain.OnlineShop.Web.Areas.Dashboard.Controllers
             }
 
             return fileName;
-        }
-
-        [ValidateAntiForgeryToken]
-        [HttpPost]
-        public async Task<IActionResult> Delete(int Id)
-        {
-            var filePath = _webHost.WebRootPath + Constants.PathBrandImage;
-            var brand = await _brandService.FindAsync(Id);
-            if (!string.IsNullOrEmpty(brand.ImageName))
-                await DeleteImageAsync(filePath, brand.ImageName);
-
-            return Json(await _brandService.DeleteAsync(Id));
         }
     }
 }
