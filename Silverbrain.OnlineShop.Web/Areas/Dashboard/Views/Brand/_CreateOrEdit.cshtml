@@ -9,22 +9,31 @@
         editMode = true;
     }
 }
+<input type="hidden" asp-for="Id" value=@(editMode ? $"{Model.Id}" : "") />
+<div class="form-group">
+    <label class="control-label" asp-for="Title">@Fields.TitleInput</label>
+    <input type="text" asp-for="Title" class="form-control" placeholder="@Fields.TitleInput">
+    <span class="help-block">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </span>
+</div>
+<div class="form-group">
+    <label class="control-label" asp-for="ImageName">@Fields.ImageInput</label>
+    <input type="text" asp-for="ImageName" class="form-control" placeholder="@Fields.ImageInput">
+    <span class="help-block">
+        <span class="text-danger">ابعاد 200 * 200</span>
+    </span>
+</div>
+
 
 <link href="~/ManagementDashboard/CSS/Brand/_CreateOrEdit.css" rel="stylesheet" />
-<script type="text/javascript">
-    Messages.UploadPlaceHolderMessage = "@Html.Raw(Messages.UploadPlaceHolderMessage)"
-    var editMode = @(editMode ? 1 : 0);
-</script>
-<script src="~/ManagementDashboard/JS/Brand/_CreateOrEdit.js"></script>
 
-<input type="hidden" asp-for="Id" value=@(editMode ? $"{Model.Id}" : "") />
+
+
+
 
 <div class="container">
-    <div class="row align-items-center">
-        <label asp-for="Title" class="required label col-md-2 col-12 font-blue-dark"><span>@Fields.TitleInput</span></label>
-        <input asp-for="Title" type="text" class="form-control col-md-8 col-12" placeholder="@Fields.TitleInput" value=@(editMode ? $"{Model.Title}" : "") />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+
     <div class="row my-3">
         <label asp-for="ImageName" class="required label col-md-2 col-12 font-blue-dark"><span>@Fields.ImageInput</span></label>
         @if (editMode)
@@ -48,3 +57,10 @@
         }
     </div>
 </div>
+@section Scripts {
+    <script src="~/ManagementDashboard/JS/Brand/_CreateOrEdit.js"></script>
+    <script type="text/javascript">
+    Messages.UploadPlaceHolderMessage = "@Html.Raw(Messages.UploadPlaceHolderMessage)"
+    var editMode = @(editMode ? 1 : 0);
+    </script>
+}

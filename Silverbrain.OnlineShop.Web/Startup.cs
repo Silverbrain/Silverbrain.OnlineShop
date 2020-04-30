@@ -96,8 +96,8 @@ namespace Silverbrain.OnlineShop.Web
                     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapAreaControllerRoute(
                     name: "default",
-                    areaName: "Dashboard",
-                    pattern: "{controller=Brand}/{action=Index}/{id?}");
+                    areaName: "Shop",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
             app.UseCookiePolicy();

@@ -1,75 +1,58 @@
-﻿@{
-    //Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
-    Layout = "~/Areas/Dashboard/Views/Shared/_Layout_new.cshtml";
+﻿<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>@Captions.CreateEdit
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <form id="brandform">
+                    <partial name="Create" />
+                </form>
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet box blue-hoki">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-gift"></i>@string.Format(Captions.List0,Captions.Brands)
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse">
+                    </a>
+                    <a href="#portlet-config" data-toggle="modal" class="config">
+                    </a>
+                    <a href="javascript:;" class="reload">
+                    </a>
+                    <a href="javascript:;" class="remove">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <!-- BEGIN FORM-->
+                <partial name="_List" />
+                <!-- END FORM-->
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/ManagementDashboard/JS/Brand/Index.js"></script>
 }
 
-@model BrandViewModel
-<!--<script src="~/assets/js/plugins/dropify/dropify.min.js"></script>-->
-<link href="~/ManagementDashboard/CSS/Brand/Index.css" rel="stylesheet" />
-<script type="text/javascript">
-    var Constants = {
-        UrlActionCreate: "@Url.Action(Constants.ActionCreate, Constants.ControllerBrand)",
-        UrlActionUpdate: "@Url.Action(Constants.ActionEdit, Constants.ControllerBrand)",
-        UrlActionDelete: "@Url.Action(Constants.ActionDelete, Constants.ControllerBrand)"
-    };
-    var Fields = {
-        HtmlRawToasterSuccessTitle: "@Html.Raw(Fields.ToasterSuccessTitle)",
-        HtmlRawToasterErrorTitle: "@Html.Raw(Fields.ToasterErrorTitle)",
-        HtmlRawDeleteButton: "@Html.Raw(Fields.DeleteButton)",
-        HtmlRawCancelButton: "@Html.Raw(Fields.CancelButton)"
-    };
-    var Captions = {
-        CreateBrand: "@Captions.CreateBrand",
-        EditBrand: "@Captions.EditBrand",
-        HtmlRawBrand: "@Html.Raw(Captions.Brand)"
-    };
-    var Messages = {
-        HtmlRawDeleteCautionMessage: "@Html.Raw(Messages.DeleteCautionMessage)"
-    };
-</script>
-<script src="~/ManagementDashboard/JS/Brand/Index.js"></script>
-<div class="row">
-    <div class="col-12">
-        <div class="portlet box blue-dark">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="icon-settings"></i>
-                    <span id="form-title" class="caption-subject uppercase">@Captions.CreateBrand</span>
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <div class="row">
-                    <form id="brandform">
-                        <partial name="Create" />
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-12">
-        <div class="portlet box blue-dark">
-            <div class="portlet-title">
-                <div class="caption">
-                    <i class="fa fa-th-list"></i>
-                    @Captions.BrandForm
-                </div>
-                <div class="tools">
-                    <a href="javascript:;" class="collapse" data-original-title="" title="">
-                    </a>
-                </div>
-            </div>
-            <div class="portlet-body">
-                <form id="brandform">
-                    <partial name="_List" />
-                </form>
-            </div>
-        </div>
-    </div>
-</div>

@@ -123,11 +123,20 @@
   <data name="BrandForm" xml:space="preserve">
     <value>برند ها</value>
   </data>
+  <data name="Brands" xml:space="preserve">
+    <value>برندها</value>
+  </data>
   <data name="CreateBrand" xml:space="preserve">
     <value>ایجاد برند</value>
   </data>
+  <data name="CreateEdit" xml:space="preserve">
+    <value>ثبت / ویرایش</value>
+  </data>
   <data name="EditBrand" xml:space="preserve">
     <value>تغییر برند</value>
+  </data>
+  <data name="List0" xml:space="preserve">
+    <value>لیست {0}</value>
   </data>
   <data name="UsersForm" xml:space="preserve">
     <value>کاربران</value>

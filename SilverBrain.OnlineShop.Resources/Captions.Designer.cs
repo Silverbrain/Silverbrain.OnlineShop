@@ -79,6 +79,15 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to برندها.
+        /// </summary>
+        public static string Brands {
+            get {
+                return ResourceManager.GetString("Brands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ایجاد برند.
         /// </summary>
         public static string CreateBrand {
@@ -88,11 +97,29 @@ namespace Silverbrain.OnlineShop.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ثبت / ویرایش.
+        /// </summary>
+        public static string CreateEdit {
+            get {
+                return ResourceManager.GetString("CreateEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to تغییر برند.
         /// </summary>
         public static string EditBrand {
             get {
                 return ResourceManager.GetString("EditBrand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to لیست {0}.
+        /// </summary>
+        public static string List0 {
+            get {
+                return ResourceManager.GetString("List0", resourceCulture);
             }
         }
         

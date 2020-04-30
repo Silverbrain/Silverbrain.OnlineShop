@@ -49,6 +49,9 @@
     <Folder Include="Areas\Dashboard\Models\" />
     <Folder Include="Areas\Shop\Data\" />
     <Folder Include="Areas\Shop\Models\" />
+    <Folder Include="wwwroot\AdminTheme\assets\frontend\pages\temp\" />
+    <Folder Include="wwwroot\AdminTheme\assets\global\plugins\angularjs\plugins\angular-file-upload\uploads\" />
+    <Folder Include="wwwroot\AdminTheme\assets\global\plugins\jquery-file-upload\server\php\files\thumbnail\" />
     <Folder Include="wwwroot\assets\images\brands\" />
     <Folder Include="wwwroot\assets\js\Shop\" />
   </ItemGroup>
