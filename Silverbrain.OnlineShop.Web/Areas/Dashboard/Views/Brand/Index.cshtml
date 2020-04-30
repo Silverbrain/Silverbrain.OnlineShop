@@ -1,5 +1,6 @@
 ﻿@{
-    Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+    //Layout = "~/Areas/Dashboard/Views/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Dashboard/Views/Shared/_Layout_new.cshtml";
 }
 
 @model BrandViewModel
@@ -27,25 +28,48 @@
     };
 </script>
 <script src="~/ManagementDashboard/JS/Brand/Index.js"></script>
-
-<div class="box">
-    <div class="box-head">
-        <h4 id="form-title" class="title">@Captions.CreateBrand</h4>
-    </div>
-    <div id="box-body-container" class="box-body">
-        <form id="brandform">
-            <partial name="Create" />
-        </form>
+<div class="row">
+    <div class="col-12">
+        <div class="portlet box blue-dark">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="icon-settings"></i>
+                    <span id="form-title" class="caption-subject uppercase">@Captions.CreateBrand</span>
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title="">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="row">
+                    <form id="brandform">
+                        <partial name="Create" />
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<br />
-
-<div class="box">
-    <div class="box-head">
-        <h4 class="title">@Captions.BrandForm</h4>
-    </div>
-    <div class="box-body">
-        <partial name="_List" />
+<div class="row">
+    <div class="col-12">
+        <div class="portlet box blue-dark">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-th-list"></i>
+                    @Captions.BrandForm
+                </div>
+                <div class="tools">
+                    <a href="javascript:;" class="collapse" data-original-title="" title="">
+                    </a>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <form id="brandform">
+                    <partial name="_List" />
+                </form>
+            </div>
+        </div>
     </div>
 </div>

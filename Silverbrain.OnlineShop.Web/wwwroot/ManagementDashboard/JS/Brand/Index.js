@@ -133,13 +133,13 @@ function confirmDelete(e) {
     })
         .then((value) => {
             if (value === "confirm") {
-                $action.formAction = Constants.UrlActionDelete;
+                $fromAction = Constants.UrlActionDelete;
                 let $token = $('form > input[name="__RequestVerificationToken"]').val();
                 let $data = {
                     __RequestVerificationToken: $token,
                     Id: dataItem.Id
                 };
-                submitForm('brandform', $action, $data);
+                submitForm('brandform', $fromAction, $data);
             }
         });
 }

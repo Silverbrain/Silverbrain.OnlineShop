@@ -21,12 +21,12 @@
 
 <div class="container">
     <div class="row align-items-center">
-        <label asp-for="Title" class="required label col-md-2 col-12"><span>@Fields.TitleInput</span></label>
+        <label asp-for="Title" class="required label col-md-2 col-12 font-blue-dark"><span>@Fields.TitleInput</span></label>
         <input asp-for="Title" type="text" class="form-control col-md-8 col-12" placeholder="@Fields.TitleInput" value=@(editMode ? $"{Model.Title}" : "") />
         <span asp-validation-for="Title" class="text-danger"></span>
     </div>
     <div class="row my-3">
-        <label asp-for="ImageName" class="required label col-md-2 col-12"><span>@Fields.ImageInput</span></label>
+        <label asp-for="ImageName" class="required label col-md-2 col-12 font-blue-dark"><span>@Fields.ImageInput</span></label>
         @if (editMode)
         {
             <input asp-for="ImageName" type="hidden" value="@Model.ImageName" />

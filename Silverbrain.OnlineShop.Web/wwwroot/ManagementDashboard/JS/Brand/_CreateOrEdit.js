@@ -8,11 +8,11 @@
     });
 
     imgfile = imgfile.data('dropify');
+    $('#img-edit').val(null);
 
     if (editMode) {
         imgfile.destroy();
         $('#img-edit').addClass('hidden');
-        $('#img-edit').val(null);
     }
     $('#edit-img-btn').on('click', function (e) {
         e.preventDefault();
