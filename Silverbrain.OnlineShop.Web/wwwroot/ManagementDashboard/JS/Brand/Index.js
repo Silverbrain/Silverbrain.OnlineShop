@@ -79,24 +79,14 @@ function notify(msg, type, title) {
     toastr[type](msg, title);
 }
 function getForm(action, id = null) {
-    let $url = (id == null)
-        ? action
-        : `${action}/${id}`;
-    let $data = { Id: id };
+    //let $url = (id == null) ? action : `${action}/${id}`;
+    let $data = id === null ? null : { Id: id };
 
     $.get({
-        url: $url,
+        url: action,
         data: $data,
         success: function (data) {
             $('#brandform').html(data);
-            switch (action) {
-                case Constants.UrlActionCreate:
-                    $('#form-title').html(Captions.CreateBrand);
-                    break;
-                case Constants.UrlActionUpdate:
-                    $('#form-title').html(Captions.EditBrand);
-                    break;
-            }
         },
         async: false
     });

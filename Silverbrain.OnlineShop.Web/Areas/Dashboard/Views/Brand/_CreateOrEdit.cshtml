@@ -9,58 +9,53 @@
         editMode = true;
     }
 }
+<link href="~/ManagementDashboard/CSS/Brand/_CreateOrEdit.css" rel="stylesheet" />
+
 <input type="hidden" asp-for="Id" value=@(editMode ? $"{Model.Id}" : "") />
+<input asp-for="ImageName" type="hidden" value=@(editMode ? $"{Model.ImageName}" : "") />
+
 <div class="form-group">
-    <label class="control-label" asp-for="Title">@Fields.TitleInput</label>
+    <label class="control-label required" asp-for="Title"><span>@Fields.TitleInput</span></label>
     <input type="text" asp-for="Title" class="form-control" placeholder="@Fields.TitleInput">
     <span class="help-block">
         <span asp-validation-for="Title" class="text-danger"></span>
     </span>
 </div>
-<div class="form-group">
-    <label class="control-label" asp-for="ImageName">@Fields.ImageInput</label>
-    <input type="text" asp-for="ImageName" class="form-control" placeholder="@Fields.ImageInput">
-    <span class="help-block">
-        <span class="text-danger">ابعاد 200 * 200</span>
-    </span>
-</div>
 
-
-<link href="~/ManagementDashboard/CSS/Brand/_CreateOrEdit.css" rel="stylesheet" />
-
-
-
-
-
-<div class="container">
-
-    <div class="row my-3">
-        <label asp-for="ImageName" class="required label col-md-2 col-12 font-blue-dark"><span>@Fields.ImageInput</span></label>
-        @if (editMode)
-        {
-            <input asp-for="ImageName" type="hidden" value="@Model.ImageName" />
-            <div class="px-0 mx-0 col-md-2 col-12">
-                <img id="img-view" src="@imagePath" alt="@Model.ImageName" />
-                <input id="img-edit" type="file" class="dropify" name="imageFile" />
+<div class="row">
+    <div class="col-md-4 col-xs-12">
+        <label asp-for="ImageName" class="required control-label"><span>@Fields.ImageInput</span></label>
+        <div class="from-group">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <div class="fileinput-new thumbnail" style="width: 200px; height: 200px;">
+                    <img src=@(editMode ? imagePath : "https://www.placehold.it/200x200/EFEFEF/AAAAAA&amp;text=no+image") alt="">
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="max-width: 200px; max-height: 200px; line-height: 10px;"></div>
+                <div>
+                    <span class="btn default btn-file">
+                        <span class="fileinput-new">
+                            انتخاب تصویر
+                        </span>
+                        <span class="fileinput-exists">
+                            تغییر
+                        </span>
+                        <input type="hidden" value="" name="...">
+                        <input type="file" name="imageFile">
+                    </span>
+                    <a href="#" class="btn red fileinput-exists" data-dismiss="fileinput">
+                        حذف
+                    </a>
+                </div>
             </div>
-            <div class="col-2"></div>
-            <div class="px-0 mx-0 col-12">
-                <input type="button" id="edit-img-btn" class="btn btn-primary" value="@Fields.EditButtin" />
-                <input type="button" id="edit-img-cancel-btn" class="btn btn-danger" value="@Fields.CancelButton" />
-            </div>
-        }
-        else
-        {
-            <div class="px-0 mx-0 col-md-2 col-12">
-                <input type="file" class="dropify" name="imageFile" />
-            </div>
-        }
+            @*<input type="file" class="dropify form-control" name="imageFile" />*@
+            <span class="help-block">
+                <span class="text-danger">ابعاد 200 * 200</span>
+            </span>
+        </div>
     </div>
 </div>
-@section Scripts {
-    <script src="~/ManagementDashboard/JS/Brand/_CreateOrEdit.js"></script>
+@*<script src="~/ManagementDashboard/JS/Brand/_CreateOrEdit.js"></script>
     <script type="text/javascript">
     Messages.UploadPlaceHolderMessage = "@Html.Raw(Messages.UploadPlaceHolderMessage)"
     var editMode = @(editMode ? 1 : 0);
-    </script>
-}
+    </script>*@

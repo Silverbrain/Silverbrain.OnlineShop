@@ -9,10 +9,6 @@
 <div class="form-actions">
     <div class="btn-set pull-right">
         <button type="button" class="btn green" id="createbtn" onclick="submitForm('brandform', '@createUrl')" formaction="@Constants.ControllerBrand/@Constants.ActionCreate">@Fields.SaveButton</button>
-        <button type="button" class="btn red" id="cancelCratebtn">@Fields.ClearButton</button>
+        <button type="button" class="btn red" id="cancelCreatebtn">@Fields.ClearButton</button>
     </div>
 </div>
-
-@section Scripts {
-    <script src="~/ManagementDashboard/JS/Brand/Create.js"></script>
-}

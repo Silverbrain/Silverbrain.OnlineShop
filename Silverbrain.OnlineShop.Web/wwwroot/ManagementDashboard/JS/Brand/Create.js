@@ -3,7 +3,7 @@
 //    submitForm('brandform', this.formAction);
 //});
 
-$('#brandform').on('click', '#cancelCratebtn', function (e) {
+$('#brandform').on('click', '#cancelCreatebtn', function (e) {
     e.preventDefault();
     getForm(Constants.UrlActionCreate);
 });

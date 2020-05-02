@@ -1,19 +1,14 @@
 ﻿@model BrandViewModel
+<link href="~/ManagementDashboard/CSS/Brand/Index.css" rel="stylesheet" />
 <div class="row">
     <div class="col-md-12">
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>@Captions.CreateEdit
+                    <i class="fa fa-gear"></i>@Captions.CreateEdit
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
-                    </a>
-                    <a href="#portlet-config" data-toggle="modal" class="config">
-                    </a>
-                    <a href="javascript:;" class="reload">
-                    </a>
-                    <a href="javascript:;" class="remove">
                     </a>
                 </div>
             </div>
@@ -32,16 +27,10 @@
         <div class="portlet box blue-hoki">
             <div class="portlet-title">
                 <div class="caption">
-                    <i class="fa fa-gift"></i>@string.Format(Captions.List0, Captions.Brands)
+                    <i class="fa fa-th-list"></i>@string.Format(Captions.List0, Captions.Brands)
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
-                    </a>
-                    <a href="#portlet-config" data-toggle="modal" class="config">
-                    </a>
-                    <a href="javascript:;" class="reload">
-                    </a>
-                    <a href="javascript:;" class="remove">
                     </a>
                 </div>
             </div>
@@ -76,10 +65,11 @@
     };
     </script>
     <script src="~/ManagementDashboard/JS/Brand/Index.js"></script>
+    <script src="~/ManagementDashboard/JS/Brand/Create.js"></script>
+    <script src="~/ManagementDashboard/JS/Brand/Edit.js"></script>
 
 }
 
 
 
 
- 
