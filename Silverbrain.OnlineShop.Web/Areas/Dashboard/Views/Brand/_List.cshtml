@@ -1,34 +1,66 @@
 ﻿<div class="k-rtl">
-    <kendo-grid name="grid">
-        <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
-            <transport>
-                <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-                <update url="@Url.Action(Constants.ActionEdit, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
-            </transport>
-            <schema>
-                <model id="@nameof(BrandViewModel.Id)">
-                    <fields>
-                        <field name="@nameof(BrandViewModel.Id)" type="number"></field>
-                        <field name="@nameof(BrandViewModel.Title)"></field>
-                    </fields>
-                </model>
-            </schema>
-        </datasource>
-        <filterable enabled="true" />
-        <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
-        </pageable>
-        <sortable enabled="true" />
-        <columns>
-            <column selectable="true" width="50" />
-            <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
-            @*<column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />*@
-
-            <column width="150">
-                <commands>
-                    <column-command name="edit" text="@Fields.EditButtin" click="openEditWindow" icon-class="fa fa-edit icon" template="#=buttonTemplate(data)#"></column-command>
-                    <column-command name="delete" text="@Fields.DeleteButton" click="confirmDelete" icon-class="fa fa-trash-o icon" template="#=buttonTemplate(data)#"></column-command>
-                </commands>
-            </column>
-        </columns>
-    </kendo-grid>
+    @(Html.Kendo().Grid<BrandViewModel>()
+    .Name("grid")
+    .Columns(column =>
+    {
+        column.Select().Width(50);
+        column.Bound(b => b.Title).Title(Fields.TitleInput);
+        column.Command(commands =>
+        {
+            commands.Custom("edit").Text(@Fields.EditButton).Click("openEditWindow").IconClass("fa fa-edit icon").Template("#=buttonTemplate(data)#");
+            commands.Custom("delete").Text(@Fields.DeleteButton).Click("confirmDelete").IconClass("fa fa-trash-o icon").Template("#=buttonTemplate(data)#");
+        }).Width(150);
+    })
+    .Filterable()
+    .Sortable()
+    .Pageable(page =>
+    {
+        page.ButtonCount(5);
+        page.Refresh(true);
+        page.PageSizes(new int[] { 5, 10, 20, 50 });
+    })
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .PageSize(10)
+        .Model(model =>
+        {
+            model.Id(brand => brand.Id);
+            model.Field(brand => brand.Title);
+        })
+        .Read(read => read.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area = Constants.AreaManagement }))
+        .Update(update => update.Action(Constants.ActionEdit, Constants.ControllerBrand, new { area = Constants.AreaManagement }))
+    )
+)
 </div>
+@*<kendo-grid name="grid">
+    <datasource type="DataSourceTagHelperType.Ajax" page-size="10">
+        <transport>
+            <read url="@Url.Action(Constants.ActionReadAll, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+            <update url="@Url.Action(Constants.ActionEdit, Constants.ControllerBrand, new { area=Constants.AreaManagement })" />
+        </transport>
+        <schema>
+            <model id="@nameof(BrandViewModel.Id)">
+                <fields>
+                    <field name="@nameof(BrandViewModel.Id)" type="number"></field>
+                    <field name="@nameof(BrandViewModel.Title)"></field>
+                </fields>
+            </model>
+        </schema>
+    </datasource>
+    <filterable enabled="true" />
+    <pageable button-count="5" refresh="true" page-sizes="new int[] { 5, 10, 20, 50 }">
+    </pageable>
+    <sortable enabled="true" />
+    <columns>
+        <column selectable="true" width="50" />
+        <column field="@nameof(BrandViewModel.Title)" title="@Fields.TitleInput" />
+        <column field="@nameof(BrandViewModel.Image)" title="@Fields.ImageInput" template="#=template(data)#" />
+
+        <column width="150">
+            <commands>
+                <column-command name="edit" text="@Fields.EditButton" click="openEditWindow" icon-class="fa fa-edit icon" template="#=buttonTemplate(data)#"></column-command>
+                <column-command name="delete" text="@Fields.DeleteButton" click="confirmDelete" icon-class="fa fa-trash-o icon" template="#=buttonTemplate(data)#"></column-command>
+            </commands>
+        </column>
+    </columns>
+</kendo-grid>*@

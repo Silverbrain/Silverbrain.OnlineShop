@@ -132,7 +132,7 @@
   <data name="DeleteButton" xml:space="preserve">
     <value>حذف</value>
   </data>
-  <data name="EditButtin" xml:space="preserve">
+  <data name="EditButton" xml:space="preserve">
     <value>تغییر</value>
   </data>
   <data name="FirstName" xml:space="preserve">

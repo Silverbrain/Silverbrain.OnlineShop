@@ -108,9 +108,9 @@ namespace Silverbrain.OnlineShop.Resources {
         /// <summary>
         ///   Looks up a localized string similar to تغییر.
         /// </summary>
-        public static string EditButtin {
+        public static string EditButton {
             get {
-                return ResourceManager.GetString("EditButtin", resourceCulture);
+                return ResourceManager.GetString("EditButton", resourceCulture);
             }
         }
         

@@ -26,6 +26,10 @@ input.input-validation-error {
     color: #dc3545;
 }
 
+.k-grid-delete, .k-grid-edit {
+    color: #000;
+}
+
 .icon {
     margin: 0.2em;
     font-weight: 100;
