@@ -9,7 +9,7 @@
         editMode = true;
     }
 }
-<link href="~/ManagementDashboard/CSS/Brand/_CreateOrEdit.css" rel="stylesheet" />
+<link href="~/AdminTheme/CSS/Brand/_CreateOrEdit.css" rel="stylesheet" />
 
 <input type="hidden" asp-for="Id" value=@(editMode ? $"{Model.Id}" : "") />
 <input asp-for="ImageName" type="hidden" value=@(editMode ? $"{Model.ImageName}" : "") />
@@ -54,7 +54,7 @@
         </div>
     </div>
 </div>
-@*<script src="~/ManagementDashboard/JS/Brand/_CreateOrEdit.js"></script>
+@*<script src="~/AdminTheme/JS/Brand/_CreateOrEdit.js"></script>
     <script type="text/javascript">
     Messages.UploadPlaceHolderMessage = "@Html.Raw(Messages.UploadPlaceHolderMessage)"
     var editMode = @(editMode ? 1 : 0);
